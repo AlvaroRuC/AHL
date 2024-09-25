@@ -4,29 +4,94 @@ Système de projection privilégié : EPSG : 3857
 
 ## Conversion de l’AHL en Maplibre ?
 
-<s>### 1. Définir une emprise pour la fenêtre de carte.</s>
+### Fait
 
-### 2. Afficher des couches web (google, osm, ign -> BD Ortho, cadastre, éléments BD Topo).
+- [x] Définir une emprise pour la fenêtre de carte.
 
-Tester une carte géoréférencée EPSG : 3857
+- [x] Prévoir un volet latéral pour afficher des informations.
 
-### 3. Gérer l’affichage de ces couches (afficher/masquer, opacité, changer l’ordre, afficher légende si disponible, slider si possible, zoomer sur l’emprise de la couche, gérer l’affichage de la couche en fonction de la couche si nécessaire).
+### À faire facilement
 
-Le point le plus compliqué.
+- [X] Afficher des couches web (google, osm, ign -> BD Ortho, cadastre, éléments BD Topo):
 
-### 5. Afficher des couches en 3D en fonction du relief (ajouter des bâtiments).
+Couches vectorielles ?
 
-Ça se fait, mais j'ai besoin de la couche.
+- [] Parcelles cadastrales,
+- [] Limites administratives (communes ou d'autres?)
 
-### 6. Afficher des couches vectoriel avec des étiquettes éventuelles et/ou infobulle.
+WMS:
 
-Bien sûr
+- [] Carte topographique ??
+- [] Carte topographique en noire et blanc ?? Voir geoportail. https://www.geoportail.gouv.fr/carte
+- [X] Photographie aerienne 2017 ->  2023
+- [X] Photographie aerienne 1965-1980
+- [X] Photographie aerienne 1950-1965
+- [X] Carte de l'État-Major
 
-### 7. Prévoir un volet latéral pour afficher des informations.
+- [] Altitude MNT
 
-Bien sûr
+Projections EPSG : 3857
 
-## Plan
+Ça marche pour des couches wms, et pas (?) pour des couches vecteur.
 
-1. Sidebars pour gérer les 
+- [] Afficher des couches en 3D en fonction du relief (ajouter des bâtiments).
+
+J'ai besoin du Terrain RGB tile
+
+- [ ] Afficher des couches vectoriel avec des étiquettes éventuelles et/ou infobulle.
+
+### Le plus compliqué
+
+- [ ] Gérer l’affichage de ces couches:
+
+- [/] afficher/masquer,
+- [/] opacité,  
+- [?] changer l’ordre, 
+
+- [/] afficher légende si disponible, 
+
+- [/] slider si possible, 
+
+- [ ] zoomer sur l’emprise de la couche, 
+
+- [ ] gérer l’affichage de la couche en fonction du zoom si nécessaire. ??
+
+Minumum, afficher/masquer, et opacité 
+avec 
+https://github.com/mug-jp/maplibre-gl-opacity 
+ou
+https://www.npmjs.com/package/mapbox-layer-control
+
+### Plugins à tester
+
+Gerer opacité des couches
+https://github.com/mug-jp/maplibre-gl-opacity
+
+Swipe between maps
+https://docs.mapbox.com/mapbox-gl-js/example/mapbox-gl-compare/
+https://github.com/maplibre/maplibre-gl-compare
+
+Une autre possibilité:
+https://maplibre.org/maplibre-gl-js/docs/examples/sync-move/
+
+https://github.com/Beilinson/mapbox-layer-groups
+
+Maputnik
+https://geoservices.ign.fr/documentation/services/utilisation-sig/tutoriel-maputnik
+
+WMS IGN ici: 
+https://data.geopf.fr/wms-r?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetCapabilities
+
+
+2 :  Gestion des photos
+
+Prévoir un modèle de BDD intégrant les infos sur les photos (datation, localisation prise de vue, auteur, thématique/mot clé, liste des lieux vu)
+Photos déjà géolocalisées -> affiche une couche avec la localisation de la prise de vue
+Réfléchir à un moyen de visualiser ce qui est vu sur la photo (bâtiment/objet, emprise ?)
+Interagir avec les points pour afficher la photo et les infos
+Compléter les informations sur les photos (autre interface ? galerie photo ? formulaire ? Système de validation ou modération ?)
+
+3 : Tutoriel
+Prévoir un tutoriel pour l’utilisation de(s) interface(s)
+
 

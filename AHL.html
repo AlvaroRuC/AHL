@@ -1,166 +1,232 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <title>Offset the vanishing point using padding</title>
-    <meta property="og:description" content="Offset the center or vanishing point of the map to reduce distortion when floating elements are displayed over the map." />
+    <title>Atlas Historique du Limousin</title>
+    <meta property="og:description" content="Atlas Historique du Limousin" />
     <meta charset='utf-8'>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel='stylesheet' href='https://unpkg.com/maplibre-gl@4.7.0/dist/maplibre-gl.css' />
     <script src='https://unpkg.com/maplibre-gl@4.7.0/dist/maplibre-gl.js'></script>
     <style>
-        body { margin: 0; padding: 0; }
-        html, body, #map { height: 100%; }
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        html,
+        body,
+        #map {
+            height: 100%;
+        }
     </style>
 </head>
+
 <body>
-<style>
-    .rounded-rect {
-        background: white;
-        border-radius: 10px;
-        box-shadow: 0 0 50px -25px black;
-    }
+    <style>
+        .rounded-rect {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 0 50px -25px black;
+        }
 
-    .flex-center {
-        position: absolute;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
+        .flex-center {
+            position: absolute;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
 
-    .flex-center.left {
-        left: 0px;
-    }
+        .flex-center.left {
+            left: 0px;
+        }
 
-    .flex-center.right {
-        right: 0px;
-    }
+        .flex-center.right {
+            right: 0px;
+        }
 
-    .sidebar-content {
-        position: absolute;
-        width: 95%;
-        height: 95%;
-        font-family: Arial, Helvetica, sans-serif;
-        font-size: 32px;
-        color: gray;
-    }
+        .sidebar-content {
+            position: absolute;
+            width: 95%;
+            height: 95%;
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 32px;
+            color: gray;
+        }
 
-    .sidebar-toggle {
-        position: absolute;
-        width: 1.3em;
-        height: 1.3em;
-        overflow: visible;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
+        .sidebar-toggle {
+            position: absolute;
+            width: 1.3em;
+            height: 1.3em;
+            overflow: visible;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
 
-    .sidebar-toggle.left {
-        right: -1.5em;
-    }
+        .sidebar-toggle.left {
+            right: -1.5em;
+        }
 
-    .sidebar-toggle.right {
-        left: -1.5em;
-    }
+        .sidebar-toggle.right {
+            left: -1.5em;
+        }
 
-    .sidebar-toggle:hover {
-        color: #0aa1cf;
-        cursor: pointer;
-    }
+        .sidebar-toggle:hover {
+            color: #0aa1cf;
+            cursor: pointer;
+        }
 
-    .sidebar {
-        transition: transform 1s;
-        z-index: 1;
-        width: 300px;
-        height: 100%;
-    }
+        .sidebar {
+            transition: transform 1s;
+            z-index: 1;
+            width: 300px;
+            height: 100%;
+        }
 
-    /*
+        /*
   The sidebar styling has them "expanded" by default, we use CSS transforms to push them offscreen
   The toggleSidebar() function removes this class from the element in order to expand it.
 */
-    .left.collapsed {
-        transform: translateX(-295px);
-    }
-
-    .right.collapsed {
-        transform: translateX(295px);
-    }
-</style>
-
-<div id="map">
-    <div id="left" class="sidebar flex-center left collapsed">
-        <div class="sidebar-content rounded-rect flex-center">
-            Left Sidebar
-            <div
-                class="sidebar-toggle rounded-rect left"
-                onclick="toggleSidebar('left')"
-            >
-                &rarr;
-            </div>
-        </div>
-    </div>
-    <div id="right" class="sidebar flex-center right collapsed">
-        <div class="sidebar-content rounded-rect flex-center">
-            Right Sidebar
-            <div
-                class="sidebar-toggle rounded-rect right"
-                onclick="toggleSidebar('right')"
-            >
-                &larr;
-            </div>
-        </div>
-    </div>
-</div>
-
-<script>
-    const center = [1.25866, 45.83088];
-    const map = new maplibregl.Map({
-        container: 'map',
-        zoom: 12.5,
-        center,
-        pitch: 0,
-        maxBounds: [[1.14858, 45.79313], [1.36808, 45.86836]],
-        style:
-            'https://api.maptiler.com/maps/streets/style.json?key=get_your_own_OpIi9ZULNHzrESv6T2vL'
-            // 'https://data.geopf.fr/annexes/ressources/vectorTiles/styles/PLAN.IGN/standard.json' Modifier sur Maputnik?
-    });
-
-    new maplibregl.Marker().setLngLat(center).addTo(map);
-
-    function toggleSidebar(id) {
-        const elem = document.getElementById(id);
-        const classes = elem.className.split(' ');
-        const collapsed = classes.indexOf('collapsed') !== -1;
-
-        const padding = {};
-
-        if (collapsed) {
-            // Remove the 'collapsed' class from the class list of the element, this sets it back to the expanded state.
-            classes.splice(classes.indexOf('collapsed'), 1);
-
-            padding[id] = 300; // In px, matches the width of the sidebars set in .sidebar CSS class
-            map.easeTo({
-                padding,
-                duration: 1000 // In ms, CSS transition duration property for the sidebar matches this value
-            });
-        } else {
-            padding[id] = 0;
-            // Add the 'collapsed' class to the class list of the element
-            classes.push('collapsed');
-
-            map.easeTo({
-                padding,
-                duration: 1000
-            });
+        .left.collapsed {
+            transform: translateX(-295px);
         }
 
-        // Update the class list on the element
-        elem.className = classes.join(' ');
-    }
+        .right.collapsed {
+            transform: translateX(295px);
+        }
+    </style>
 
-    map.on('load', () => {
-        toggleSidebar('left');
-    });
-</script>
+    <div id="map">
+        <div id="left" class="sidebar flex-center left collapsed">
+            <div class="sidebar-content rounded-rect flex-center">
+                Left Sidebar
+                <div class="sidebar-toggle rounded-rect left" onclick="toggleSidebar('left')">
+                    &rarr;
+                </div>
+            </div>
+        </div>
+        <div id="right" class="sidebar flex-center right collapsed">
+            <div class="sidebar-content rounded-rect flex-center">
+                Right Sidebar
+                <div class="sidebar-toggle rounded-rect right" onclick="toggleSidebar('right')">
+                    &larr;
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const center = [1.25866, 45.83088];
+        const map = new maplibregl.Map({
+            container: 'map',
+            zoom: 12.5,
+            center,
+            pitch: 0,
+            projection: { "type": "globe" },
+            maxBounds: [[1.14858, 45.79313], [1.36808, 45.86836]],
+            style: {
+                version: 8,
+                sources: {
+                    osm: {
+                        type: 'raster',
+                        tiles: ['https://tile.openstreetmap.org/{z}/{x}/{y}.png'],
+                        tileSize: 256,
+                        attribution: '&copy; OpenStreetMap Contributors',
+                        maxzoom: 19
+                    },
+                    S_Arenes: {
+                        type: "geojson",
+                        data: "./static/layers/Arenes.geojson",
+                    },
+                },
+                layers: [
+                    {
+                        id: 'osm',
+                        type: 'raster',
+                        source: 'osm'
+                    },
+                    {
+                        "id": "Quartier des Arenes",
+                        "type": "fill",
+                        "source": "S_Arenes",
+                        "paint": {
+                            "fill-color": "red",
+                        }
+                    }
+                ]
+                //MAPTILER: 'https://api.maptiler.com/maps/streets/style.json?key=get_your_own_OpIi9ZULNHzrESv6T2vL', 
+                // IGN: 'https://data.geopf.fr/annexes/ressources/vectorTiles/styles/PLAN.IGN/standard.json',
+                // Modifier sur Maputnik?
+            }
+        });
+
+        map.on('load', () => {
+            map.addSource('wms-test-source', {
+                'type': 'raster',
+                // use the tiles option to specify a WMS tile source URL
+                // https://maplibre.org/maplibre-style-spec/sources/
+                'tiles': [
+                    'https://data.geopf.fr/wms-r?LAYERS=SCANEM40_PYR_PNG_FXX_LAMB93&FORMAT=image/jpeg&SERVICE=WMS&VERSION=1.3.0&REQUEST=GetMap&STYLES=&CRS=EPSG:3857&BBOX={bbox-epsg-3857}&WIDTH=256&HEIGHT=256'
+                    // 'https://data.geopf.fr/wms-r?LAYERS=ORTHOIMAGERY.ORTHOPHOTOS.1950-1965&FORMAT=image/jpeg&SERVICE=WMS&VERSION=1.3.0&REQUEST=GetMap&STYLES=&CRS=EPSG:3857&BBOX={bbox-epsg-3857}&WIDTH=256&HEIGHT=256'
+                    // 'https://data.geopf.fr/annexes/ressources/wms-r/wms?BBOX=47.34956960,3.25167353,47.38545104,3.30486151&FORMAT=image/jpeg&SERVICE=WMS&VERSION=1.3.0&REQUEST=GetMap&CRS=EPSG:4326&EXCEPTIONS=text/xml&WIDTH=256&HEIGHT=256&LAYERS=OI.OrthoimageCoverage'
+                    // 'https://data.geopf.fr/wmts?layer=HYDROGRAPHY.BCAE.2024&style=normal&tilematrixset=PM&Service=WMTS&Request=GetTile&Version=1.0.0&Format=image/png&TileMatrix=11&TileCol=1028&TileRow=728'
+                    // 'https://criham-geoserver/geoserver/gwc/service/wms?SERVICE=WMS&VERSION=1.1.1&REQUEST=GetMap&FORMAT=image/png&TRANSPARENT=true&LAYERS=AHL:1878&WIDTH=256&HEIGHT=256&SRS=EPSG:3857&STYLES=&BBOX=136975.1546679698,5752956.496054687,139421.13957275494,5755402.480959471'
+                    // 'https://img.nj.gov/imagerywms/Natural2015?bbox={bbox-epsg-3857}&format=image/png&service=WMS&version=1.1.1&request=GetMap&srs=EPSG:3857&transparent=true&width=256&height=256&layers=Natural2015'
+                ],
+                'tileSize': 256
+            });
+            map.addLayer(
+                {
+                    'id': 'wms-test-layer',
+                    'type': 'raster',
+                    'source': 'wms-test-source',
+                    'paint': {}
+                },
+                // 'aeroway_fill'
+            );
+        });
+
+        new maplibregl.Marker().setLngLat(center).addTo(map);
+
+        function toggleSidebar(id) {
+            const elem = document.getElementById(id);
+            const classes = elem.className.split(' ');
+            const collapsed = classes.indexOf('collapsed') !== -1;
+
+            const padding = {};
+
+            if (collapsed) {
+                // Remove the 'collapsed' class from the class list of the element, this sets it back to the expanded state.
+                classes.splice(classes.indexOf('collapsed'), 1);
+
+                padding[id] = 300; // In px, matches the width of the sidebars set in .sidebar CSS class
+                map.easeTo({
+                    padding,
+                    duration: 1000 // In ms, CSS transition duration property for the sidebar matches this value
+                });
+            } else {
+                padding[id] = 0;
+                // Add the 'collapsed' class to the class list of the element
+                classes.push('collapsed');
+
+                map.easeTo({
+                    padding,
+                    duration: 1000
+                });
+            }
+
+            // Update the class list on the element
+            elem.className = classes.join(' ');
+        }
+
+        // Ajoute les boutons de rotation et zoom:
+        map.addControl(new maplibregl.NavigationControl());
+
+        map.on('load', () => {
+            toggleSidebar('left');
+        });
+    </script>
 </body>
+
 </html>
