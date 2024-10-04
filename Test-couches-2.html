@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Atlas Historique du Limousin</title>
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
+    <script src="https://unpkg.com/maplibre-gl@4.7.0/dist/maplibre-gl.js"></script>
+    <link href="https://unpkg.com/maplibre-gl@4.7.0/dist/maplibre-gl.css" rel="stylesheet">
+
+    <link rel="stylesheet" crossorigin href="/style2.css">
+    <link rel="icon" type="image/png" href="/static/img/favicon.ico">
+</head>
+
+<body>
+
+    <div id="map"></div>
+
+    <div class="map-overlay top">
+        <div class="map-overlay-inner">
+
+            <div class="selecteur">
+                <div id="bouton-selecteur">
+                    <p id="texte-selecteur">Superposer une carte</p>
+                    <img src="static/img/arrow.png" id="fleche">
+
+                </div>
+            </div>
+
+            <ul id="liste-cartes-1" class="cache">
+                <li class="option-carte" id="c1843" value="c1843">
+                    <img src="static/img/min_etat_major.jpg">
+                    <p class="top-left">Carte de l'état-major</p>
+                    <p class="bottom-right">ca 1843</p>
+                </li>
+                <li class="option-carte" id="c1950" value="c1950">
+                    <img src="static/img/min_ortho_1960.jpg">
+                    <p class="top-left">Orthophotos</p>
+                    <p class="bottom-right">ca 1960</p>
+                </li>
+                <li class="option-carte" id="c2023" value="c2023">
+                    <img src="static/img/min_ortho_2017.jpg">
+                    <p class="top-left">Orthophotos</p>
+                    <p class="bottom-right">2023</p>
+                </li>
+            </ul>
+
+        </div>
+    </div>
+
+    <script>
+
+        var boutonSelecteur = document.getElementById("bouton-selecteur");
+        var texteSelecteur = document.getElementById("texte-selecteur");
+        var optionCarte = document.getElementsByClassName("option-carte")
+        var cartes0 = document.getElementById("liste-cartes-1");
+        var fleche = document.getElementById("fleche");
+
+        // console.log("optionCarte", optionCarte)
+
+        boutonSelecteur.onclick = function () {
+            cartes0.classList.toggle("cache")
+            fleche.classList.toggle("tourne")
+        }
+
+        const map = new maplibregl.Map({
+            container: 'map',
+            // Choose from maplibre's core styles, or make your own style with maplibre Studio
+            style:
+                // 'https://data.geopf.fr/annexes/ressources/vectorTiles/styles/PLAN.IGN/standard.json',
+                'https://api.maptiler.com/maps/streets/style.json?key=get_your_own_OpIi9ZULNHzrESv6T2vL',
+            center: [1.25866, 45.83088],
+
+            maxBounds: [[1.123559633, 45.78234858], [1.353149083, 45.935090766]],
+            minZoom: 9.5,
+            maxZoom: 20,
+            zoom: 13
+        });
+
+        const slider1 = document.getElementById('slider1');
+        const sliderValue1 = document.getElementById('slider-value-1');
+
+        map.on('load', () => {
+
+            // const layers = map.getStyle().layers;
+            // // Find the index of the first symbol layer in the map style
+            // let firstSymbolId;
+            // for (let i = 0; i < layers.length; i++) {
+            //     if (layers[i].type === 'symbol') {
+            //         firstSymbolId = layers[i].id;
+            //         break;
+            //     }
+            // }
+
+            map.addSource("orthophotos2023", {
+                "type": "raster",
+                "tiles": [
+                    "https://data.geopf.fr/wms-r?LAYERS=ORTHOIMAGERY.ORTHOPHOTOS.ORTHO-EXPRESS.2023&FORMAT=image/jpeg&SERVICE=WMS&VERSION=1.3.0&REQUEST=GetMap&STYLES=&CRS=EPSG:3857&BBOX={bbox-epsg-3857}&WIDTH=256&HEIGHT=256"
+                ],
+                "tileSize": 256,
+                "attribution": "Institut national de l'information géographique et forestière"
+            });
+
+            map.addSource("orthophotos1950", {
+                "type": "raster",
+                "tiles": [
+                    'https://data.geopf.fr/wms-r?LAYERS=ORTHOIMAGERY.ORTHOPHOTOS.1950-1965&FORMAT=image/jpeg&SERVICE=WMS&VERSION=1.3.0&REQUEST=GetMap&STYLES=&CRS=EPSG:3857&BBOX={bbox-epsg-3857}&WIDTH=256&HEIGHT=256'
+                ],
+                "tileSize": 256,
+                "attribution": "Institut national de l'information géographique et forestière"
+            });
+
+            map.addSource('carte1843', {
+                'type': 'raster',
+                'tiles': [
+                    // layer1 Eliminar esta prueba?
+                    'https://data.geopf.fr/wms-r?LAYERS=SCANEM40_PYR_PNG_FXX_LAMB93&FORMAT=image/jpeg&SERVICE=WMS&VERSION=1.3.0&REQUEST=GetMap&STYLES=&CRS=EPSG:3857&BBOX={bbox-epsg-3857}&WIDTH=256&HEIGHT=256'
+                ],
+                'tileSize': 256,
+                "attribution": "Institut national de l'information géographique et forestière"
+            });
+
+            map.addLayer(
+                {
+                    'id': 'cartePrincipale',
+                    'source': 'carte1843',
+                    'type': 'raster'
+                },
+                // firstSymbolId
+            );
+        });
+
+        // Pour changer les sources des couches:
+
+        // Nouvelle fonction
+
+        function setLayerSource(layerId, source, sourceLayer) {
+            const oldLayers = map.getStyle().layers;
+            const layerIndex = oldLayers.findIndex(l => l.id === layerId);
+            const layerDef = oldLayers[layerIndex];
+            const before = oldLayers[layerIndex + 1] && oldLayers[layerIndex + 1].id;
+            layerDef.source = source;
+            if (sourceLayer) {
+                layerDef['source-layer'] = sourceLayer;
+            }
+            map.removeLayer(layerId);
+            map.addLayer(layerDef, before);
+        }
+
+        // Carte Superposée
+
+        var LISTAPLANOS = document.getElementById("liste-cartes-1").getElementsByTagName("li");
+
+        console.log(LISTAPLANOS)
+
+        LISTAPLANOS.addEventListener('click', function () {
+
+            //Se le pone un listener a LISTAPLANOS. Si click se activa lo siguiente: 
+
+            // Vérifie que la source existe. Sinon elle est créée
+
+            var mapLayer = map.getLayer('carteSuperposee');
+            if (typeof mapLayer !== 'undefined') {
+                map.removeLayer('carteSuperposee')
+            }
+
+            map.addLayer(
+                {
+                    'id': 'carteSuperposee',
+                    'source': 'carte1843',
+                    'type': 'raster'
+                },
+            );
+
+            console.log("Después listener. LISTAPLANOS.value: ", LISTAPLANOS.value);
+
+            if (LISTAPLANOS.value == "c1843") {
+                setLayerSource(
+                    'carteSuperposee', 'carte1843'
+                )
+            }
+            else if (LISTAPLANOS.value == "c1950") {
+                setLayerSource(
+                    'carteSuperposee', 'orthophotos1950'
+                )
+            }
+            else if (LISTAPLANOS.value == "c2023") {
+                setLayerSource(
+                    'carteSuperposee', 'orthophotos2023'
+                )
+            }
+            console.log("Listener. LISTAPLANOS.id = ", LISTAPLANOS.value);
+        });
+
+        // Carte principale
+
+        var cartes1 = document.getElementById('carte-liste-2');
+
+
+        cartes1.addEventListener('change', function changementSource() {
+
+            if (cartes1.value == "c1843") {
+                setLayerSource(
+                    'cartePrincipale', 'carte1843'
+                )
+            }
+            else if (cartes1.value == "c1950") {
+                setLayerSource(
+                    'cartePrincipale', 'orthophotos1950'
+                )
+            }
+            else if (cartes1.value == "c2023") {
+                setLayerSource(
+                    'cartePrincipale', 'orthophotos2023'
+                )
+            }
+        });
+
+        map.addControl(new maplibregl.NavigationControl());
+
+        map.addControl(new maplibregl.ScaleControl())
+
+    </script>
+
+</body>
+
+</html>
