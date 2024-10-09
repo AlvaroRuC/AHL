@@ -30,17 +30,17 @@ map.on('load', () => {
     //     }
     // }
 
-    map.addSource("orthophotos2023", {
+    map.addSource("sOrthophotos2023", {
         "type": "raster",
         "tiles": [
-            // "https://criham-geoserver.unilim.fr/geoserver/AHL/wms?service=WMS&version=1.1.0&request=GetMap&layers=AHL%3A1765&bbox=138980.49021339905%2C5751617.664022118%2C141650.3105063983%2C5753976.618561288&width=768&height=678&srs=EPSG%3A385"
+            // "https://criham-geoserver.unilim.fr/geoserver/AHL/wms?layers=AHL:1765&FORMAT=image/png&service=WMS&version=1.1.0&request=GetMap&STYLES=&CRS=EPSG:3857&BBOX={bbox-epsg-3857}&width=768&height=678"
             "https://data.geopf.fr/wms-r?LAYERS=ORTHOIMAGERY.ORTHOPHOTOS.ORTHO-EXPRESS.2023&FORMAT=image/jpeg&SERVICE=WMS&VERSION=1.3.0&REQUEST=GetMap&STYLES=&CRS=EPSG:3857&BBOX={bbox-epsg-3857}&WIDTH=256&HEIGHT=256"
         ],
         "tileSize": 256,
         "attribution": "Institut national de l'information géographique et forestière"
     });
 
-    map.addSource("orthophotos1950", {
+    map.addSource("sOrthophotos1950", {
         "type": "raster",
         "tiles": [
             'https://data.geopf.fr/wms-r?LAYERS=ORTHOIMAGERY.ORTHOPHOTOS.1950-1965&FORMAT=image/jpeg&SERVICE=WMS&VERSION=1.3.0&REQUEST=GetMap&STYLES=&CRS=EPSG:3857&BBOX={bbox-epsg-3857}&WIDTH=256&HEIGHT=256'
@@ -49,23 +49,67 @@ map.on('load', () => {
         "attribution": "Institut national de l'information géographique et forestière"
     });
 
-    map.addSource('carte1843', {
-        'type': 'raster',
-        'tiles': [
+    map.addSource("sCarte1843", {
+        "type": "raster",
+        "tiles": [
             // layer1 Eliminar esta prueba?
-            'https://data.geopf.fr/wms-r?LAYERS=SCANEM40_PYR_PNG_FXX_LAMB93&FORMAT=image/jpeg&SERVICE=WMS&VERSION=1.3.0&REQUEST=GetMap&STYLES=&CRS=EPSG:3857&BBOX={bbox-epsg-3857}&WIDTH=256&HEIGHT=256'
+            "https://data.geopf.fr/wms-r?LAYERS=SCANEM40_PYR_PNG_FXX_LAMB93&FORMAT=image/jpeg&SERVICE=WMS&VERSION=1.3.0&REQUEST=GetMap&STYLES=&CRS=EPSG:3857&BBOX={bbox-epsg-3857}&WIDTH=256&HEIGHT=256"
         ],
-        'tileSize': 256,
+        "tileSize": 256,
         "attribution": "Institut national de l'information géographique et forestière"
     });
 
+    map.addSource("Bati2024", {
+        "type": "geojson",
+        "data": "./static/layers/Bati-CRS-84.geojson"
+    })
+
+    map.addSource("images", {
+        "type": "geojson",
+        "data": "./static/layers/images.geojson",
+        "generateId": true
+    })
+
+    // var cartePrincipale = ""
+
     map.addLayer(
         {
-            'id': 'cartePrincipale',
-            'source': 'carte1843',
-            'type': 'raster'
+            "id": "cartePrincipale",
+            "source": "sCarte1843",
+            "type": "raster"
         },
-        // firstSymbolId
+    );
+
+    map.addLayer(
+        {
+            "id": "bati-3d",
+            "source": "Bati2024",
+            "type": "fill-extrusion",
+            "paint": {
+                "fill-extrusion-color": "grey",
+                "fill-extrusion-height": ["get", "HAUTEUR"],
+                "fill-extrusion-opacity": 0.8,
+            },
+            "layout": {
+                "visibility": "none",
+            }
+        }
+    )
+
+    map.addLayer(
+        {
+            "id": "images-points",
+            "source": "images",
+            "type": "circle",
+            "paint": {
+                "circle-color":[
+                    'case',
+                    ['boolean', ['feature-state', 'hover'], false],
+                    "#bb95ff",
+                    "#8f50ff"
+                ]
+            }
+        },
     );
 
     // Pour changer les sources des couches:
@@ -89,8 +133,6 @@ map.on('load', () => {
 
     var carte2 = document.getElementById('carte-select-2');
 
-    console.log("Declaro la variable carte2:", carte2);
-
     // La variable arroja <select id="carte-select-2" name="carte" autocomplete="off"> y las <options>
 
     carte2.addEventListener('click', function () {
@@ -107,29 +149,26 @@ map.on('load', () => {
         map.addLayer(
             {
                 'id': 'carteSuperposee',
-                'source': 'carte1843',
+                'source': 'sCarte1843',
                 'type': 'raster'
             },
         );
 
-        console.log("Después listener. carte2.value: ", carte2.value);
-
         if (carte2.value == "c1843") {
             setLayerSource(
-                'carteSuperposee', 'carte1843'
+                'carteSuperposee', 'sCarte1843'
             )
         }
         else if (carte2.value == "c1950") {
             setLayerSource(
-                'carteSuperposee', 'orthophotos1950'
+                'carteSuperposee', 'sOrthophotos1950'
             )
         }
         else if (carte2.value == "c2023") {
             setLayerSource(
-                'carteSuperposee', 'orthophotos2023'
+                'carteSuperposee', 'sOrthophotos2023'
             )
         }
-        console.log("Listener. carte2.id = ", carte2.value);
     });
 
     // Carte principale
@@ -139,17 +178,17 @@ map.on('load', () => {
     carte1.addEventListener('change', function () {
         if (carte1.value == "c1843") {
             setLayerSource(
-                'cartePrincipale', 'carte1843'
+                'cartePrincipale', 'sCarte1843'
             )
         }
         else if (carte1.value == "c1950") {
             setLayerSource(
-                'cartePrincipale', 'orthophotos1950'
+                'cartePrincipale', 'sOrthophotos1950'
             )
         }
         else if (carte1.value == "c2023") {
             setLayerSource(
-                'cartePrincipale', 'orthophotos2023'
+                'cartePrincipale', 'sOrthophotos2023'
             )
         }
     });
@@ -185,4 +224,20 @@ map.on('load', () => {
 
 map.addControl(new maplibregl.NavigationControl());
 
-map.addControl(new maplibregl.ScaleControl())
+map.addControl(new maplibregl.ScaleControl());
+
+//Checkbox
+
+    // Set up the dictionary
+    let label_to_layer_ids = {
+        "Images": ["images-points"],
+        "Bâti 3D": ["bati-3d"],
+        "Terrain 3D": [],
+      };
+      
+      // Create control
+      let lc = new LayersControl(label_to_layer_ids);
+      
+      map.on("load", function() {
+        map.addControl(lc);
+      });

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title>Swipe between maps</title>
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
+    <script src="../config.js"></script>
+    <script src="https://unpkg.com/maplibre-gl@1.14.0-rc.1/dist/maplibre-gl.js"></script>
+    <link href="https://unpkg.com/maplibre-gl@1.14.0-rc.1/dist/maplibre-gl.css" rel="stylesheet" />
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        #map {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <style>
+        body {
+            overflow: hidden;
+        }
+
+        body * {
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        .map {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
+    <script src="./source/maplibre-gl-compare-main/dist/maplibre-gl-compare.js"></script>
+    <link rel="stylesheet" href="./source/maplibre-gl-compare-main/dist/maplibre-gl-compare.css" type="text/css" />
+    <div id="comparison-container">
+        <div id="before" class="map"></div>
+        <div id="after" class="map"></div>
+    </div>
+    <script>
+
+        var beforeMap = new maplibregl.Map({
+            container: "before",
+            style:
+                "https://data.geopf.fr/annexes/ressources/vectorTiles/styles/PLAN.IGN/standard.json",
+            center: [1.25866, 45.83088],
+            zoom: 15,
+        });
+
+        var afterMap = new maplibregl.Map({
+            container: "after",
+            style:
+                "https://api.maptiler.com/maps/streets/style.json?key=get_your_own_OpIi9ZULNHzrESv6T2vL",
+            center: [1.25866, 45.83088],
+            zoom: 15,
+        });
+
+        // A selector or reference to HTML element
+        var container = "#comparison-container";
+
+        var map = new maplibregl.Compare(beforeMap, afterMap, container, {
+            // Set this to enable comparing two maps by mouse movement:
+            // m ousemove: true
+        });
+    </script>
+</body>
+
+</html>

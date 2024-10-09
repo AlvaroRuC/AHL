@@ -64,6 +64,9 @@ https://www.npmjs.com/package/mapbox-layer-control
 
 ### Plugins à tester
 
+Creer de points
+https://maplibre.org/maplibre-gl-js/docs/examples/maplibre-gl-terradraw/
+
 Gerer opacité des couches
 https://github.com/mug-jp/maplibre-gl-opacity
 
@@ -90,6 +93,8 @@ Photos déjà géolocalisées -> affiche une couche avec la localisation de la p
 Réfléchir à un moyen de visualiser ce qui est vu sur la photo (bâtiment/objet, emprise ?)
 Interagir avec les points pour afficher la photo et les infos
 Compléter les informations sur les photos (autre interface ? galerie photo ? formulaire ? Système de validation ou modération ?)
+
+https://github.com/JamesLMilner/terra-draw
 
 3 : Tutoriel
 Prévoir un tutoriel pour l’utilisation de(s) interface(s)

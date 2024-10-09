@@ -17,7 +17,7 @@ body {
         Helvetica,
         sans-serif;
     position: absolute;
-    width: 18%;
+    width: 19%;
     top: 0;
     left: 0;
     padding: 10px;
@@ -33,14 +33,108 @@ body {
 
 .map-overlay label {
     display: block;
-    margin: 0 0 10px;
+    margin: 5px 0 0 5px;
 }
 
-.map-overlay input {
+.map-overlay input[type=range] {
     background-color: transparent;
     display: inline-block;
     width: 100%;
     position: relative;
-    margin: 0;
     cursor: ew-resize;
+}
+
+;
+
+.map-overlay input[type=checkbox] {
+    background-color: transparent;
+    display: inline-block;
+    width: 100%;
+    position: relative;
+    cursor: ew-resize;
+}
+
+;
+
+/* Eliminar si no lo utilizo */
+.my-custom-control {
+    color: #f00;
+    background: #000;
+    padding: 8px;
+    border-radius: 4px;
+    margin: 8px;
+}
+
+/* Checkbox */
+
+.layers-control .layer-control {
+    display: block;
+    padding: 0.2em;
+}
+
+/* SIDEBAR */
+
+.rounded-rect {
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 0 50px -25px black;
+}
+
+.flex-center {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.flex-center.right {
+    right: 0px;
+}
+
+.sidebar-content {
+    position: absolute;
+    width: 95%;
+    height: 95%;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 20px;
+    color: gray;
+}
+
+.sidebar-toggle {
+    position: absolute;
+    width: 1.3em;
+    height: 1.3em;
+    overflow: visible;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.sidebar-toggle.right {
+    left: -1.5em;
+}
+
+.sidebar-toggle:hover {
+    color: #0aa1cf;
+    cursor: pointer;
+}
+
+.sidebar {
+    transition: transform 1s;
+    z-index: 1;
+    width: 300px;
+    height: 100%;
+}
+
+/*
+The sidebar styling has them "expanded" by default, we use CSS transforms to push them offscreen
+The toggleSidebar() function removes this class from the element in order to expand it.
+*/
+
+.right.collapsed {
+    transform: translateX(295px);
+}
+
+.sidebar-img {
+    max-height: 200px;
 }
