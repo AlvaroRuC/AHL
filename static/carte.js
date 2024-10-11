@@ -4,6 +4,7 @@ const map = new maplibregl.Map({
     maxBounds: [[1.123559633, 45.78234858], [1.353149083, 45.935090766]],
     minZoom: 9.5,
     maxZoom: 20,
+    maxPitch: 85,
     zoom: 13,
     style:
         'https://data.geopf.fr/annexes/ressources/vectorTiles/styles/PLAN.IGN/standard.json',
@@ -70,6 +71,12 @@ map.on('load', () => {
         "generateId": true
     })
 
+    map.addSource("images_emprise", {
+        "type": "geojson",
+        "data": "./static/layers/images_emprise.geojson",
+        "generateId": true
+    })
+
     // var cartePrincipale = ""
 
     map.addLayer(
@@ -102,15 +109,29 @@ map.on('load', () => {
             "source": "images",
             "type": "circle",
             "paint": {
-                "circle-color":[
+                "circle-color": [
                     'case',
                     ['boolean', ['feature-state', 'hover'], false],
                     "#bb95ff",
                     "#8f50ff"
-                ]
+                ],
+                "circle-radius": 7,
             }
         },
     );
+
+    map.addLayer(
+        {
+            "id": "images-polygones",
+            "source": "images_emprise",
+            "type": "fill",
+            "paint": {
+                "fill-opacity": 0.3,
+                "fill-color": "red",
+            },
+            "layout": {"visibility": "none"}
+        },
+    )
 
     // Pour changer les sources des couches:
 
@@ -228,16 +249,16 @@ map.addControl(new maplibregl.ScaleControl());
 
 //Checkbox
 
-    // Set up the dictionary
-    let label_to_layer_ids = {
-        "Images": ["images-points"],
-        "Bâti 3D": ["bati-3d"],
-        "Terrain 3D": [],
-      };
-      
-      // Create control
-      let lc = new LayersControl(label_to_layer_ids);
-      
-      map.on("load", function() {
-        map.addControl(lc);
-      });
+// Set up the dictionary
+let label_to_layer_ids = {
+    "Images": ["images-points"],
+    "Bâti 3D": ["bati-3d"],
+    "Terrain 3D": [],
+};
+
+// Create control
+let lc = new LayersControl(label_to_layer_ids);
+
+map.on("load", function () {
+    map.addControl(lc);
+});

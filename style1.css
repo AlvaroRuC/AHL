@@ -135,6 +135,22 @@ The toggleSidebar() function removes this class from the element in order to exp
     transform: translateX(295px);
 }
 
+/* C'était un test
+
 .sidebar-img {
     max-height: 200px;
+} */ 
+
+#paneau-photo {
+    display: flex;
+    justify-content: center;
+    position: absolute;
+    bottom: 5px;
+    z-index: 10;
+    align-items: center;
+
+}
+
+.popup-img {
+    max-width: 100%;
 }

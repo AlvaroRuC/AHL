@@ -1,12 +1,12 @@
-// Ça sert à marquer les points de photos quand on les selectionne.
+// Ça sert à marquer les points des photos quand on les selectionne.
 
 // let hoveredPointId = null;
 
-
 map.on('click', 'images-points', (e) => {
-    openSidebar('right');
 
-    //On récupère les infos et on les stocke dans des constantes
+    // openSidebar('right'); // Pour l'instant j'enlève le sidebar
+
+    //On récupère les infos de la couche geojson et on les stocke dans des constantes
 
     const imgLieu = e.features[0].properties.lieu;
     const imgChemin = e.features[0].properties.chemin;

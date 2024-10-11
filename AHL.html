@@ -20,9 +20,9 @@
 
                 <div class="caja1">
                     <strong>Lieu</strong>&nbsp;
-                    <span id="lieu"></span>
+                    <span id="lieu2"></span>
                 </div>
-                <img id="chemin" class="sidebar-img"></img>
+                <img id="chemin2" class="sidebar-img"></img>
 
                 <div class="sidebar-toggle rounded-rect right flex-center" onclick="toggleSidebar('right')">
                     &larr;
@@ -31,9 +31,13 @@
         </div>
     </div>
 
-    <div id="panal-photo">
-        
-    </div>
+    <!-- <div id="paneau-photo">
+        <div class="caja1">
+            <strong>Lieu</strong>&nbsp;
+            <span id="lieu"></span>
+        </div>
+        <img id="chemin" class="sidebar-img"></img>
+    </div> -->
 
     <div class="map-overlay top">
         <div class="map-overlay-inner">
@@ -66,19 +70,34 @@
                 <input id="slider2" type="range" min="0" max="100" step="0" value="100" autocomplete='off'>
             </fieldset>
 
-            <div>
+            <!-- <div>
                 <label for="3d">Bâtiments 3D</label>
                 <input type="checkbox" id="3d" name="3d" checked />
-            </div>
+            </div> -->
 
         </div>
     </div>
 
+    <!-- Le checkbox qui contrôle l'affichage des bâtiments 3D. -->
     <script src="/static/checkbox.js"></script>
+
+    <!-- Les paramètres de la carte, les sources et les couches. -->
     <script src="/static/carte.js"></script>
-    <script src="/static/sidebar.js"></script>
+
+    <!-- Un test de sidebar. -->
+    <!-- <script src="/static/sidebar.js"></script> -->
+
+    <!-- Pour changer la couleur des points des photographies et afficher les emprises des photographies quand on passe la souris. -->
     <script src="/static/hover.js"></script>
-    <script src="/static/images.js"></script>
+
+    <!-- Un test d'affichage des photographies dans le sidebar. -->
+    <!-- <script src="/static/images.js"></script> -->
+
+     <!-- Pour voler aux coordonnées des photographies. -->
+    <script src="/static/images_coordonnees.js"></script>
+
+    <!-- Outil pour ouvrir les popups des images et afficher les emprises des photographies. -->
+    <script src="/static/popup.js"></script>
 
 
 </body>

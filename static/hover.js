@@ -3,6 +3,9 @@
 let hoveredPointId = null;
 
 map.on('mousemove', 'images-points', (e) => {
+
+    const imageIdHover = e.features[0].properties.id;
+
     if (e.features.length > 0) {
         if (hoveredPointId !== null) {
             map.setFeatureState(
@@ -16,6 +19,18 @@ map.on('mousemove', 'images-points', (e) => {
             { source: 'images', id: hoveredPointId },
             { hover: true }
         );
+
+        // Pour marquer les emprises des photographies
+
+        map.setLayoutProperty(
+            'images-polygones',
+            'visibility',
+            'visible');
+    
+        map.setFilter(
+            'images-polygones',
+            ['==', ['number', ['get', 'image']], imageIdHover]
+        )
     }
 });
 
