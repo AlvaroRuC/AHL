@@ -154,3 +154,9 @@ The toggleSidebar() function removes this class from the element in order to exp
 .popup-img {
     max-width: 100%;
 }
+
+.popupRedimensionnable {
+    resize: both;
+    overflow: auto;
+    z-index: 100;
+}

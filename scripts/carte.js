@@ -7,8 +7,8 @@ const map = new maplibregl.Map({
     maxPitch: 85,
     zoom: 13,
     style:
-        'https://data.geopf.fr/annexes/ressources/vectorTiles/styles/PLAN.IGN/standard.json',
-    // 'https://api.maptiler.com/maps/streets/style.json?key=get_your_own_OpIi9ZULNHzrESv6T2vL',
+        // 'https://data.geopf.fr/annexes/ressources/vectorTiles/styles/PLAN.IGN/standard.json',
+    'https://api.maptiler.com/maps/streets/style.json?key=get_your_own_OpIi9ZULNHzrESv6T2vL',
 });
 
 const slider1 = document.getElementById('slider1');
@@ -34,8 +34,8 @@ map.on('load', () => {
     map.addSource("sOrthophotos2023", {
         "type": "raster",
         "tiles": [
-            // "https://criham-geoserver.unilim.fr/geoserver/AHL/wms?layers=AHL:1765&FORMAT=image/png&service=WMS&version=1.1.0&request=GetMap&STYLES=&CRS=EPSG:3857&BBOX={bbox-epsg-3857}&width=768&height=678"
-            "https://data.geopf.fr/wms-r?LAYERS=ORTHOIMAGERY.ORTHOPHOTOS.ORTHO-EXPRESS.2023&FORMAT=image/jpeg&SERVICE=WMS&VERSION=1.3.0&REQUEST=GetMap&STYLES=&CRS=EPSG:3857&BBOX={bbox-epsg-3857}&WIDTH=256&HEIGHT=256"
+            "https://criham-geoserver.unilim.fr/geoserver/AHL/wms?layers=AHL:1765&FORMAT=image/png&service=WMS&version=1.1.0&request=GetMap&STYLES=&CRS=EPSG:3857&BBOX={bbox-epsg-3857}&width=768&height=678"
+            // "https://data.geopf.fr/wms-r?LAYERS=ORTHOIMAGERY.ORTHOPHOTOS.ORTHO-EXPRESS.2023&FORMAT=image/jpeg&SERVICE=WMS&VERSION=1.3.0&REQUEST=GetMap&STYLES=&CRS=EPSG:3857&BBOX={bbox-epsg-3857}&WIDTH=256&HEIGHT=256"
         ],
         "tileSize": 256,
         "attribution": "Institut national de l'information géographique et forestière"
@@ -62,18 +62,18 @@ map.on('load', () => {
 
     map.addSource("Bati2024", {
         "type": "geojson",
-        "data": "./static/layers/Bati-CRS-84.geojson"
+        "data": "/donnees/Bati-CRS-84.geojson"
     })
 
     map.addSource("images", {
         "type": "geojson",
-        "data": "./static/layers/images.geojson",
+        "data": "/donnees/images.geojson",
         "generateId": true
     })
 
     map.addSource("images_emprise", {
         "type": "geojson",
-        "data": "./static/layers/images_emprise.geojson",
+        "data": "/donnees/images_emprise.geojson",
         "generateId": true
     })
 
@@ -109,13 +109,15 @@ map.on('load', () => {
             "source": "images",
             "type": "circle",
             "paint": {
-                "circle-color": [
+                "circle-color":"white",
+                "circle-radius": 6,
+                "circle-stroke-width": 2,
+                "circle-stroke-color": [
                     'case',
                     ['boolean', ['feature-state', 'hover'], false],
-                    "#bb95ff",
-                    "#8f50ff"
+                    "#1c90b9",
+                    "grey",
                 ],
-                "circle-radius": 7,
             }
         },
     );
@@ -127,7 +129,7 @@ map.on('load', () => {
             "type": "fill",
             "paint": {
                 "fill-opacity": 0.3,
-                "fill-color": "red",
+                "fill-color": "#1c90b9",
             },
             "layout": {"visibility": "none"}
         },
