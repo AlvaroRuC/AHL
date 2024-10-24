@@ -49,7 +49,3 @@ function toggleSidebar(id) {
     // Update the class list on the element
     elem.className = classes.join(' ');
 }
-
-// map.on('load', () => {
-//     toggleSidebar('right');
-// });

@@ -7,8 +7,8 @@ const map = new maplibregl.Map({
     maxPitch: 85,
     zoom: 13,
     style:
-        // 'https://data.geopf.fr/annexes/ressources/vectorTiles/styles/PLAN.IGN/standard.json',
-    'https://api.maptiler.com/maps/streets/style.json?key=get_your_own_OpIi9ZULNHzrESv6T2vL',
+        'https://data.geopf.fr/annexes/ressources/vectorTiles/styles/PLAN.IGN/standard.json',
+    // 'https://api.maptiler.com/maps/streets/style.json?key=get_your_own_OpIi9ZULNHzrESv6T2vL',
 });
 
 const slider1 = document.getElementById('slider1');
@@ -34,8 +34,8 @@ map.on('load', () => {
     map.addSource("sOrthophotos2023", {
         "type": "raster",
         "tiles": [
-            "https://criham-geoserver.unilim.fr/geoserver/AHL/wms?layers=AHL:1765&FORMAT=image/png&service=WMS&version=1.1.0&request=GetMap&STYLES=&CRS=EPSG:3857&BBOX={bbox-epsg-3857}&width=768&height=678"
-            // "https://data.geopf.fr/wms-r?LAYERS=ORTHOIMAGERY.ORTHOPHOTOS.ORTHO-EXPRESS.2023&FORMAT=image/jpeg&SERVICE=WMS&VERSION=1.3.0&REQUEST=GetMap&STYLES=&CRS=EPSG:3857&BBOX={bbox-epsg-3857}&WIDTH=256&HEIGHT=256"
+            // "https://criham-geoserver.unilim.fr/geoserver/AHL/wms?layers=AHL:1765&FORMAT=image/png&service=WMS&version=1.1.0&request=GetMap&STYLES=&CRS=EPSG:3857&BBOX={bbox-epsg-3857}&width=768&height=678"
+            "https://data.geopf.fr/wms-r?LAYERS=ORTHOIMAGERY.ORTHOPHOTOS.ORTHO-EXPRESS.2023&FORMAT=image/jpeg&SERVICE=WMS&VERSION=1.3.0&REQUEST=GetMap&STYLES=&CRS=EPSG:3857&BBOX={bbox-epsg-3857}&WIDTH=256&HEIGHT=256"
         ],
         "tileSize": 256,
         "attribution": "Institut national de l'information géographique et forestière"
@@ -67,7 +67,7 @@ map.on('load', () => {
 
     map.addSource("images", {
         "type": "geojson",
-        "data": "/donnees/images.geojson",
+        "data": "/donnees/images_points.geojson",
         "generateId": true
     })
 
@@ -109,7 +109,7 @@ map.on('load', () => {
             "source": "images",
             "type": "circle",
             "paint": {
-                "circle-color":"white",
+                "circle-color": "white",
                 "circle-radius": 6,
                 "circle-stroke-width": 2,
                 "circle-stroke-color": [
@@ -118,7 +118,8 @@ map.on('load', () => {
                     "#1c90b9",
                     "grey",
                 ],
-            }
+            },
+            "layout": { "visibility": "none" }
         },
     );
 
@@ -131,7 +132,7 @@ map.on('load', () => {
                 "fill-opacity": 0.3,
                 "fill-color": "#1c90b9",
             },
-            "layout": {"visibility": "none"}
+            "layout": { "visibility": "none" }
         },
     )
 
@@ -249,18 +250,69 @@ map.addControl(new maplibregl.NavigationControl());
 
 map.addControl(new maplibregl.ScaleControl());
 
-//Checkbox
+// Sidebar:
 
-// Set up the dictionary
-let label_to_layer_ids = {
-    "Images": ["images-points"],
-    "Bâti 3D": ["bati-3d"],
-    "Terrain 3D": [],
-};
+const imageSidebar = document.getElementById("imageImage")
+const lieuSidebar = document.getElementById("imageLieu")
+const datesSidebar = document.getElementById("imagesDates")
+const imageNotice = document.getElementById("imageNotice")
 
-// Create control
-let lc = new LayersControl(label_to_layer_ids);
 
-map.on("load", function () {
-    map.addControl(lc);
-});
+map.on('click', 'images-points', (e) => {
+
+    var imageChemin = '../ressources/images/' + e.features[0].properties.chemin;
+    var imageLieu = e.features[0].properties.lieu;
+    var imageCote = e.features[0].properties.cote_aml;
+
+    var date_inf = e.features[0].properties.date_inf;
+    var date_sup = e.features[0].properties.date_sup;
+
+    var dateDebut = new Date(date_inf);
+    var dateFin = new Date(date_sup);
+    
+
+    // Verifie si les dates sont valides
+    function isValidDate(date) {
+        return !isNaN(date.getTime());
+    }
+
+    var imageDates = '';
+
+    if (!isValidDate(dateDebut) && !isValidDate(dateFin)) {
+        imageDates = 'Date inconnue';
+    } else if (isValidDate(dateDebut) && !isValidDate(dateFin)) {
+        imageDates = 'Après ' + dateDebut.getFullYear();
+    } else if (!isValidDate(dateDebut) && isValidDate(dateFin)) {
+        imageDates = 'Avant ' + dateFin.getFullYear();
+    } else if (isValidDate(dateDebut) && isValidDate(dateFin)) {
+        imageDates = 'Entre '+ dateDebut.getFullYear() + ' et ' + dateFin.getFullYear();
+    }
+
+    var imageCommentaire = e.features[0].properties.comment;
+
+
+    openSidebar('right');
+
+    if (e.features.length === 0) return;
+
+    var imageNotice = `
+    <img class="sidebar-image" src="${imageChemin}">
+        <a href="https://archivesenligne.limoges.fr/4DCGI/Web_VoirLaNotice/34_01/${imageCote}/${imageCote}/ILUMP16014" target="_blank"> Voir notice</a>
+        <a href="https://archivesenligne.limoges.fr/4DCGI/Web_DFPict/034/${imageCote}/ILUMP16014" target="_blank"> Voir image</a>
+        <h4>${imageLieu}</h4>
+        <p>${imageDates}</p>
+        <p>Archives Municipales de Limoges. Côte: ${imageCote}</p>
+
+        <form id="formulaireImages">
+            <label for="commentaires">Commentaires :</label>
+            <input type="text" id="imageCommentaires" name="commentaires">
+            <button type="submit">Sauvegarder</button>
+        </form>
+
+        <p id="dataStatus">Données actuelles: <span id="currentSource">Source initiale</span></p>
+    `;
+
+    document.getElementById('imageNotice').innerHTML = imageNotice
+
+}
+);

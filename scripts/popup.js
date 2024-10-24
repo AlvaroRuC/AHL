@@ -4,7 +4,9 @@
 map.on('click', 'images-points', (e) => {
     const coordinates = e.features[0].geometry.coordinates.slice();
     const lieu = e.features[0].properties.lieu;
-    // const dateInf = e.features[0].properties.cote_aml; 
+    const dateInf = new Date(e.features[0].properties.date_inf).getFullYear(); 
+    const dateSup = new Date(e.features[0].properties.date_sup).getFullYear();
+    const cote = e.features[0].properties.cote_aml
     const cheminImg = document.getElementById('chemin');
     const imageId = e.features[0].properties.id;
 
@@ -34,8 +36,12 @@ map.on('click', 'images-points', (e) => {
     })
         .setLngLat(coordinates)
         .setHTML('<img class="popup-img" src="' + e.features[0].properties['chemin'] + '">' +
+                        '<a href="https://archivesenligne.limoges.fr/4DCGI/Web_VoirLaNotice/34_01/' + cote + '/' + cote + '/ILUMP16014" target="_blank"> Voir notice</a>' + 
+            '<a href="https://archivesenligne.limoges.fr/4DCGI/Web_DFPict/034/' + cote + '/ILUMP16014" target="_blank"> Voir image</a>' +
             '<h4>' + lieu + '</h4>' +
-            '<h4>' + date_inf + '-' + date_sup + '</h4>' 
+            '<p>' + dateInf + ' - ' + dateSup + '</p>' +
+            '<p>' + 'Archives Municipales de Limoges. Côte: ' + cote + '</p>'
+
         )
         .addTo(map);
 });

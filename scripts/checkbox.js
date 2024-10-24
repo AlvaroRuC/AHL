@@ -1,14 +1,8 @@
 class LayersControl {
-    constructor(ctrls) {
+    constructor(ctrls, container) {
       // This div will hold all the checkboxes and their labels
-      this._container = document.createElement("div");
-      this._container.classList.add(
-        // Built-in classes for consistency
-        "maplibregl-ctrl",
-        "maplibregl-ctrl-group",
-        // Custom class, see later
-        "layers-control",
-      );
+      this._container = container
+      this._container.classList.add("layers-control-container");
       // Might be cleaner to deep copy these instead
       this._ctrls = ctrls;
       // Direct access to the input elements so I can decide which should be
@@ -63,14 +57,29 @@ class LayersControl {
       return this._container;
     }
   
-    onRemove(map) {
-      // Not sure why we have to do this ourselves since we are not the ones
-      // adding us to the map.
-      // Copied from their example so keeping it in.
-      this._container.parentNode.removeChild(this._container);
-      // This might be to help garbage collection? Also from their example.
-      // Or perhaps to ensure calls to this object do not change the map still
-      // after removal.
-      this._map = undefined;
+  updateControlState() {
+    for (const input of this._inputs) {
+      let layers = this._ctrls[input.id];
+      let is_visible = true;
+      for (const layername of layers) {
+        is_visible = is_visible && map.getLayoutProperty(layername, "visibility") !== "none";
+      }
+      input.checked = is_visible;
     }
   }
+}
+
+//Couches selectionnées
+
+const layers = {
+  "Images": ["images-points"], //on peut ajouter plusieurs couches
+  "Bâti 3D": ["bati-3d"],
+  "Terrain 3D": [],
+  "Boucherie 3D": ["3d-model"]
+};
+
+const controlDiv = document.getElementById("layersControlDiv");
+
+const layersControl = new LayersControl(layers, controlDiv);
+
+layersControl.updateControlState();
