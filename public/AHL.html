@@ -19,51 +19,58 @@
 
 <body>
 
-    <div id="map">
-        <div id="right" class="sidebar flex-center right collapsed">
-            <div class="sidebar-content rounded-rect" id="sidebar-contenu">
+    <div id="comparison-container" style="display: none;">
+        <div id="after" class="map"></div>
+    </div>
 
-                <div class="sidebar-notice">
-                    <span id="imageNotice"></span>
-                </div>
-                <div class="sidebar-description">
-                    <h1>Ajouter une nouvelle image</h1>
-                    <form id="uploadForm" enctype="multipart/form-data" accept="image/png, image/jpeg, image/gif" required>
-                        <label for="imageUpload">Choisissez une image :</label>
-                        <input type="file" id="imageUpload" name="image" accept="image/*" required>
-                        <br>
-                        <label for="lieu">Lieu :</label>
-                        <input type="text" id="lieu" name="lieu" required>
-                        <br>
-                        <label for="date_inf">Date inférieure :</label>
-                        <input type="date" id="date_inf" name="date_inf" required>
-                        <br>
-                        <label for="date_sup">Date supérieure :</label>
-                        <input type="date" id="date_sup" name="date_sup" required>
-                        <br>
-                        <input type="submit" value="Télécharger">
-                    </form>
-                    <form id="infoForm">
-                        <label for="comment">Commentaire :</label>
-                        <input type="text" id="comment" name="comment" required>
-                        <br>
-                        <label for="date">Date :</label>
-                        <input type="date" id="date" name="date" required>
-                        <br>
-                        <label for="lieu">Lieu :</label>
-                        <input type="text" id="lieu" name="lieu" required>
-                        <br>
-                        <label for="coordinates">Coordonnées (longitude,latitude) :</label>
-                        <input type="text" id="coordinates" name="coordinates" placeholder="102.0,0.5" required>
-                        <br>
-                        <input type="button" value="Générer GeoJSON" onclick="generateGeoJSON()">
-                </div>
+    <div id="right" class="sidebar flex-center right collapsed">
+        <div class="sidebar-content rounded-rect" id="sidebar-contenu">
 
-                <div class="sidebar-toggle rounded-rect right flex-center" onclick="toggleSidebar('right')">
-                    &larr;
-                </div>
+            <div class="sidebar-notice">
+                <span id="imageNotice"></span>
+            </div>
+            <div class="sidebar-description">
+                <h1>Ajouter une nouvelle image</h1>
+                <form id="uploadForm" enctype="multipart/form-data" accept="image/png, image/jpeg, image/gif"
+                    required>
+                    <label for="imageUpload">Choisissez une image :</label>
+                    <input type="file" id="imageUpload" name="image" accept="image/*" required>
+                    <br>
+                    <label for="lieu">Lieu :</label>
+                    <input type="text" id="lieu" name="lieu" required>
+                    <br>
+                    <label for="date_inf">Date inférieure :</label>
+                    <input type="date" id="date_inf" name="date_inf" required>
+                    <br>
+                    <label for="date_sup">Date supérieure :</label>
+                    <input type="date" id="date_sup" name="date_sup" required>
+                    <br>
+                    <input type="submit" value="Télécharger">
+                </form>
+                <form id="infoForm">
+                    <label for="comment">Commentaire :</label>
+                    <input type="text" id="comment" name="comment" required>
+                    <br>
+                    <label for="date">Date :</label>
+                    <input type="date" id="date" name="date" required>
+                    <br>
+                    <label for="lieu">Lieu :</label>
+                    <input type="text" id="lieu" name="lieu" required>
+                    <br>
+                    <label for="coordinates">Coordonnées (longitude,latitude) :</label>
+                    <input type="text" id="coordinates" name="coordinates" placeholder="102.0,0.5" required>
+                    <br>
+                    <input type="button" value="Générer GeoJSON" onclick="generateGeoJSON()">
+            </div>
+
+            <div class="sidebar-toggle rounded-rect right flex-center" onclick="toggleSidebar('right')">
+                &larr;
             </div>
         </div>
+    </div>
+
+    <div id="map">
+
     </div>
 
     <!-- <div id="paneau-photo">
@@ -78,7 +85,7 @@
         <div class="map-overlay-inner">
 
             <!-- Ajouter un bouton pour plus d'info? -->
-             <!-- Ajouter un bouton sur carte suporposée qui déplie les paramètres -->
+            <!-- Ajouter un bouton sur carte suporposée qui déplie les paramètres -->
             </fieldset>
             <fieldset>
                 <legend>
@@ -111,38 +118,43 @@
                 <label for="3d">Bâtiments 3D</label>
                 <input type="checkbox" id="3d" name="3d" checked />
             </div> -->
-                <div id="layersControlDiv">
-                </div>
+            <div id="layersControlDiv">
+            </div>
+
+            <button id="bouton-comparer" class="bouton" type="button">Activer la comparaison</button>
 
         </div>
     </div>
 
-    <script src="/scripts/checkbox.js"></script><!-- Le checkbox qui contrôle l'affichage des bâtiments 3D. -->
-
     <script src="/scripts/carte.js"></script><!-- Les paramètres de la carte, les sources et les couches. -->
+
+    <script src="/scripts/checkbox.js"></script><!-- Le checkbox qui contrôle l'affichage des bâtiments 3D. -->
 
     <script src="/scripts/sidebar.js"></script><!-- Un test de sidebar. -->
 
-    <script src="/scripts/hover.js"></script><!-- Pour changer la couleur des points des photographies et afficher les emprises des photographies quand on passe la souris. -->
+    <script src="/scripts/images_hover.js"></script>
+    <!-- Pour changer la couleur des points des photographies et afficher les emprises des photographies quand on passe la souris. -->
 
     <!-- <script src="/scripts/images.js"></script> --><!-- Un test d'affichage des photographies dans le sidebar. -->
 
-    <script src="/scripts/images_coordonnees.js"></script><!-- Pour voler aux coordonnées des photographies. -->
+    <script src="/scripts/images_click.js"></script><!-- Pour voler aux coordonnées des photographies. -->
 
     <!-- <script src="/scripts/popup.js"></script> --><!-- Outil pour ouvrir les popups des images et afficher les emprises des photographies. -->
 
     <script src="/scripts/3d.js"></script><!-- Pour ajouter les modèles 3d -->
 
     <!-- Plugin Compare -->
-    <!-- <script src="../scripts/plugins/maplibre-gl-compare-main/dist/maplibre-gl-compare.js"></script>
-    <link rel="stylesheet" href="../scripts/plugins/maplibre-gl-compare-main/dist/maplibre-gl-compare.css" type="text/css" /> -->
+    <script src="../scripts/plugins/maplibre-gl-compare-main/dist/maplibre-gl-compare.js"></script>
+    <link rel="stylesheet" href="../scripts/plugins/maplibre-gl-compare-main/dist/maplibre-gl-compare.css"
+        type="text/css" />
 
-    <!-- <script src="/scripts/compare.js"></script>
-    Slider pour comparer des cartes sur "map" -->
+    <script src="/scripts/compare.js"></script>
+    <!-- Slider pour comparer des cartes sur "map" -->
 
     <script src="/scripts/formulaire.js"></script><!-- Gére la modification des informations des photographies -->
 
-    <script src="/scripts/formulaire-nouveau.js"></script><!-- Gére la modification des informations des photographies -->
+    <script src="/scripts/formulaire-nouveau.js"></script>
+    <!-- Gére la modification des informations des photographies -->
 
 </body>
 

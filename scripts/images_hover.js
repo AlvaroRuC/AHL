@@ -1,22 +1,22 @@
 // Ça sert à marquer les points de photos quand le pointeur passe sur eux.
 
-let hoveredPointId = null;
+let idPointSurvole = null;
 
 map.on('mousemove', 'images-points', (e) => {
 
     const imageIdHover = e.features[0].properties.id;
 
     if (e.features.length > 0) {
-        if (hoveredPointId !== null) {
+        if (idPointSurvole !== null) {
             map.setFeatureState(
-                { source: 'images', id: hoveredPointId },
+                { source: 'images', id: idPointSurvole },
                 { hover: false }
             );
         }
         map.getCanvas().style.cursor = 'pointer';
-        hoveredPointId = e.features[0].id;
+        idPointSurvole = e.features[0].id;
         map.setFeatureState(
-            { source: 'images', id: hoveredPointId },
+            { source: 'images', id: idPointSurvole },
             { hover: true }
         );
 
@@ -26,7 +26,7 @@ map.on('mousemove', 'images-points', (e) => {
             'images-polygones',
             'visibility',
             'visible');
-    
+
         map.setFilter(
             'images-polygones',
             ['==', ['number', ['get', 'image']], imageIdHover]
@@ -35,12 +35,16 @@ map.on('mousemove', 'images-points', (e) => {
 });
 
 map.on('mouseleave', 'images-points', () => {
-    if (hoveredPointId !== null) {
+    if (idPointSurvole !== null && idPointSelectionne === null) {
         map.setFeatureState(
-            { source: 'images', id: hoveredPointId },
+            { source: 'images', id: idPointSurvole },
             { hover: false }
         );
+        map.setLayoutProperty(
+            'images-polygones',
+            'visibility',
+            'none');
     }
     map.getCanvas().style.cursor = '';
-    hoveredPointId = null;
+    idPointSurvole = null;
 });

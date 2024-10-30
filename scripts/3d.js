@@ -33,33 +33,33 @@ const customLayer = {
         this.scene = new THREE.Scene();
 
         // create two three.js lights to illuminate the model
-        const directionalLight = new THREE.DirectionalLight(0xffffff);
-        directionalLight.position.set(0, 70, 100).normalize();
-        this.scene.add(directionalLight);
+        const sunLight = new THREE.DirectionalLight(0xffdd99, 0.5); // Couleur jaune, intensité 1
+        sunLight.position.set(0, 100, 100); // Position du soleil
+        sunLight.target.position.set(0, 0, 0); // Cible la scène (ou le centre de la scène)
+        sunLight.castShadow = true;
+        this.scene.add(sunLight);
+
+        // lumière d'ambiance, pour réalisme.
+        const ambientLight = new THREE.AmbientLight(0xffffff, 1); // Couleur blanche, intensité 0.5
+        this.scene.add(ambientLight);
 
         // use the three.js GLTF loader to add the 3D model to the three.js scene
         const loader = new THREE.GLTFLoader();
         loader.load(
-            '/donnees/3d/B-34.glb',
+            '/donnees/3d/boucherie.glb',
             // '/donnees/3d/B-22-36.glb',
             (gltf) => {
                 this.scene.add(gltf.scene);
             }
         );
+        // S'il faut carger plus de modèles:
+        // loader.load(
+        //     '/donnees/3d/B-32.glb',
+        //     (gltf) => {
+        //         this.scene.add(gltf.scene);
+        //     }
+        // );
 
-        loader.load(
-            '/donnees/3d/B-32.glb',
-            (gltf) => {
-                this.scene.add(gltf.scene);
-            }
-        );
-
-        loader.load(
-            '/donnees/3d/B-36.glb',
-            (gltf) => {
-                this.scene.add(gltf.scene);
-            }
-        );
         this.map = map;
 
         // use the MapLibre GL JS map canvas for three.js
@@ -112,10 +112,7 @@ const customLayer = {
 
 // POR AHORA ESTÁ DESACTIVADO EL 3D
 
-// map.on('style.load', () => {
-//     map.addLayer(customLayer);
-// });
-
-// map.on('load', function () {
-//     map.setLayoutProperty('3d-model', 'visibility', 'none');
-// });
+map.on('style.load', () => {
+    map.addLayer(customLayer);
+    map.setLayoutProperty('3d-model', 'visibility', 'none');
+});

@@ -12,7 +12,7 @@ map.on('click', 'images-points', (e) => {
     const imgChemin = e.features[0].properties.chemin;
 
     // Estas dos lineas funcionan.
-    // const imgChemin = document.createElement("img");    
+    // const imgChemin = document.createElement("img");
     // imgChemin.src = e.features[0].properties.chemin
 
     // On selectionne l'endroit pour l'injecter

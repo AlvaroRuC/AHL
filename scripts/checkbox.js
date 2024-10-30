@@ -14,7 +14,7 @@ class LayersControl {
         this._container.appendChild(labeled_checkbox);
       }
     }
-  
+
     // Creates one checkbox and its label
     _createLabeledCheckbox(key) {
       let label = document.createElement("label");
@@ -24,20 +24,20 @@ class LayersControl {
       this._inputs.push(input);
       input.type = "checkbox";
       input.id = key;
-      // `=>` function syntax keeps `this` to the LayersControl object
-      // When changed, toggle all the layers associated with the checkbox via
-      // `this._ctrls`.
+
       input.addEventListener("change", () => {
-        let visibility = input.checked ? "visible" : "none";
+        const visibility = input.checked ? "visible" : "none";
+        // Regroupez les changements de visibilité
         for (const layer of this._ctrls[input.id]) {
-          map.setLayoutProperty(layer, "visibility", visibility);
+          this._map.setLayoutProperty(layer, "visibility", visibility);
         }
       });
+
       label.appendChild(input);
       label.appendChild(text);
       return label;
     }
-  
+
     onAdd(map) {
       this._map = map;
       // For every checkbox, find out if all its associated layers are visible.
@@ -56,13 +56,13 @@ class LayersControl {
       }
       return this._container;
     }
-  
+
   updateControlState() {
     for (const input of this._inputs) {
       let layers = this._ctrls[input.id];
       let is_visible = true;
       for (const layername of layers) {
-        is_visible = is_visible && map.getLayoutProperty(layername, "visibility") !== "none";
+        is_visible = is_visible && this._map.getLayoutProperty(layername, "visibility") !== "none";
       }
       input.checked = is_visible;
     }
@@ -74,12 +74,13 @@ class LayersControl {
 const layers = {
   "Images": ["images-points"], //on peut ajouter plusieurs couches
   "Bâti 3D": ["bati-3d"],
-  "Terrain 3D": [],
+  // "Terrain 3D": [],
   "Boucherie 3D": ["3d-model"]
 };
 
-const controlDiv = document.getElementById("layersControlDiv");
-
-const layersControl = new LayersControl(layers, controlDiv);
-
-layersControl.updateControlState();
+map.on('load', () => {
+  const controlDiv = document.getElementById("layersControlDiv");
+  const layersControl = new LayersControl(layers, controlDiv);
+  controlDiv.appendChild(layersControl.onAdd(map)); // Ajouter les contrôles à la carte
+  layersControl.updateControlState(); // Mettre à jour l'état des contrôles
+});

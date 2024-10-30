@@ -43,9 +43,23 @@
             bottom: 0;
             width: 100%;
         }
+        #toggle-button {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: white;
+            padding: 10px;
+            border: 1px solid #ccc;
+            cursor: pointer;
+            z-index: 1; /* Assure que le bouton est au-dessus des cartes */
+        }
     </style>
+
     <script src="../scripts/plugins/maplibre-gl-compare-main/dist/maplibre-gl-compare.js"></script>
     <link rel="stylesheet" href="../scripts/plugins/maplibre-gl-compare-main/dist/maplibre-gl-compare.css" type="text/css" />
+
+    <div id="toggle-button">Activer la comparaison</div>
+
     <div id="comparison-container">
         <div id="before" class="map"></div>
         <div id="after" class="map"></div>
@@ -73,8 +87,24 @@
 
         var map = new maplibregl.Compare(beforeMap, afterMap, container, {
             // Set this to enable comparing two maps by mouse movement:
-            // m ousemove: true
+            // mousemove: true
         });
+
+        map.compare.remove(afterMap);
+
+        // document.getElementById('toggle-button').addEventListener('click', function () {
+        //     if (!comparison) {
+        //         document.getElementById('comparison-container').style.display = 'block';
+        //         comparison = new maplibregl.Compare(beforeMap, afterMap, container);
+        //         this.textContent = 'Désactiver la comparaison';
+        //     } else {
+        //         document.getElementById('comparison-container').style.display = 'none';
+        //         comparison.remove(); // Désactive la comparaison
+        //         comparison = null; // Réinitialise la variable
+        //         this.textContent = 'Activer la comparaison';
+        //     }
+        // })
+
     </script>
 </body>
 

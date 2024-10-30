@@ -1,25 +1,59 @@
-// Este es el que no quiero
+var comparaison = null;
+var comparaisonActivee = false;
+var afterMap = null;
 
-// var beforeMap = new maplibregl.Map({
-//     container: "before",
-//     style:
-//         "https://data.geopf.fr/annexes/ressources/vectorTiles/styles/PLAN.IGN/standard.json",
-//     center: [1.25866, 45.83088],
-//     zoom: 15,
-// });
+var bouton = document.getElementById('bouton-comparer').addEventListener('click', function () {
 
-var afterMap = new maplibregl.Map({
-    container: "after",
-    style:
-        "https://api.maptiler.com/maps/streets/style.json?key=get_your_own_OpIi9ZULNHzrESv6T2vL",
-    center: [1.25866, 45.83088],
-    zoom: 15,
-});
+    var coordonneesCenter = map.getCenter();
+    var longitude = coordonneesCenter.lng;
+    var latitude = coordonneesCenter.lat;
+    var zoom = map.getZoom();
+    var pitch = map.getPitch();
+    var bearing = map.getBearing();
+    
 
-// A selector or reference to HTML element
-var container = "#comparison-container";
+    if (!comparaisonActivee) {
+        // Afficher le conteneur de comparaison
+        document.getElementById('comparison-container').style.display = 'block';
 
-var map = new maplibregl.Compare(beforeMap, afterMap, container, {
-    // Set this to enable comparing two maps by mouse movement:
-    // m ousemove: true
+        // var beforeMap = map;
+
+        // Créer une nouvelle instance de la carte "After"
+        afterMap = new maplibregl.Map({
+            container: "after",
+            style: "https://api.maptiler.com/maps/streets/style.json?key=get_your_own_OpIi9ZULNHzrESv6T2vL",
+            center: [longitude, latitude],
+            zoom: zoom,
+            pitch: pitch,
+            bearing: bearing,
+        });
+
+        var container = "#comparison-container";
+
+        comparaison = new maplibregl.Compare(map, afterMap, container, {
+            // Optionnel : activer le mouvement de la souris pour comparer
+            // mousemove: true
+        });
+
+        this.textContent = 'Désactiver la comparaison';
+
+    } else {
+        // Cacher le conteneur de comparaison
+        document.getElementById('comparison-container').style.display = 'none';
+        this.textContent = 'Activer la comparaison';
+
+        // Retirer le widget de comparaison
+        if (comparaison) {
+            comparaison.remove();
+            comparaison = null; // Réinitialiser la variable de comparaison
+        }
+
+        // Si afterMap existe, le retirer
+        if (afterMap) {
+            afterMap.remove();  // Retirer l'instance de la carte "After"
+            afterMap = null; // Réinitialiser afterMap
+        }
+    }
+
+    comparaisonActivee = !comparaisonActivee; // Bascule l'état
 });

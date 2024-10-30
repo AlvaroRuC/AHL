@@ -7,7 +7,8 @@ const map = new maplibregl.Map({
     maxPitch: 85,
     zoom: 13,
     style:
-        'https://data.geopf.fr/annexes/ressources/vectorTiles/styles/PLAN.IGN/standard.json',
+        '../ressources/styles/positron-Limoges.json'
+        // 'https://data.geopf.fr/annexes/ressources/vectorTiles/styles/PLAN.IGN/standard.json',
     // 'https://api.maptiler.com/maps/streets/style.json?key=get_your_own_OpIi9ZULNHzrESv6T2vL',
 });
 
@@ -77,8 +78,6 @@ map.on('load', () => {
         "generateId": true
     })
 
-    // var cartePrincipale = ""
-
     map.addLayer(
         {
             "id": "cartePrincipale",
@@ -89,7 +88,7 @@ map.on('load', () => {
 
     map.addLayer(
         {
-            "id": "bati-3d",
+            "id": "bati-3d2",
             "source": "Bati2024",
             "type": "fill-extrusion",
             "paint": {
@@ -161,7 +160,7 @@ map.on('load', () => {
 
     carte2.addEventListener('click', function () {
 
-        //Se le pone un listener a carte2. Si click se activa lo siguiente: 
+        //Se le pone un listener a carte2. Si click se activa lo siguiente:
 
         // Vérifie que la source existe. Sinon elle est créée
 
@@ -269,7 +268,7 @@ map.on('click', 'images-points', (e) => {
 
     var dateDebut = new Date(date_inf);
     var dateFin = new Date(date_sup);
-    
+
 
     // Verifie si les dates sont valides
     function isValidDate(date) {
