@@ -10,7 +10,7 @@ var bouton = document.getElementById('bouton-comparer').addEventListener('click'
     var zoom = map.getZoom();
     var pitch = map.getPitch();
     var bearing = map.getBearing();
-    
+
 
     if (!comparaisonActivee) {
         // Afficher le conteneur de comparaison
@@ -30,7 +30,7 @@ var bouton = document.getElementById('bouton-comparer').addEventListener('click'
 
         var container = "#comparison-container";
 
-        comparaison = new maplibregl.Compare(map, afterMap, container, {
+        comparaison = new maplibregl.Compare(afterMap, map, container, {
             // Optionnel : activer le mouvement de la souris pour comparer
             // mousemove: true
         });

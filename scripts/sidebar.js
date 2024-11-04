@@ -1,4 +1,4 @@
-const mapDiv = document.getElementById('map');
+const mapDiv = document.querySelector('#map');
 
 function openSidebar(id) {
     const elem = document.getElementById(id);
@@ -12,7 +12,7 @@ function openSidebar(id) {
         classes.splice(classes.indexOf('collapsed'), 1);
 
         // Pour déplacer la limite de la carte à gauche
-        mapDiv.style.marginRight = '300px'; //
+        mapDiv.style.right = '300px'; //
 
         padding[id] = 300; // In px, matches the width of the sidebars set in .sidebar CSS class
         map.easeTo({
@@ -36,14 +36,10 @@ function toggleSidebar(id) {
         // Remove the 'collapsed' class from the class list of the element, this sets it back to the expanded state.
         classes.splice(classes.indexOf('collapsed'), 1);
 
-        padding[id] = 300; // In px, matches the width of the sidebars set in .sidebar CSS class
+        // Pour déplacer la limite de la carte à gauche
+        mapDiv.style.right = '300px'; //
 
-        map.setPadding({
-            left: 0,
-            right: 300,
-            top: 0,
-            bottom: 0
-        });
+        padding[id] = 300; // In px, matches the width of the sidebars set in .sidebar CSS class
 
         map.easeTo({
             padding,
@@ -53,6 +49,9 @@ function toggleSidebar(id) {
         padding[id] = 0;
         // Add the 'collapsed' class to the class list of the element
         classes.push('collapsed');
+
+        // Pour déplacer la limite de la carte à gauche
+        mapDiv.style.right = '0px';
 
         map.easeTo({
             padding,

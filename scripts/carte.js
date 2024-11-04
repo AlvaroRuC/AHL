@@ -271,6 +271,7 @@ map.on('click', 'images-points', (e) => {
 
 
     // Verifie si les dates sont valides
+
     function isValidDate(date) {
         return !isNaN(date.getTime());
     }
@@ -288,7 +289,6 @@ map.on('click', 'images-points', (e) => {
     }
 
     var imageCommentaire = e.features[0].properties.comment;
-
 
     openSidebar('right');
 

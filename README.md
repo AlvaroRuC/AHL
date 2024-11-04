@@ -1,10 +1,13 @@
 # Changements :
 
 [x] Ajouter les modèles qui restent.
-[x] Optimiser 3D. Question. Où ratacher les 3D ? Couches actuelles ou couches anciennes ?
+[x] Optimiser les bâtiments en 3D. Question. Où ratacher les 3D ? Couches actuelles ou couches anciennes ?
 [x] Améliorer lumières.
+[x] Ajouter les 3D OSM/cadastre à sa place.
 [x] Bug checkbox.js
-[] Bug formulaire.js: Uncaught TypeError: document.getElementById(...) is null 1:10
+[x] Bug formulaire.js: Uncaught TypeError: document.getElementById(...) is null 1:10
+[x] Rendre les contrôles visibles lors de l'ouverture du sidebar.
+[] Bug photos
 
 # Réunion 14 octobre :
 
