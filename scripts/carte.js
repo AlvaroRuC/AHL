@@ -289,7 +289,6 @@ map.on('click', 'images-points', (e) => {
 
     var imageCommentaire = e.features[0].properties.comment;
 
-
     openSidebar('right');
 
     if (e.features.length === 0) return;

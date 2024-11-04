@@ -72,8 +72,7 @@ class LayersControl {
 //Couches selectionnées
 
 const layers = {
-  "Images": ["images-points"], //on peut ajouter plusieurs couches
-  "Bâti 3D": ["bati-3d"],
+  "Bâti 3D": ["bati-3d"],//on peut ajouter plusieurs couches
   // "Terrain 3D": [],
   "Boucherie 3D": ["3d-model"]
 };
