@@ -1,0 +1,219 @@
+@font-face {
+    font-family: 'Roboto';
+    src: url('/ressources/polices/Roboto/Roboto-Regular.woff2') format('woff2'),
+         url('/ressources/polices/Roboto/Roboto-Regular.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Roboto';
+    src: url('/ressources/polices/Roboto/Roboto-Light.woff2') format('woff2'),
+         url('/ressources/polices/Roboto/Roboto-Light.ttf') format('truetype');
+    font-weight: 300;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Roboto-condensed';
+    src: url('/ressources/polices/Roboto_condensed/RobotoCondensed-Bold.woff2') format('woff2'),
+         url('/ressources/polices/Roboto_condensed/RobotoCondensed-Bold.ttf') format('truetype');
+    font-weight: 700;
+    font-style: normal;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+#map {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0px;
+
+    width: 100%;
+
+    transition:
+        right 1s linear,
+        width 1s linear;
+}
+
+.map-overlay {
+    font:
+        bold 12px/20px 'Helvetica Neue',
+        Arial,
+        Helvetica,
+        sans-serif;
+    position: absolute;
+    width: 19%;
+    top: 0;
+    left: 0;
+    padding: 10px;
+}
+
+.map-overlay .map-overlay-inner {
+    background-color: #fff;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+    border-radius: 3px;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+.map-overlay label {
+    display: block;
+    margin: 5px 0 0 5px;
+}
+
+.map-overlay input[type=range] {
+    background-color: transparent;
+    display: inline-block;
+    width: 100%;
+    position: relative;
+    cursor: ew-resize;
+}
+
+;
+
+.map-overlay input[type=checkbox] {
+    background-color: transparent;
+    display: inline-block;
+    width: 100%;
+    position: relative;
+    cursor: ew-resize;
+}
+
+;
+
+/* Eliminar si no lo utilizo */
+.my-custom-control {
+    color: #f00;
+    background: #000;
+    padding: 8px;
+    border-radius: 4px;
+    margin: 8px;
+}
+
+/* Checkbox */
+
+.layers-control .layer-control {
+    display: block;
+    padding: 0.2em;
+}
+
+/* Paneau photo */
+
+#paneau-photo {
+    display: flex;
+    justify-content: center;
+    position: absolute;
+    bottom: 5px;
+    z-index: 10;
+    align-items: center;
+
+}
+
+.popup-img {
+    max-width: 100%;
+}
+
+.popupRedimensionnable {
+    resize: both;
+    overflow: auto;
+    z-index: 100;
+}
+
+/* Pour compare plugin */
+
+body * {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.map {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 100%;
+}
+
+/* Effacer ?? */
+
+#toggle-button {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background: white;
+    padding: 10px;
+    border: 1px solid #ccc;
+    cursor: pointer;
+    z-index: 1;
+}
+
+/* Pour le nouveau volet lateral */
+
+#bouton-volet {
+    position: relative;
+    z-index: 1;
+
+    width: 29px;
+    height: 29px;
+    border-radius: 5px;
+    box-shadow: 0 0 0 2px rgba(0, 0, 0, .1);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background: white;
+    pointer-events: all;
+}
+
+#volet {
+    position: absolute;
+    right: 0px;
+    z-index: 1;
+
+    overflow-y: auto;
+
+    height: 100%;
+
+    font-family: Roboto, sans-serif;
+
+    background:white;
+    transition: width 1s linear;
+}
+
+#volet.plie {
+    width:0%;
+}
+
+#volet h3 {
+    margin-top: 5px;
+    font-family: Roboto-condensed, sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+}
+
+#fiches-images {
+    display: flex;
+    flex-direction: column;
+    transition: all;
+}
+
+.fiche-image {
+    margin: 10px 20px 10px 10px;
+    border: #000;
+    transition: opacity 0.3s ease;
+
+}
+
+.fiche-image img {
+    width: 100%;
+    border-radius: 5px;
+}

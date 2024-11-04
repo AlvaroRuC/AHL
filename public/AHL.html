@@ -8,8 +8,9 @@
     <script src="https://unpkg.com/maplibre-gl@4.7.0/dist/maplibre-gl.js"></script>
     <link href="https://unpkg.com/maplibre-gl@4.7.0/dist/maplibre-gl.css" rel="stylesheet">
 
-    <link rel="stylesheet" crossorigin href="/ressources/styles/style.css">
-    <link rel="stylesheet" crossorigin href="/ressources/styles/sidebar.css">
+    <link rel="stylesheet" crossorigin href="/css/style.css">
+    <!-- Ancien sidebar. Probablement je ne l'utiliserai plus-->
+    <!-- <link rel="stylesheet" crossorigin href="/css/sidebar.css">  -->
 
     <script src="https://unpkg.com/three@0.147.0/build/three.min.js"></script>
     <script src="https://unpkg.com/three@0.147.0/examples/js/loaders/GLTFLoader.js"></script>
@@ -25,7 +26,7 @@
 
     <div id="volet" class="plie"></div>
 
-    <div id="map" >
+    <div id="map">
 
     </div>
 
@@ -131,16 +132,17 @@
     <!-- Les paramètres de la carte, les sources et les couches. -->
     <script src="/scripts/carte.js"></script>
 
-    <!-- Le checkbox qui contrôle l'affichage des bâtiments 3D. -->
+    <!-- Le checkbox qui contrôle l'affichage des bâtiments 3D et des images. -->
     <script src="/scripts/checkbox.js"></script>
 
-    <!-- Un test de sidebar. -->
-    <script src="/scripts/sidebar.js"></script>
+    <!-- Ancien sidebar. EFFACER ? -->
+    <!-- <script src="/scripts/sidebar.js"></script> -->
 
-    <!-- Pour changer la couleur des points des photographies et afficher les emprises des photographies quand on passe la souris. -->
+    <!-- Change la couleur des points des photographies et affiche les emprises des photographies quand on passe la souris.-->
     <script src="/scripts/images_hover.js"></script>
 
-    <!-- <script src="/scripts/images.js"></script> --><!-- Un test d'affichage des photographies dans le sidebar. -->
+    <!-- Un test d'affichage des photographies dans le sidebar. -->
+    <!-- <script src="/scripts/images.js"></script> -->
 
     <!-- Pour voler aux coordonnées des photographies. -->
     <script src="/scripts/images_click.js"></script>
@@ -160,14 +162,16 @@
     <script src="/scripts/compare.js"></script>
 
     <!-- Gére la modification des informations des photographies -->
-    <script src="/scripts/formulaire.js"></script>
+    <!-- <script src="/scripts/formulaire.js"></script> -->
 
-        <!-- Gére la modification des informations des photographies -->
+    <!-- Gére la modification des informations des photographies -->
     <script src="/scripts/formulaire-nouveau.js"></script>
 
     <!-- Gére la modification des informations des photographies -->
-        <script src="/scripts/volet.js"></script>
+    <script src="/scripts/volet.js"></script>
 
+    <!-- Ouvre les images quand on active le bouton images -->
+    <script src="/scripts/volet_images.js"></script>
 
 </body>
 

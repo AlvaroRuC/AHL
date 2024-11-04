@@ -256,7 +256,6 @@ const lieuSidebar = document.getElementById("imageLieu")
 const datesSidebar = document.getElementById("imagesDates")
 const imageNotice = document.getElementById("imageNotice")
 
-
 map.on('click', 'images-points', (e) => {
 
     var imageChemin = '../ressources/images/' + e.features[0].properties.chemin;
@@ -289,6 +288,7 @@ map.on('click', 'images-points', (e) => {
     }
 
     var imageCommentaire = e.features[0].properties.comment;
+
 
     openSidebar('right');
 

@@ -1,3 +1,7 @@
 # Ignorer les 3D
 
 donnees/3d
+
+# Ignorer les photos du fonds Paul Colmar
+
+donnees/photos
