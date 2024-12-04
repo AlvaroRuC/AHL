@@ -35,29 +35,33 @@ function afficherImagesVolet() {
             ficheImage.appendChild(imageLieu);
 
 
-     // Affichage des années
-     const imageDatesExtremes = document.createElement('time');
+            // Affichage des années
+            const imageDatesExtremes = document.createElement('time');
 
-     const anneeInf = proprietes.date_inf ? proprietes.date_inf.split('-')[0] : null;
-     const anneeSup = proprietes.date_sup ? proprietes.date_sup.split('-')[0] : null;
+            const anneeInf = proprietes.date_inf ? proprietes.date_inf.split('-')[0] : null;
+            const anneeSup = proprietes.date_sup ? proprietes.date_sup.split('-')[0] : null;
 
-     // Ça change en fonction des dates disponibles
-     if (anneeInf && anneeSup) {
-         imageDatesExtremes.textContent = `${anneeInf} - ${anneeSup}`;
-     } else if (anneeSup) {
-         imageDatesExtremes.textContent = `${anneeSup} - Date non disponible`;
-     } else if (anneeInf) {
-         imageDatesExtremes.textContent = `Date non disponible - ${anneeInf}`;
-     } else {
-         imageDatesExtremes.textContent = "Date non disponible";
-     }
+            // Ça change en fonction des dates disponibles
+            if (anneeInf && anneeSup) {
+                if (anneeInf === anneeSup) {
+                    imageDatesExtremes.textContent = anneeInf;
+                } else {
+                    imageDatesExtremes.textContent = `${anneeInf}-${anneeSup}`;
+                }
+            } else if (anneeSup) {
+                imageDatesExtremes.textContent = `Avant ${anneeSup}`;
+            } else if (anneeInf) {
+                imageDatesExtremes.textContent = `Après ${anneeInf}`;
+            } else {
+                imageDatesExtremes.textContent = "Date inconnue";
+            }
 
-     ficheImage.appendChild(imageDatesExtremes);
+            ficheImage.appendChild(imageDatesExtremes);
 
-     //Afiche tout sur le volet
+            //Afiche tout sur le volet
 
-     fichesImages.appendChild(ficheImage);
- });
+            fichesImages.appendChild(ficheImage);
+        });
 
         // Ajoute les événements en dehors de la boucle
         fichesSurvolees.forEach(fiche => {

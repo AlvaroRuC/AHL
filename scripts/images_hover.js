@@ -2,9 +2,19 @@
 
 let idPointSurvole = null;
 
+//Pour optimiser le rendement
+let lastMove = 0;
+const throttleTime = 50;
+
 map.on('mousemove', 'images-points', (e) => {
 
-    const imageIdHover = e.features[0].properties.id;
+    const now = Date.now();
+    if (now - lastMove < throttleTime) {
+        return; // Ignore si le temps écoulé depuis le dernier appel est trop court
+    }
+    lastMove = now;
+
+    const imageIdHover = e.features[0].properties.id_image;
 
     if (e.features.length > 0) {
         if (idPointSurvole !== null) {
