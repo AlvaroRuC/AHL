@@ -180,6 +180,8 @@ body * {
     z-index: 1;
 
     overflow-y: auto;
+    padding: 15px;
+    box-sizing: border-box;
 
     height: 100%;
 
@@ -187,10 +189,13 @@ body * {
 
     background:white;
     transition: width 1s linear;
+    user-select: text;
+
 }
 
 #volet.plie {
     width:0%;
+    padding: 0px;
 }
 
 #volet h3 {
@@ -205,13 +210,19 @@ body * {
     display: flex;
     flex-direction: column;
     transition: all;
+    user-select: text;
 }
 
 .fiche-image {
-    margin: 10px 20px 10px 10px;
+    margin: 0px 0px 15px 0px;
     border: #000;
     transition: opacity 0.3s ease;
+    opacity: 0.85;
+}
 
+.fiche-image-etiquette {
+    margin-left: 4px;
+    user-select: text;
 }
 
 .fiche-image img {

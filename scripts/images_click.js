@@ -55,5 +55,3 @@ map.on('click', 'images-points', (e) => {
 
     map.on('moveend', moveendHandler);
 })
-
-// L'ouverture du sidebar est dans carte.js

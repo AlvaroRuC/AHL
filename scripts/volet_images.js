@@ -1,3 +1,5 @@
+// Cet script nécessite images_hover.js
+
 function afficherImagesVolet() {
     map.on('moveend', () => {
         const volet = document.getElementById('volet');
@@ -12,28 +14,27 @@ function afficherImagesVolet() {
 
         const fichesImages = document.createElement('div');
         fichesImages.id = "fiches-images";
-
         volet.appendChild(fichesImages);
-
-        // Pour créer un tableau pour stocker les fiches d'images
-        const fichesSurvolees = [];
 
         imagesVisibles.forEach(imageVisible => {
             const proprietes = imageVisible.properties;
 
             const ficheImage = document.createElement('div');
             ficheImage.classList.add('fiche-image');
-            ficheImage.setAttribute('data-id', proprietes.id_image); //Je crois que ça ne sert à rien.
+            ficheImage.setAttribute('image-id', proprietes.id_image);
 
             const imageImage = document.createElement('img');
             imageImage.src = "../donnees/" + proprietes.chemin;
             imageImage.alt = proprietes.lieu || 'Image';
             ficheImage.appendChild(imageImage);
 
+            const ficheImageEtiquette = document.createElement('div');
+            ficheImageEtiquette.classList.add('fiche-image-etiquette');
+            ficheImage.appendChild(ficheImageEtiquette);
+
             const imageLieu = document.createElement('h3');
             imageLieu.textContent = proprietes.lieu;
-            ficheImage.appendChild(imageLieu);
-
+            ficheImageEtiquette.appendChild(imageLieu);
 
             // Affichage des années
             const imageDatesExtremes = document.createElement('time');
@@ -41,13 +42,8 @@ function afficherImagesVolet() {
             const anneeInf = proprietes.date_inf ? proprietes.date_inf.split('-')[0] : null;
             const anneeSup = proprietes.date_sup ? proprietes.date_sup.split('-')[0] : null;
 
-            // Ça change en fonction des dates disponibles
             if (anneeInf && anneeSup) {
-                if (anneeInf === anneeSup) {
-                    imageDatesExtremes.textContent = anneeInf;
-                } else {
-                    imageDatesExtremes.textContent = `${anneeInf}-${anneeSup}`;
-                }
+                imageDatesExtremes.textContent = anneeInf === anneeSup ? anneeInf : `${anneeInf}-${anneeSup}`;
             } else if (anneeSup) {
                 imageDatesExtremes.textContent = `Avant ${anneeSup}`;
             } else if (anneeInf) {
@@ -56,37 +52,46 @@ function afficherImagesVolet() {
                 imageDatesExtremes.textContent = "Date inconnue";
             }
 
-            ficheImage.appendChild(imageDatesExtremes);
+            ficheImageEtiquette.appendChild(imageDatesExtremes);
 
-            //Afiche tout sur le volet
-
+            // Ajoute la fiche à la liste
             fichesImages.appendChild(ficheImage);
         });
 
-        // Ajoute les événements en dehors de la boucle
-        fichesSurvolees.forEach(fiche => {
-            fiche.addEventListener('mouseover', function () {
-                this.style.opacity = '1';
+        // Écouteur pour les fiches des images et effets
 
-                const idImage = this.getAttribute('data-id'); // Changement ici
-                console.log("ID survolé :", idImage);
-                map.setPaintProperty('images-points', 'circle-color', [
-                    'case',
-                    ['==', ['get', 'id_image'], idImage],
-                    '#ff0000',
-                    '#007cbf'
-                ]);
-            });
+        volet.addEventListener('mouseover', function (event) {
 
-            fiche.addEventListener('mouseout', function () {
-                this.style.opacity = '0.85';
-                map.setPaintProperty('images-points', 'circle-color', '#007cbf');
-            });
+            const ficheSurvolee = event.target.closest('.fiche-image');
+
+            if (ficheSurvolee) {
+                ficheSurvolee.style.opacity = '1';
+            }
+
+            const idImage = parseInt(ficheSurvolee.getAttribute('image-id'), 10);
+
+            console.log('mouseover sur:', idImage); // <----------------------<< Eliminar
+
+            surlignerImage(idImage) //fontion déclaré dans "images_hover.js"
         });
+
+        volet.addEventListener('mouseout', function (event) {
+            const ficheSurvolee = event.target.closest('.fiche-image');
+
+            if (ficheSurvolee) {
+                ficheSurvolee.style.opacity = '0.85';
+            }
+
+            const idImage = parseInt(ficheSurvolee.getAttribute('image-id'), 10);
+
+            enleverSurlignageImage(idImage);
+        });
+
     });
 }
 
-document.getElementById("bouton-volet").addEventListener("click", function (event) {
+document.getElementById("bouton-volet").addEventListener("click", function () {
+    const volet = document.getElementById('volet');
     if (volet.classList.contains("plie")) {
         map.setLayoutProperty('images-points', 'visibility', 'none');
     } else {
