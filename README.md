@@ -1,8 +1,20 @@
 
 # Changements décembre :
 [X] Bug: les photos n'affichent pas leur emprise mais toutes les emprises.
-[] Bug: quelques emprises ont plusieurs photos.
+[X] Bug: quelques emprises ont plusieurs photos.
+[X] Les images qui se montrent sur le volet sont les plus proches à la caméra
+[] Volet dynamique:
+    [] Côté volet:s
+        [X] Selection
+        [] Pas d'image repétée
+        [] Hover
+    [] Côté carte
+        [] Selection
+        [] Hover
+[] Cluster
 [] Exclure les photos qui sont cachés par le volet de la liste qui s'affiche sur le volet.
+[] Ouvrir formulaire depuis le volet
+[] Ouverture d'un formulaire de saisi de points et d'emprises.
 [] Pour modifier les images: créer un API côté serveur qui accepte des requêtes de mise à jour (PUT, PATCH, ou POST), et cette API permettra de modifier le GeoJSON. Node.js et Express pour gérer l'API serveur.
 
 

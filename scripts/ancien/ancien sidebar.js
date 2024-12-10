@@ -65,3 +65,6 @@ map.on('click', 'images-points', (e) => {
 
 }
 );
+
+
+
