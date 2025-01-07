@@ -229,9 +229,13 @@ body * {
 .fiche-image {
     margin: 0px 0px 15px 0px;
     border: #000;
-    transition: opacity 0.3s ease;
-    opacity: 0.85;
+    transition: opacity 1s ease-in-out;
+    opacity: 0.75;
     position: relative;
+}
+
+.fiche-image.visible {
+    opacity: 1;
 }
 
 .fiche-image-etiquette {
@@ -266,4 +270,35 @@ body * {
 .donnees-ligne dd {
     display: inline-block;
     margin: 0 10px;  /* Espacement horizontal entre les éléments */
+}
+
+/* Style pour le champ de recherche */
+#recherche {
+    width: 95%;                      /* S'étend sur toute la largeur de son conteneur */
+    padding: 5px 0px 5px 5px;                    /* Ajoute de l'espace à l'intérieur */
+    font-size: 16px;                  /* Taille de la police */
+    border-radius: 5px;               /* Bords arrondis */
+    border: 2px solid #ccc;           /* Bordure grise par défaut */
+    transition: border-color 0.3s ease; /* Transition douce pour le changement de couleur de bordure */
+}
+
+/* Changer la couleur de la bordure au focus */
+#recherche:focus {
+    border-color: #2f8aa8;  /* Bordure verte lorsqu'on clique dans le champ */
+    outline: none;          /* Supprime le contour bleu par défaut */
+}
+
+/* Style pour l'icône de recherche (si vous en utilisez une) */
+#recherche-icon {
+    position: absolute;
+    right: 10px; /* Positionne l'icône à droite */
+    top: 50%;
+    transform: translateY(-50%); /* Centrer verticalement */
+}
+
+/* Style global pour le conteneur du champ de recherche (si vous l'entourez d'un div) */
+#search-container {
+    position: relative;     /* Nécessaire si vous ajoutez une icône de recherche */
+    max-width: 300px;       /* Limiter la largeur maximale */
+    margin-bottom: 15px;         /* Centrer le champ de recherche horizontalement */
 }

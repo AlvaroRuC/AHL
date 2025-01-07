@@ -25,6 +25,11 @@
     </div>
 
     <div id="volet" class="plie">
+        <div id="search-container">
+            <input type="text" id="recherche" placeholder="Rechercher..." />
+            <i id="recherche-icon" class="fa fa-search"></i>
+            <!-- NE PAS OUBLIER D'AJOUTER UNE ICONE -->
+        </div>
         <div id="image-selectionnee"></div>
         <div id="images-visibles"></div>
     </div>
@@ -118,6 +123,9 @@
 
     <!-- Gére la modification des informations des photographies -->
     <script src="/scripts/volet.js"></script>
+
+    <!-- Fonctions pour la barre de recherche -->
+    <script src="/scripts/volet/recherche.js"></script>
 
     <!-- Ouvre les images quand on active le bouton images -->
     <script src="/scripts/volet_images.js"></script>

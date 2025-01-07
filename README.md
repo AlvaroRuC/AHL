@@ -11,6 +11,8 @@
     [] Côté carte
         [] Selection
         [] Hover
+
+[] Moteur de recherche
 [] Cluster
 [] Exclure les photos qui sont cachés par le volet de la liste qui s'affiche sur le volet.
 [] Ouvrir formulaire depuis le volet
