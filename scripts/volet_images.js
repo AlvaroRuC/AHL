@@ -11,6 +11,7 @@ document.getElementById("bouton-volet").addEventListener("click", function () {
 });
 
 // Fonction principale pour afficher les images dans le volet
+
 function afficherImagesVolet(recherche = '') {
     const volet = document.getElementById('volet');
     const imageSelectionnee = document.getElementById('image-selectionnee');
@@ -31,7 +32,8 @@ function afficherImagesVolet(recherche = '') {
     imagesTriees.forEach(imageVisible => {
         const ficheImage = creerFicheImageSiFiltrable(imageVisible, recherche);
         if (ficheImage) {
-            ajouterFicheImageAvecEvenements(ficheImage, imageVisible.properties, imageSelectionnee, fichesImagesVisibles);
+            ajouterFicheImage(ficheImage, fichesImagesVisibles); // Ajout de l'image
+            gererEvenementsFicheImage(ficheImage, imageVisible.properties, imageSelectionnee); // Gestion des événements
         }
     });
 }
@@ -59,8 +61,15 @@ function creerFicheImageSiFiltrable(imageVisible, recherche) {
     return null;
 }
 
-// Fonction pour ajouter une fiche d'image avec gestion des événements (clic et hover)
-function ajouterFicheImageAvecEvenements(ficheImage, proprietes, imageSelectionnee, fichesImagesVisibles) {
+function ajouterFicheImage(ficheImage, fichesImagesVisibles) {
+    // Ajouter la fiche d'image dans le volet
+    fichesImagesVisibles.appendChild(ficheImage);
+    setTimeout(() => {
+        ficheImage.classList.add('visible'); // Transition d'apparition de la fiche
+    }, 10);
+}
+
+function gererEvenementsFicheImage(ficheImage, proprietes, imageSelectionnee) {
     // Ajouter un événement de clic pour la sélection de l'image
     ficheImage.addEventListener('click', function() {
         imageSelectionnee.innerHTML = ''; // Vide la section de l'image sélectionnée
@@ -82,12 +91,6 @@ function ajouterFicheImageAvecEvenements(ficheImage, proprietes, imageSelectionn
         ficheImage.style.transform = 'scale(1)';
         ficheImage.style.boxShadow = 'none';
     });
-
-    // Ajouter la fiche d'image dans le volet
-    fichesImagesVisibles.appendChild(ficheImage);
-    setTimeout(() => {
-        ficheImage.classList.add('visible'); // Transition d'apparition de la fiche
-    }, 10);
 }
 
 // Fonction pour calculer la distance entre deux points (coordonnées géographiques)
