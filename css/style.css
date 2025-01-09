@@ -258,14 +258,25 @@ body * {
     font-size: 13px;
 }
 
+.image-icones {
+    position: absolute;            /* Permet de positionner le conteneur par rapport à son parent */
+    top: 10px;                     /* Décalage de 10px du haut */
+    right: 10px;                   /* Décalage de 10px de la droite */
+    display: flex;                 /* Utilise Flexbox pour aligner les éléments en ligne */
+    justify-content: flex-end;     /* Aligne les éléments à droite du conteneur */
+    gap: 10px;                     /* Ajoute un écart entre les icônes */
+    padding: 3px;                  /* Espace autour des icônes à l'intérieur du conteneur */
+}
+
 .image-icone {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    color: white;
-    background-color: rgba(219, 219, 219, 0.5);
-    padding: 3px;
-    width: 15px;
+    background-color: rgba(219, 219, 219, 0.5);  /* Fond semi-transparent pour les icônes */
+    padding: 5px;                  /* Espacement autour de l'icône */
+    cursor: pointer;              /* Curseur en forme de main pour indiquer l'interactivité */
+    width: 15px;                   /* Largeur des icônes */
+    height: 15px;                  /* Hauteur des icônes */
+    display: flex;                 /* Pour pouvoir centrer le contenu dans chaque icône */
+    align-items: center;           /* Aligner verticalement l'icône à l'intérieur du conteneur */
+    justify-content: center;       /* Centrer l'icône horizontalement à l'intérieur du conteneur */
 }
 
 .donnees-ligne dt {

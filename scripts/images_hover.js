@@ -4,32 +4,43 @@
 
 let idPointSurvole = null;  // ID du point survolé sur la carte
 
+let timeoutId = null;  // Variable pour stocker l'identifiant du timeout
+
 function surlignerImage(idImage) {
-    const features = map.querySourceFeatures('images', {
-        filter: ['==', ['get', 'id_image'], idImage]
-    });
-
-    if (features.length > 0) {
-        const feature = features[0];
-        const mapLibreId = feature.id;
-
-        map.setFeatureState(
-            { source: 'images', id: mapLibreId },
-            { hover: true }
-        );
-
-        map.setLayoutProperty(
-            'images-polygones',
-            'visibility',
-            'visible'
-        );
-
-        map.setFilter(
-            'images-polygones',
-            ['==', ['number', ['get', 'image']], idImage]
-        );
+    // Si un timeout est déjà en cours, on l'annule
+    if (timeoutId) {
+        clearTimeout(timeoutId);
     }
+
+    // On crée un nouveau timeout avec un délai (par exemple 300ms)
+    timeoutId = setTimeout(() => {
+        const features = map.querySourceFeatures('images', {
+            filter: ['==', ['get', 'id_image'], idImage]
+        });
+
+        if (features.length > 0) {
+            const feature = features[0];
+            const mapLibreId = feature.id;
+
+            map.setFeatureState(
+                { source: 'images', id: mapLibreId },
+                { hover: true }
+            );
+
+            map.setLayoutProperty(
+                'images-polygones',
+                'visibility',
+                'visible'
+            );
+
+            map.setFilter(
+                'images-polygones',
+                ['==', ['number', ['get', 'image']], idImage]
+            );
+        }
+    }, 100);  // 300ms de délai avant d'exécuter la logique
 }
+
 
 function enleverSurlignageImage(idImage) {
     const features = map.querySourceFeatures('images', {

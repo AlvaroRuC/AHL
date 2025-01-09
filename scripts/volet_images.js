@@ -83,13 +83,14 @@ function gererEvenementsFicheImage(ficheImage, proprietes, imageSelectionnee) {
 
     // Ajouter l'événement hover (mouseenter et mouseleave)
     ficheImage.addEventListener('mouseenter', function() {
-        surlignerImage(idImage);
+        surlignerImage(proprietes.id_image);
     });
 
     ficheImage.addEventListener('mouseleave', function() {
         // Restaure l'état d'origine lorsque la souris quitte la fiche
         ficheImage.style.transform = 'scale(1)';
         ficheImage.style.boxShadow = 'none';
+        enleverSurlignageImage(proprietes.id_image)
     });
 }
 
