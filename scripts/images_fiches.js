@@ -80,7 +80,7 @@ function creerFicheImageDetaillee(proprietes) {
     const imageCoteGJS = proprietes.cote_aml; //Ça recupère la cote du geojson
 
     const coteLien = document.createElement("a");
-    coteLien.href = `https://archivesenligne.limoges.fr/4DCGI/Web_DFPict/034/${imageCoteGJS}/ILUMP16014`;
+    coteLien.href = `https://archivesenligne.limoges.fr/4DCGI/Web_VoirLaNotice/34_01/${imageCoteGJS}/ILUMP830`;
     coteLien.target = "_blank";
     coteLien.textContent = proprietes.cote_aml || "Aucune cote fournie";
 

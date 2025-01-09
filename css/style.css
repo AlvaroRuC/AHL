@@ -280,6 +280,11 @@ body * {
     border-radius: 5px;               /* Bords arrondis */
     border: 2px solid #ccc;           /* Bordure grise par défaut */
     transition: border-color 0.3s ease; /* Transition douce pour le changement de couleur de bordure */
+    font:
+    bold 15px/20px 'Roboto-condensed',
+    Arial,
+    Helvetica,
+    sans-serif;
 }
 
 /* Changer la couleur de la bordure au focus */
@@ -288,7 +293,7 @@ body * {
     outline: none;          /* Supprime le contour bleu par défaut */
 }
 
-/* Style pour l'icône de recherche (si vous en utilisez une) */
+/* Style pour ajouter un icône de recherche*/
 #recherche-icon {
     position: absolute;
     right: 10px; /* Positionne l'icône à droite */
@@ -298,7 +303,7 @@ body * {
 
 /* Style global pour le conteneur du champ de recherche (si vous l'entourez d'un div) */
 #search-container {
-    position: relative;     /* Nécessaire si vous ajoutez une icône de recherche */
-    max-width: 300px;       /* Limiter la largeur maximale */
-    margin-bottom: 15px;         /* Centrer le champ de recherche horizontalement */
+    position: relative;
+    max-width: 300px;
+    margin-bottom: 15px;
 }
