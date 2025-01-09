@@ -1,98 +1,96 @@
-//Pour la création de fiches descriptives des images
+function obtenirInfosImage(proprietes) {
+    // Cette fonction va extraire et formater toutes les informations nécessaires.
+    const anneeInf = proprietes.date_inf ? proprietes.date_inf.split("-")[0] : null;
+    const anneeSup = proprietes.date_sup ? proprietes.date_sup.split("-")[0] : null;
 
+    // Format de la plage de dates
+    const datesExtremes = (anneeInf && anneeSup) ?
+                          (anneeInf === anneeSup ? anneeInf : `${anneeInf}-${anneeSup}`) :
+                          (anneeSup ? `Avant ${anneeSup}` : (anneeInf ? `Après ${anneeInf}` : "Date inconnue"));
+
+    // Construction de l'objet d'informations de base
+    return {
+        chemin: "../donnees/" + proprietes.chemin,
+        lieu: proprietes.lieu || 'Lieu inconnu',
+        datesExtremes: datesExtremes,
+        coteAML: proprietes.cote_aml,
+        imageCoteGJS: proprietes.cote_aml, // Même cote pour le GeoJSON
+    };
+}
 function creerFicheImage(proprietes) {
+    const infos = obtenirInfosImage(proprietes);  // On récupère les infos de l'image
 
-    //creation d'un containeur pour les fiches
+    // Création du conteneur de la fiche d'image
     const ficheImage = document.createElement('div');
     ficheImage.classList.add('fiche-image');
     ficheImage.setAttribute('image-id', proprietes.id_image);
 
+    // Partie image
     const ficheImageImage = document.createElement("div");
     ficheImageImage.classList.add('fiche-image-image');
-    ficheImage.appendChild(ficheImageImage);
 
     const imageImage = document.createElement('img');
-    imageImage.src = "../donnees/" + proprietes.chemin;
-    imageImage.alt = proprietes.lieu || 'Image';
-    ficheImageImage.appendChild(imageImage);
+    imageImage.src = infos.chemin;  // Utilisation du chemin obtenu
+    imageImage.alt = infos.lieu;  // Utilisation du lieu obtenu
 
+    // Partie étiquette
     const ficheImageEtiquette = document.createElement("div");
     ficheImageEtiquette.classList.add('fiche-image-etiquette');
-    ficheImage.appendChild(ficheImageEtiquette);
 
     const imageLieu = document.createElement("h3");
-    imageLieu.textContent = proprietes.lieu || "Lieu inconnu";
-    ficheImageEtiquette.appendChild(imageLieu);
+    imageLieu.textContent = infos.lieu;
 
     const imageDatesExtremes = document.createElement("time");
-    const anneeInf = proprietes.date_inf ? proprietes.date_inf.split("-")[0] : null;
-    const anneeSup = proprietes.date_sup ? proprietes.date_sup.split("-")[0] : null;
+    imageDatesExtremes.textContent = infos.datesExtremes;  // Utilisation des dates formatées
 
-    // Agrandir
-    const imageCote = proprietes.cote_aml;
-
+    // Lien pour agrandir l'image
     const imageLien = document.createElement("a");
-    imageLien.href = `https://archivesenligne.limoges.fr/4DCGI/Web_DFPict/034/${imageCote}/ILUMP16014`;
+    imageLien.href = `https://archivesenligne.limoges.fr/4DCGI/Web_DFPict/034/${infos.coteAML}/ILUMP16014`;
     imageLien.target = "_blank";
 
     const agrandirImage = document.createElement("img");
     agrandirImage.src = "../ressources/icones/agrandir.png";
     agrandirImage.classList.add('image-icone');
-    imageLien.appendChild(agrandirImage);
 
-    // Ajouter le lien contenant l'image à l'élément parent (ficheImage)
+    // Construction de la fiche d'image basique
+    ficheImage.appendChild(ficheImageImage);
+    ficheImageImage.appendChild(imageImage);
     ficheImageImage.appendChild(imageLien);
-
-
-    if (anneeInf && anneeSup) {
-        imageDatesExtremes.textContent = anneeInf === anneeSup ? anneeInf : `${anneeInf}-${anneeSup}`;
-    } else if (anneeSup) {
-        imageDatesExtremes.textContent = `Avant ${anneeSup}`;
-    } else if (anneeInf) {
-        imageDatesExtremes.textContent = `Après ${anneeInf}`;
-    } else {
-        imageDatesExtremes.textContent = "Date inconnue";
-    }
-
+    imageLien.appendChild(agrandirImage);
+    ficheImage.appendChild(ficheImageEtiquette);
+    ficheImageEtiquette.appendChild(imageLieu);
     ficheImageEtiquette.appendChild(imageDatesExtremes);
 
     return ficheImage;
 }
-
-// Pour l'image sélectionnée
-
 function creerFicheImageDetaillee(proprietes) {
-    // On prend la fiche basique
-    const ficheImageDetaillee = creerFicheImage(proprietes);
+    const infos = obtenirInfosImage(proprietes);  // Récupère les informations communes
+
+    // On commence par créer la fiche basique
+    const ficheImageDetaillee = creerFicheImage(proprietes);  // Utilisation de la fonction de la fiche basique
+
+    // Création de la section détaillée (Cote des Archives)
     const ficheImageEtiquetteDetaillee = document.createElement('div');
     ficheImageEtiquetteDetaillee.classList.add('fiche-image-etiquette');
 
-    // Cote des Archives municipales
-
-    const cote = document.createElement("div")
-    cote.classList.add("donnees-ligne")
+    const cote = document.createElement("div");
+    cote.classList.add("donnees-ligne");
 
     const coteEtiquette = document.createElement('dt');
     coteEtiquette.textContent = 'Cote AML :';
 
     const coteContenu = document.createElement('dd');
 
-    const imageCoteGJS = proprietes.cote_aml; //Ça recupère la cote du geojson
-
     const coteLien = document.createElement("a");
-    coteLien.href = `https://archivesenligne.limoges.fr/4DCGI/Web_VoirLaNotice/34_01/${imageCoteGJS}/ILUMP830`;
+    coteLien.href = `https://archivesenligne.limoges.fr/4DCGI/Web_VoirLaNotice/34_01/${infos.imageCoteGJS}/ILUMP830`;
     coteLien.target = "_blank";
-    coteLien.textContent = proprietes.cote_aml || "Aucune cote fournie";
+    coteLien.textContent = infos.coteAML || "Aucune cote fournie";
 
-    //Ajout des élements
-
+    // Construction de la fiche détaillée
     ficheImageDetaillee.appendChild(ficheImageEtiquetteDetaillee);
-
-    ficheImageEtiquetteDetaillee.appendChild(cote)
-
+    ficheImageEtiquetteDetaillee.appendChild(cote);
     cote.appendChild(coteEtiquette);
     cote.appendChild(coteContenu);
-
     coteContenu.appendChild(coteLien);
 
     return ficheImageDetaillee;

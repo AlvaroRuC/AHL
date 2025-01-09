@@ -68,7 +68,7 @@ function ajouterFicheImage(ficheImage, fichesImagesVisibles) {
         ficheImage.classList.add('visible'); // Transition d'apparition de la fiche
     }, 10);
 }
- 
+
 function gererEvenementsFicheImage(ficheImage, proprietes, imageSelectionnee) {
     // Ajouter un événement de clic pour la sélection de l'image
     ficheImage.addEventListener('click', function() {

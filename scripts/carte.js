@@ -66,6 +66,15 @@ map.on('load', () => {
         "data": "/donnees/Bati-CRS-84.geojson"
     })
 
+    // map.addSource("imagesCluster", {
+    //     "type": "geojson",
+    //     "data": "/donnees/images_points.geojson",
+    //     "generateId": true,
+    //     "cluster": true,
+    //     "clusterMaxZoom": 14,
+    //     "clusterRadius": 50
+    // })
+
     map.addSource("images", {
         "type": "geojson",
         "data": "/donnees/images_points.geojson",

@@ -1,4 +1,4 @@
-// Je crée un nouveau control Maplibre pour controler le déplacement
+// Création un nouveau control Maplibre pour controler le déplacement
 
 const controleVolet = document.createElement("div");
 controleVolet.classList = "maplibregl-ctrl maplibregl-ctrl-group";

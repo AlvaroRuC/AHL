@@ -96,6 +96,11 @@ body {
     margin: 8px;
 }
 
+.controle {
+    height: 80%;
+    margin: 3px;
+}
+
 /* Checkbox */
 
 .layers-control .layer-control {
