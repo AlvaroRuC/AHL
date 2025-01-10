@@ -71,7 +71,7 @@ function ajouterFicheImage(ficheImage, fichesImagesVisibles) {
 
 function gererEvenementsFicheImage(ficheImage, proprietes, imageSelectionnee) {
     // Ajouter un événement de clic pour la sélection de l'image
-    ficheImage.addEventListener('click', function() {
+    ficheImage.addEventListener('click', function () {
         imageSelectionnee.innerHTML = ''; // Vide la section de l'image sélectionnée
         const ficheImageSelectionnee = creerFicheImageDetaillee(proprietes);
         imageSelectionnee.appendChild(ficheImageSelectionnee);
@@ -82,15 +82,19 @@ function gererEvenementsFicheImage(ficheImage, proprietes, imageSelectionnee) {
     });
 
     // Ajouter l'événement hover (mouseenter et mouseleave)
-    ficheImage.addEventListener('mouseenter', function() {
-        surlignerImage(proprietes.id_image);
+    ficheImage.addEventListener('mouseenter', function () {
+
+        const idMapLibre = obtenirIdMLDepuisIdImage(proprietes.id_image);
+
+        surlignerImage(idMapLibre, proprietes.id_image);
     });
 
-    ficheImage.addEventListener('mouseleave', function() {
-        // Restaure l'état d'origine lorsque la souris quitte la fiche
-        ficheImage.style.transform = 'scale(1)';
-        ficheImage.style.boxShadow = 'none';
-        enleverSurlignageImage(proprietes.id_image)
+    ficheImage.addEventListener('mouseleave', function () {
+        // Obtenir l'ID MapLibre depuis l'ID personnalisé (id_image)
+        const idMapLibre = obtenirIdMLDepuisIdImage(proprietes.id_image);
+
+        // Enlever le surlignage en utilisant l'ID MapLibre
+        enleverSurlignageImage(idMapLibre);
     });
 }
 

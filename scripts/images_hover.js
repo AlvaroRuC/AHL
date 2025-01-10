@@ -6,7 +6,16 @@ let idPointSurvole = null;  // ID du point survolé sur la carte
 
 let timeoutId = null;  // Variable pour stocker l'identifiant du timeout
 
-function surlignerImage(idImage) {
+// Fonction utilitaire pour obtenir l'ID MapLibre à partir de id_image
+function obtenirIdMLDepuisIdImage(idImage) {
+    const features = map.querySourceFeatures('images', {
+        filter: ['==', ['get', 'id_image'], idImage]
+    });
+
+    return features[0].id;
+}
+
+function surlignerImage(idMapLibreImage, idImageSurvolee) {
     // Si un timeout est déjà en cours, on l'annule
     if (timeoutId) {
         clearTimeout(timeoutId);
@@ -14,92 +23,56 @@ function surlignerImage(idImage) {
 
     // On crée un nouveau timeout avec un délai (par exemple 300ms)
     timeoutId = setTimeout(() => {
-        const features = map.querySourceFeatures('images', {
-            filter: ['==', ['get', 'id_image'], idImage]
-        });
-
-        if (features.length > 0) {
-            const feature = features[0];
-            const mapLibreId = feature.id;
-
-            map.setFeatureState(
-                { source: 'images', id: mapLibreId },
-                { hover: true }
-            );
-
-            map.setLayoutProperty(
-                'images-polygones',
-                'visibility',
-                'visible'
-            );
-
-            map.setFilter(
-                'images-polygones',
-                ['==', ['number', ['get', 'image']], idImage]
-            );
-        }
-    }, 100);  // 300ms de délai avant d'exécuter la logique
-}
-
-
-function enleverSurlignageImage(idImage) {
-    const features = map.querySourceFeatures('images', {
-        filter: ['==', ['get', 'id_image'], idImage]
-    });
-
-    if (features.length > 0) {
-        const feature = features[0];
-        const mapLibreId = feature.id;
 
         map.setFeatureState(
-            { source: 'images', id: mapLibreId },
-            { hover: false }
+            { source: 'images', id: idMapLibreImage },
+            { hover: true }
         );
 
         map.setLayoutProperty(
             'images-polygones',
             'visibility',
-            'none'
+            'visible'
         );
-    }
+
+        map.setFilter(
+            'images-polygones',
+            ['==', ['number', ['get', 'image']], idImageSurvolee]
+        );
+
+    }, 100);  // 100ms de délai avant d'exécuter la logique
 }
 
-let lastMove = 0;
-const throttleTime = 50;
+function enleverSurlignageImage(idMapLibreImage) {
 
-map.on('mousemove', 'images-points', (e) => {
-    const now = Date.now();
-    if (now - lastMove < throttleTime) {
-        return;
-    }
-    lastMove = now;
+    map.setFeatureState(
+        { source: 'images', id: idMapLibreImage },
+        { hover: false }
+    );
 
-    const imageIdHover = e.features[0].properties.id_image;
+    map.setLayoutProperty(
+        'images-polygones',
+        'visibility',
+        'none'
+    );
 
-    if (e.features.length > 0) {
-        if (idPointSurvole !== null && idPointSurvole !== e.features[0].id) {
-            map.setFeatureState(
-                { source: 'images', id: idPointSurvole },
-                { hover: false }
-            );
-        }
+}
 
-        map.getCanvas().style.cursor = 'pointer';
-        idPointSurvole = e.features[0].id;
+map.on('mouseenter', 'images-points', (e) => {
 
-        surlignerImage(imageIdHover);
-    }
+    const imageIdSurvolee = e.features[0].properties.id_image;
+
+    const idMapLibre = obtenirIdMLDepuisIdImage(imageIdSurvolee);
+
+    map.getCanvas().style.cursor = 'pointer';
+    idPointSurvole = e.features[0].id;
+
+    surlignerImage(idMapLibre, imageIdSurvolee);
 });
 
 map.on('mouseleave', 'images-points', () => {
-    if (idPointSurvole !== null) {
-        map.setFeatureState(
-            { source: 'images', id: idPointSurvole },
-            { hover: false }
-        );
 
-        enleverSurlignageImage(idPointSurvole);
-    }
+    enleverSurlignageImage(idPointSurvole)
 
     map.getCanvas().style.cursor = '';
     idPointSurvole = null;
