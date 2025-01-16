@@ -1,0 +1,56 @@
+<style>
+    /* Style de la carte */
+    .carte {
+        position: relative;
+        background-color: white;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        margin: 10px;
+        overflow: hidden;
+    }
+
+    .etiquette {
+        position: relative;
+    }
+
+    .carte img {
+        max-width: 100%;
+    }
+
+    .carte-title {
+        font-size: 1.2em;
+        color: #333;
+    }
+
+    .carte-info {
+        color: #666;
+    }
+
+    /* Petite taille */
+    @media (max-width: 600px) {
+        .etiquette {
+            position: absolute;
+            bottom: 10px;
+            background-color: black;
+            padding: 5px;
+            border-radius: 3px;
+            display: flex;
+        }
+        .carte-title {
+            font-size: 1.2em;
+            color: #ffffff;
+        }
+        .carte-info {
+            color: #ffffff;
+        }
+    }
+</style>
+<div class="carte">
+    <img src="" alt="Image de la carte">
+    <div class="etiquette">
+        <div class="carte-title">Titre par défaut</div>
+        <div class="carte-info date">Date par défaut</div>
+        <div class="carte-info lieu">Lieu par défaut</div>
+    </div>
+</div>

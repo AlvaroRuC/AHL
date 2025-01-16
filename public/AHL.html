@@ -11,6 +11,8 @@
     <link rel="stylesheet" crossorigin href="/css/style.css">
     <!-- Ancien sidebar. Probablement je ne l'utiliserai plus-->
     <!-- <link rel="stylesheet" crossorigin href="/css/sidebar.css">  -->
+    <link rel="stylesheet" crossorigin href="/css/slider.css">
+
 
     <script src="https://unpkg.com/three@0.147.0/build/three.min.js"></script>
     <script src="https://unpkg.com/three@0.147.0/examples/js/loaders/GLTFLoader.js"></script>
@@ -26,11 +28,37 @@
 
     <div id="volet" class="plie">
         <div id="search-container">
+            <h2>Filtrer</h2>
             <input type="text" id="recherche" placeholder="Rechercher..." />
             <i id="recherche-icon" class="fa fa-search"></i>
             <!-- NE PAS OUBLIER D'AJOUTER UNE ICONE -->
         </div>
+
+        <div class="wrapper">
+            <div class="values">
+                <span id="range1">
+                    1840
+                </span>
+                <span> &dash; </span>
+                <span id="range2">
+                    2000
+                </span>
+            </div>
+            <div class="container">
+                <div class="slider-track"></div>
+                <input type="range" min="1840" max="2000" value="1840" id="slider-1" oninput="slideOne()">
+                <span id="range1"></span>
+                </input>
+                <input type="range" min="1840" max="2000" value="1840" id="slider-2" oninput="slideTwo()">
+            </div>
+        </div>
+
         <div id="image-selectionnee"></div>
+
+        <template id="my-paragraph">
+            <p>My paragraph</p>
+        </template>
+
         <div id="images-visibles"></div>
     </div>
 
@@ -124,8 +152,8 @@
     <!-- Gére la modification des informations des photographies -->
     <script src="/scripts/volet.js"></script>
 
-    <!-- Fonctions pour la barre de recherche -->
-    <script src="/scripts/volet/recherche.js"></script>
+    <!-- Fonctions pour filtres les images -->
+    <script src="/scripts/volet/filtres.js"></script>
 
     <!-- Ouvre les images quand on active le bouton images -->
     <script src="/scripts/volet_images.js"></script>
@@ -136,8 +164,8 @@
     <!-- Contrôle de couches -->
     <script src="/scripts/couches.js"></script>
 
-    <!-- Pour convertir les id des geojson dans des id maplibre -->
-    <script src="/scripts/convertisseur_id.js"></script>
+    <!-- Pour filtrer les dates -->
+    <script src="/scripts/slider.js"></script>
 
 
 </body>

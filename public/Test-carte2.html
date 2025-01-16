@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test carte-image avec GeoJSON</title>
+    <script src="../composants/fiche-image.js" defer></script> <!-- Importer le script du composant -->
+</head>
+
+<body>
+    <div id="card-container"></div>
+    <style>
+        @font-face {
+            font-family: 'Roboto';
+            src: url('/ressources/polices/Roboto/Roboto-Regular.woff2') format('woff2'),
+                url('/ressources/polices/Roboto/Roboto-Regular.ttf') format('truetype');
+            font-weight: 400;
+            font-style: normal;
+        }
+
+        @font-face {
+            font-family: 'Roboto';
+            src: url('/ressources/polices/Roboto/Roboto-Light.woff2') format('woff2'),
+                url('/ressources/polices/Roboto/Roboto-Light.ttf') format('truetype');
+            font-weight: 300;
+            font-style: normal;
+        }
+
+        @font-face {
+            font-family: 'Roboto-condensed';
+            src: url('/ressources/polices/Roboto_condensed/RobotoCondensed-Bold.woff2') format('woff2'),
+                url('/ressources/polices/Roboto_condensed/RobotoCondensed-Bold.ttf') format('truetype');
+            font-weight: 700;
+            font-style: normal;
+        }
+
+        body {
+            font-family: Roboto-condensed;
+            font-weight: 300;
+        }
+    </style>
+    <script>
+        // Fonction pour vérifier si une date est valide
+        function isValidDate(date) {
+            return !isNaN(Date.parse(date));
+        }
+
+        // Fonction pour formater les dates selon la logique définie
+        function formatDates(dateDebut, dateFin) {
+            let imageDates;
+
+            // Si les dates sont nulles, on les remplace par une chaîne vide pour éviter des erreurs
+            const dateDebutObj = dateDebut ? new Date(dateDebut) : null;
+            const dateFinObj = dateFin ? new Date(dateFin) : null;
+
+            if (!dateDebutObj && !dateFinObj) {
+                imageDates = 'Date inconnue';
+            } else if (dateDebutObj && !dateFinObj) {
+                imageDates = 'Après ' + dateDebutObj.getFullYear();
+            } else if (!dateDebutObj && dateFinObj) {
+                imageDates = 'Avant ' + dateFinObj.getFullYear();
+            } else if (dateDebutObj && dateFinObj) {
+                imageDates = 'Entre ' + dateDebutObj.getFullYear() + ' et ' + dateFinObj.getFullYear();
+            }
+
+            return imageDates;
+        }
+
+        async function chargerEtGenererCartes() {
+            const geojson = await fetch('../donnees/images_points.geojson').then(response => response.json());
+            const cardContainer = document.getElementById('card-container');
+            cardContainer.innerHTML = ''; // Vider le conteneur avant de l'ajouter
+
+            geojson.features.forEach(feature => {
+                const cardElement = document.createElement('my-card');
+
+                // Extraire les données du GeoJSON
+                const { chemin, lieu, date_inf, date_sup, cote_aml } = feature.properties;
+
+                // Utiliser la fonction formatDates pour obtenir le texte formaté des dates
+                const imageDates = formatDates(date_inf, date_sup);
+
+                // Créer un objet de données à passer au composant
+                const data = {
+                    image: `../donnees/${chemin}`,
+                    title: lieu,
+                    date: imageDates,
+                    location: lieu,
+                    cote_aml: cote_aml
+                };
+
+                // Utiliser la méthode pour définir les données dans le composant
+                cardElement.setCardData(data.image, data.title, data.date, data.location, data.cote_aml);
+
+                // Ajouter la carte au conteneur
+                cardContainer.appendChild(cardElement);
+            });
+        }
+
+        // Lancer la génération des cartes dès que la page est chargée
+        window.onload = chargerEtGenererCartes;
+    </script>
+</body>
+
+</html>

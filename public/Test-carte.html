@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cartes avec GeoJSON</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        my-card {
+            display: block;
+            width: 250px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        /* .card-image img {
+            max-width: 100%;
+            border-radius: 8px;
+            display: block;
+            margin: 0 auto;
+        }
+
+        .card-content {
+            margin-top: 10px;
+        }
+
+        .card-content .title {
+            font-size: 1.2em;
+            color: #333;
+        }
+
+        .card-content .info {
+            color: #666;
+            font-size: 1em;
+        } */
+    </style>
+</head>
+<body>
+
+    <h1>Images</h1>
+    <!-- Cartes dynamiques générées ici -->
+    <div id="card-container"></div>
+
+
+    <!-- Template de carte -->
+    <template id="card-template">
+        <style>
+            .card-image img {
+                max-width: 100%;
+                border-radius: 8px;
+                display: block;
+                margin: 0 auto;
+            }
+
+            .card-content {
+                margin-top: 10px;
+            }
+
+            .card-content .title {
+                font-size: 1.2em;
+                color: #333;
+            }
+
+            .card-content .info {
+                color: #666;
+                font-size: 1em;
+            }
+        </style>
+        <div class="card-image">
+            <slot name="image">Image par défaut</slot>
+        </div>
+        <div class="card-content">
+            <div class="title">
+                <slot name="title">Titre par défaut</slot>
+            </div>
+            <div class="info">
+                <slot name="date">Date par défaut</slot><br>
+                <slot name="location">Lieu par défaut</slot><br>
+                <slot name="cote_aml">Cote AML par défaut</slot>
+            </div>
+        </div>
+    </template>
+
+    <script>
+        // Définir le composant my-card
+        class MyCard extends HTMLElement {
+            constructor() {
+                super();
+                const template = document.getElementById('card-template');
+                const templateContent = template.content;
+                const shadowRoot = this.attachShadow({ mode: 'open' }).appendChild(templateContent.cloneNode(true));
+            }
+        }
+
+        customElements.define('my-card', MyCard);
+
+        // Fonction pour charger le GeoJSON et générer des cartes
+        async function genererCartesDepuisGeoJSON() {
+            const geojson = await chargerGeoJSON();
+
+            const cardContainer = document.getElementById('card-container');
+            cardContainer.innerHTML = '';  // Vider le conteneur avant d'ajouter de nouvelles cartes
+
+            geojson.features.forEach(feature => {
+                const card = document.createElement('my-card');
+                const properties = feature.properties;
+
+                // Ajouter des slots pour chaque donnée
+                const imageSlot = card.shadowRoot.querySelector('slot[name="image"]');
+                imageSlot.innerHTML = `<img src="../donnees/${properties.chemin}" alt="${properties.lieu}">`;
+
+                const titleSlot = card.shadowRoot.querySelector('slot[name="title"]');
+                titleSlot.textContent = properties.lieu;
+
+                const dateSlot = card.shadowRoot.querySelector('slot[name="date"]');
+                dateSlot.textContent = `${properties.date_inf} - ${properties.date_sup}`;
+
+                const locationSlot = card.shadowRoot.querySelector('slot[name="location"]');
+                locationSlot.textContent = properties.lieu;
+
+                const coteAmlSlot = card.shadowRoot.querySelector('slot[name="cote_aml"]');
+                coteAmlSlot.textContent = properties.cote_aml;
+
+                // Ajouter la carte générée au conteneur
+                cardContainer.appendChild(card);
+            });
+        }
+
+        // Fonction pour charger le GeoJSON
+        async function chargerGeoJSON() {
+            // Remplacer par le chemin vers votre fichier GeoJSON
+            const response = await fetch('../donnees/images_points.geojson');
+            const data = await response.json();
+            return data;
+        }
+
+        // Générer les cartes au chargement de la page
+        window.onload = genererCartesDepuisGeoJSON;
+    </script>
+
+</body>
+</html>
