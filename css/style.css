@@ -26,6 +26,23 @@ body {
     margin: 0;
     padding: 0;
     overflow: hidden;
+
+    font-family: Roboto-condensed, Arial, Helvetica, sans-serif;
+}
+
+h2 {
+    font-weight: 700;
+    font-size: 24px;
+}
+
+h3 {
+    font-weight: 700;
+    font-size: 18px;
+}
+
+h4 {
+    font-weight: 700;
+    font-size: 14px;
 }
 
 #map {
@@ -77,9 +94,7 @@ body {
     width: 100%;
     position: relative;
     cursor: ew-resize;
-}
-
-;
+};
 
 .map-overlay input[type=checkbox] {
     background-color: transparent;
@@ -87,62 +102,16 @@ body {
     width: 100%;
     position: relative;
     cursor: ew-resize;
-}
+};
 
-;
-
-/* Eliminar si no lo utilizo */
-.my-custom-control {
-    color: #f00;
-    background: #000;
-    padding: 8px;
-    border-radius: 4px;
-    margin: 8px;
-}
-
-.controle {
-    height: 80%;
-    margin: 3px;
-}
-
-/* Checkbox */
+/* Checkbox (bâti 3D, Boucherie 3D)*/
 
 .layers-control .layer-control {
     display: block;
     padding: 0.2em;
 }
 
-/* Paneau photo */
-
-#paneau-photo {
-    display: flex;
-    justify-content: center;
-    position: absolute;
-    bottom: 5px;
-    z-index: 10;
-    align-items: center;
-
-}
-
-.popup-img {
-    max-width: 100%;
-}
-
-.popupRedimensionnable {
-    resize: both;
-    overflow: auto;
-    z-index: 100;
-}
-
 /* Pour compare plugin */
-
-body * {
-    -webkit-touch-callout: none;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-}
 
 .map {
     position: absolute;
@@ -166,23 +135,6 @@ body * {
 
 /* Pour le nouveau volet lateral */
 
-#bouton-volet {
-    position: relative;
-    z-index: 1;
-
-    width: 29px;
-    height: 29px;
-    border-radius: 5px;
-    box-shadow: 0 0 0 2px rgba(0, 0, 0, .1);
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    background: white;
-    pointer-events: all;
-}
-
 #volet {
     position: absolute;
     right: 0px;
@@ -194,9 +146,7 @@ body * {
 
     height: 100%;
 
-    font-family: Roboto, sans-serif;
-
-    background:white;
+    background:#f3f3f8;
     transition: width 1s linear;
     user-select: text;
     border-left: 1px solid #bfbfbf;
@@ -208,67 +158,57 @@ body * {
     padding: 0px;
 }
 
-#volet h2 {
+#volet h4 {
     margin-top: 5px;
-    margin-bottom: 5px;
-    margin-left: 2px;
-    font-family: Roboto-condensed, sans-serif;
-    font-weight: 700;
-    font-size: 24px;
-}
-
-#volet h3 {
-    margin-top: 5px;
-    font-family: Roboto-condensed, sans-serif;
-    font-weight: 700;
-    font-size: 14px;
     margin-bottom: 0px;
 }
 
-#image-selectionnee {
-    /* background-color: #eaeaea; */
-    margin-bottom: 15px;
+#fiche-img-selectionee{
+    transition: border-color 0.3s ease;
+    border: 1px solid #2f8aa873;
+    outline: none;
 }
 
-#image-selectionnee .fiche-image{
-    background: #fbfbfb;
-    border: 1px solid #c4c4c4;
+#fiche-img-selectionee .fiche-img{
     padding: 5px;
-    border-radius: 4px;
 }
 
-#fiches-images {
-    display: flex;
-    flex-direction: column;
-    transition: all;
-    user-select: text;
-}
-
-.fiche-image {
+.fiche-img {
     margin: 0px 0px 15px 0px;
-    border: #000;
-    transition: opacity 1s ease-in-out;
-    opacity: 0.75;
     position: relative;
+    background-color: #fff;
+    border-radius: 10px;
 }
 
-.fiche-image.visible {
+.fiche-img.visible {
     opacity: 1;
 }
 
-.fiche-image-etiquette {
+.fiche-img-etiquette {
     margin-left: 4px;
     user-select: text;
     font-size: 13px;
 }
 
-.fiche-image img {
+.photographie {
     max-width: 100%;
     border-radius: 5px;
 }
-.fiche-image time {
+
+.visible .photographie {
+    transition: opacity 0.5s ease-in-out;
+    opacity: 0.7;
+}
+
+.visible .photographie:hover {
+    transition: opacity 0.5s ease-in;
+    opacity: 1;
+}
+
+.fiche-img time {
     margin-top: 5px;
     font-size: 13px;
+    font-family: Roboto, sans-serif;
 }
 
 .image-icones {
@@ -290,6 +230,7 @@ body * {
     display: flex;                 /* Pour pouvoir centrer le contenu dans chaque icône */
     align-items: center;           /* Aligner verticalement l'icône à l'intérieur du conteneur */
     justify-content: center;       /* Centrer l'icône horizontalement à l'intérieur du conteneur */
+    border-radius: 5px;
 }
 
 .donnees-ligne dt {
@@ -307,7 +248,7 @@ body * {
     padding: 5px 0px 5px 5px;
     font-size: 16px;
     border-radius: 5px;
-    border: 1px solid #ccc;           /* Bordure grise par défaut */
+    border: 1px solid #ccc;
     transition: border-color 0.3s ease; /* Transition douce pour le changement de couleur de bordure */
     font:
     bold 15px/20px 'Roboto-condensed',
@@ -318,8 +259,8 @@ body * {
 
 /* Changer la couleur de la bordure au focus */
 #recherche:focus {
-    border-color: #2f8aa8;  /* Bordure verte lorsqu'on clique dans le champ */
-    outline: none;          /* Supprime le contour bleu par défaut */
+    border-color: #2f8aa8;
+    outline: none;
 }
 
 /* Style pour ajouter un icône de recherche*/

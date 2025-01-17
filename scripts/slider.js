@@ -30,3 +30,31 @@ function fillColor(){
     percent2 = (sliderTwo.value / sliderMaxValue) * 100;
     sliderTrack.style.background = `linear-gradient(to right, #dadae5 ${percent1}% , #3264fe ${percent1}% , #3264fe ${percent2}%, #dadae5 ${percent2}%)`;
 }
+
+// Fonction pour mettre à jour le champ de texte (input) 1 à partir du slider
+function updateInput1() {
+    const slider1 = document.getElementById('slider-1');
+    const range1 = document.getElementById('range1');
+    range1.value = slider1.value;
+}
+
+// Fonction pour mettre à jour le champ de texte (input) 2 à partir du slider
+function updateInput2() {
+    const slider2 = document.getElementById('slider-2');
+    const range2 = document.getElementById('range2');
+    range2.value = slider2.value;
+}
+
+// Fonction pour mettre à jour le slider 1 à partir du champ de texte
+function updateSlider1() {
+    const range1 = document.getElementById('range1');
+    const slider1 = document.getElementById('slider-1');
+    slider1.value = range1.value;
+}
+
+// Fonction pour mettre à jour le slider 2 à partir du champ de texte
+function updateSlider2() {
+    const range2 = document.getElementById('range2');
+    const slider2 = document.getElementById('slider-2');
+    slider2.value = range2.value;
+}

@@ -8,11 +8,16 @@ controlCouchesParent.appendChild(controleCouches);
 
 const boutonCouches = document.createElement("button");
 boutonCouches.id = "bouton-couches";
+boutonCouches.classList.add("controle");
+
 controleCouches.appendChild(boutonCouches);
+
 
 const icon = document.createElement("img");
 icon.src = "../ressources/icones/couches.png";
 icon.alt = "Icône couches";
-icon.classList.add("controle");
+icon.style.height = "80%";
+icon.style.margin = "3px";
+
 
 boutonCouches.appendChild(icon);

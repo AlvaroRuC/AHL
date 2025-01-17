@@ -19,7 +19,7 @@
 [] Ouverture d'un formulaire de saisi de points et d'emprises.
 [] Pour modifier les images: créer un API côté serveur qui accepte des requêtes de mise à jour (PUT, PATCH, ou POST), et cette API permettra de modifier le GeoJSON. Node.js et Express pour gérer l'API serveur.
 
-
+Quel système pour geolocaliser ? Nouvelle page ou à travers la carte ?
 
 # Changements novembre :
 

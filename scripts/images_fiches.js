@@ -22,22 +22,21 @@ function creerFicheImage(proprietes) {
 
     // Création du conteneur de la fiche d'image
     const ficheImage = document.createElement('div');
-    ficheImage.classList.add('fiche-image');
+    ficheImage.classList.add('fiche-img');
     ficheImage.setAttribute('image-id', proprietes.id_image);
 
     // Partie image
-    const ficheImageImage = document.createElement("div");
-    ficheImageImage.classList.add('fiche-image-image');
 
     const imageImage = document.createElement('img');
     imageImage.src = infos.chemin;  // Utilisation du chemin obtenu
     imageImage.alt = infos.lieu;  // Utilisation du lieu obtenu
+    imageImage.classList.add('photographie')
 
     // Partie étiquette
     const ficheImageEtiquette = document.createElement("div");
-    ficheImageEtiquette.classList.add('fiche-image-etiquette');
+    ficheImageEtiquette.classList.add('fiche-img-etiquette');
 
-    const imageLieu = document.createElement("h3");
+    const imageLieu = document.createElement("h4");
     imageLieu.textContent = infos.lieu;
 
     const imageDatesExtremes = document.createElement("time");
@@ -53,9 +52,8 @@ function creerFicheImage(proprietes) {
     agrandirImage.classList.add('image-icone');
 
     // Construction de la fiche d'image basique
-    ficheImage.appendChild(ficheImageImage);
-    ficheImageImage.appendChild(imageImage);
-    ficheImageImage.appendChild(imageLien);
+    ficheImage.appendChild(imageImage);
+    ficheImage.appendChild(imageLien);
     imageLien.appendChild(agrandirImage);
     ficheImage.appendChild(ficheImageEtiquette);
     ficheImageEtiquette.appendChild(imageLieu);
@@ -71,7 +69,7 @@ function creerFicheImageDetaillee(proprietes) {
 
     // Création de la section détaillée (Cote des Archives)
     const ficheImageEtiquetteDetaillee = document.createElement('div');
-    ficheImageEtiquetteDetaillee.classList.add('fiche-image-etiquette');
+    ficheImageEtiquetteDetaillee.classList.add('fiche-img-etiquette');
 
     const cote = document.createElement("div");
     cote.classList.add("donnees-ligne");

@@ -11,37 +11,44 @@ document.getElementById("bouton-volet").addEventListener("click", function () {
 });
 
 function filtrerImagesParDate(images) {
-    const dateMin = new Date(sliderOne.value + "-01-01");  // Date minimale en fonction du slider 1 (ex: "1860-01-01")
-    const dateMax = new Date(sliderTwo.value + "-12-31");  // Date maximale en fonction du slider 2 (ex: "2000-12-31")
-
-    console.log("Date Min:", dateMin, "Date Max:", dateMax);  // Affichage des dates pour déboguer
+    // Récupérer les valeurs des sliders
+    const dateMin = new Date(sliderOne.value === "0" ? "0000-01-01" : sliderOne.value + "-01-01"); // Date minimale
+    const dateMax = new Date(sliderTwo.value + "-12-31"); // Date maximale
 
     return images.filter(imageVisible => {
         const dateInfStr = imageVisible.properties.date_inf; // date de début
         const dateSupStr = imageVisible.properties.date_sup; // date de fin
 
-        // Si les dates sont manquantes, on ignore cette image
+        // Si les deux dates sont manquantes, on exclut l'image
+        if (!dateInfStr && !dateSupStr) {
+            return false; // Exclut l'image si les deux dates sont manquantes
+        }
+
+        // Si une des dates est manquante, on l'inclut quand même
         if (!dateInfStr || !dateSupStr) {
-            console.log(`Dates manquantes pour l'image ${imageVisible.properties.id_image}`);
-            return false;  // On ignore cette image si une des dates est manquante
+            return true; // Inclut l'image si une des dates est manquante
         }
 
         const dateInf = new Date(dateInfStr); // Date de début de l'image
         const dateSup = new Date(dateSupStr); // Date de fin de l'image
 
-        console.log("Date Inf:", dateInf, "Date Sup:", dateSup); // Log des dates pour débogage
+        // Si l'image n'a pas de dates valides et la valeur du slider est "0" (pour inclure les dates inconnues)
+        if (sliderOne.value === "0" && (!dateInfStr || !dateSupStr)) {
+            return true; // Inclut les images sans dates (si la valeur du slider est "0")
+        }
 
         // Vérifie si l'image est dans la plage des dates spécifiées
         return (dateSup >= dateMin && dateInf <= dateMax);
     });
 }
 
+
 // Fonction principale pour afficher les images dans le volet
 
 function afficherImagesVolet(recherche = '') {
     const volet = document.getElementById('volet');
-    const imageSelectionnee = document.getElementById('image-selectionnee');
-    const fichesImagesVisibles = document.getElementById('images-visibles');
+    const imageSelectionnee = document.getElementById('fiche-img-selectionee');
+    const fichesImagesVisibles = document.getElementById('fiches-img-visibles');
     fichesImagesVisibles.innerHTML = ''; // Vide la liste des images visibles
 
     const fichesImagesVisiblesData = map.queryRenderedFeatures({ layers: ['images-points'] });

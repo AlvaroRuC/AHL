@@ -9,10 +9,7 @@
     <link href="https://unpkg.com/maplibre-gl@4.7.0/dist/maplibre-gl.css" rel="stylesheet">
 
     <link rel="stylesheet" crossorigin href="/css/style.css">
-    <!-- Ancien sidebar. Probablement je ne l'utiliserai plus-->
-    <!-- <link rel="stylesheet" crossorigin href="/css/sidebar.css">  -->
     <link rel="stylesheet" crossorigin href="/css/slider.css">
-
 
     <script src="https://unpkg.com/three@0.147.0/build/three.min.js"></script>
     <script src="https://unpkg.com/three@0.147.0/examples/js/loaders/GLTFLoader.js"></script>
@@ -28,21 +25,18 @@
 
     <div id="volet" class="plie">
         <div id="search-container">
-            <h2>Filtrer</h2>
+            <h2>Rechercher</h2>
             <input type="text" id="recherche" placeholder="Rechercher..." />
+            <h3>Filtrer</h3>
             <i id="recherche-icon" class="fa fa-search"></i>
             <!-- NE PAS OUBLIER D'AJOUTER UNE ICONE -->
         </div>
 
         <div class="wrapper">
             <div class="values">
-                <span id="range1">
-                    1840
-                </span>
+                <input type="number" id="range1" value="1840" min="1840" max="2000" oninput="updateSlider1()">
                 <span> &dash; </span>
-                <span id="range2">
-                    2000
-                </span>
+                <input type="number" id="range2" value="2000" min="1840" max="2000" oninput="updateSlider2()">
             </div>
             <div class="container">
                 <div class="slider-track"></div>
@@ -53,13 +47,13 @@
             </div>
         </div>
 
-        <div id="image-selectionnee"></div>
+        <div id="fiche-img-selectionee" class="fiche-img"></div>
 
         <template id="my-paragraph">
             <p>My paragraph</p>
         </template>
 
-        <div id="images-visibles"></div>
+        <div id="fiches-img-visibles"></div>
     </div>
 
 

@@ -8,6 +8,7 @@ voletParent.appendChild(controleVolet);
 
 const boutonVolet = document.createElement("button");
 boutonVolet.id = "bouton-volet";
+boutonVolet.classList.add("controle")
 controleVolet.appendChild(boutonVolet);
 boutonVolet.innerHTML = "&larr;"; //Flèche
 
