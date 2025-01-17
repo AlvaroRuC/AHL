@@ -46,6 +46,7 @@ function creerFicheImage(proprietes) {
     const imageLien = document.createElement("a");
     imageLien.href = `https://archivesenligne.limoges.fr/4DCGI/Web_DFPict/034/${infos.coteAML}/ILUMP16014`;
     imageLien.target = "_blank";
+    imageLien.classList.add('image-bouton');
 
     const agrandirImage = document.createElement("img");
     agrandirImage.src = "../ressources/icones/agrandir.png";
