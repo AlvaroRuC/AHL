@@ -167,21 +167,77 @@ h4 {
     margin-bottom: 0px;
 }
 
-/* #fiche-img-selectionee .fiche-img:hover {
-    transition: border-color 0.3s ease;
-    border: 1px solid #2f8aa873;
-    outline: none;
-} */
-
-.fiche-img-etiquette {
-    background-color: #ffffff;
-    user-select: text;
-    font-size: 13px;
-    margin: -1px 0px 4px 0px;
-    padding: 3px 10px;
+#boite-outils {
+    margin: 10px 0px;
+    display: flex;
+    gap: 10px;
 }
 
-.visible .fiche-img-etiquette {
+.bouton {
+    background-color: rgba(219, 219, 219, 0.5);
+    flex-grow: 1;
+    padding: 5px;
+    border-radius: 5px;
+    /* border: 1 solid rgba(118, 144, 192, 0.5); */
+}
+
+#bouton-fermeture {
+    all: unset;
+    font-size: 24px;
+    font-family: sans-serif;
+    cursor: pointer;
+    background: none;
+    border: non;
+    padding: 0;
+    align-content: center;
+    margin-left: auto;
+    align-self: flex-start;
+    position: absolute;
+    right: 10px;
+    top: 3px;
+}
+
+#bouton-fermeture:hover {
+    color:#443d3d
+    }
+
+.entete {
+    background-color: #9dd2eb00;
+    margin: 0px 0px 0px 0px;
+    border-top-left-radius: 7px;
+    border-top-right-radius: 7px;
+    padding: 3px 10px;
+    position: relative;
+}
+
+.fiche-cote {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    padding: 1px;
+    background-color: rgba(255, 255, 255, 0.747);
+    border-radius: 2px;
+    font-family: Roboto;
+    font-size: 12px;
+}
+
+.fiche-entete h3 {
+    margin: 5px 0px
+}
+
+#fiche-img-selectionnee img {
+    border-radius: 0px;
+}
+
+.fiche-corps {
+    background-color: #ffffff00;
+    user-select: text;
+    font-size: 13px;
+    margin: 0px 0px 0px 0px;
+    padding: 0px 0px;
+}
+
+.visible .fiche-img-corps {
     bottom: 5px;
     color: black;
     border-bottom-left-radius: 7px;
@@ -216,7 +272,12 @@ h4 {
     }
 } */
 
+#image-boite {
+    position: relative;
+}
+
 .photographie {
+    position: relative;
     max-width: 100%;
     border-radius: 7px 7px 0px 0px;
 }
@@ -239,49 +300,53 @@ h4 {
 
 .image-bouton {
     position: absolute;
-    /* Permet de positionner le conteneur par rapport à son parent */
     top: 10px;
-    /* Décalage de 10px du haut */
     right: 10px;
-    /* Décalage de 10px de la droite */
     display: flex;
-    /* Utilise Flexbox pour aligner les éléments en ligne */
     justify-content: flex-end;
-    /* Aligne les éléments à droite du conteneur */
     gap: 10px;
-    /* Ajoute un écart entre les icônes */
     padding: 3px;
-    /* Espace autour des icônes à l'intérieur du conteneur */
 }
 
 .image-icone {
     background-color: rgba(219, 219, 219, 0.5);
-    /* Fond semi-transparent pour les icônes */
     padding: 5px;
-    /* Espacement autour de l'icône */
     cursor: pointer;
-    /* Curseur en forme de main pour indiquer l'interactivité */
     width: 15px;
-    /* Largeur des icônes */
     height: 15px;
-    /* Hauteur des icônes */
     display: flex;
-    /* Pour pouvoir centrer le contenu dans chaque icône */
     align-items: center;
-    /* Aligner verticalement l'icône à l'intérieur du conteneur */
     justify-content: center;
-    /* Centrer l'icône horizontalement à l'intérieur du conteneur */
     border-radius: 5px;
+}
+
+.donnees-fiche {
+    font-family: "Roboto";
+    font-size: 14px;
+    margin-top: 0px;
 }
 
 .donnees-ligne dt {
     display: inline-block;
+    font-family: "Roboto";
+    text-transform: uppercase;
+    font-size: 12px;
 }
 
 .donnees-ligne dd {
     display: inline-block;
     margin: 0 10px;
-    /* Espacement horizontal entre les éléments */
+    /* font-family: "Roboto-Condensed";
+    font-weight: 300;
+    font-size: 16px */
+    font-family: "Roboto";
+    font-size: 14px;
+    text-decoration: none;
+}
+
+dd a {
+    text-decoration: none;
+    margin:-5px;
 }
 
 /* Style pour le champ de recherche */

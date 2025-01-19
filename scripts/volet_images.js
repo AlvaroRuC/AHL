@@ -42,7 +42,6 @@ function filtrerImagesParDate(images) {
     });
 }
 
-
 // Fonction principale pour afficher les images dans le volet
 
 function afficherImagesVolet(recherche = '') {
@@ -69,7 +68,8 @@ function afficherImagesVolet(recherche = '') {
         const ficheImage = creerFicheImageSiFiltrable(imageVisible, recherche);
         if (ficheImage) {
             ajouterFicheImage(ficheImage, fichesImagesVisibles); // Ajout de l'image
-            gererEvenementsFicheImage(ficheImage, imageVisible.properties, imageSelectionnee); // Gestion des événements
+            selectionFicheImage(ficheImage, imageVisible.properties);
+            survolFicheImage(ficheImage, imageVisible.properties); // Hover des fiches
         }
     });
 
@@ -109,19 +109,54 @@ function ajouterFicheImage(ficheImage, fichesImagesVisibles) {
     }, 10);
 }
 
-function gererEvenementsFicheImage(ficheImage, proprietes, imageSelectionnee) {
-    // Ajouter un événement de clic pour la sélection de l'image
-    ficheImage.addEventListener('click', function () {
-        imageSelectionnee.innerHTML = ''; // Vide la section de l'image sélectionnée
-        const ficheImageSelectionnee = creerFicheImageDetaillee(proprietes);
-        imageSelectionnee.appendChild(ficheImageSelectionnee);
-        imageSelectionnee.dataset.selectedId = proprietes.id_image;
-        ficheImage.remove(); // Retirer la fiche de la liste non sélectionnée
-        ficheImage.classList.add('fixe-haut'); // Fixer l'image sélectionnée
-        ficheImageSelectionnee.scrollIntoView({ behavior: 'smooth', block: 'start' }); // Scroll vers l'image
-    });
+let ficheDetailleeActive = false;
+let contenuOriginalOutilsRecherche = null; // Variable pour stocker les outils de recherche
 
-    // Ajouter l'événement hover (mouseenter et mouseleave)
+function selectionFicheImage(ficheImage, proprietes) {
+    ficheImage.addEventListener('click', function () {
+        // Empêche l'affichage des images lors de la sélection d'une image
+        ficheDetailleeActive = true;
+
+        // Vide le volet des images et les outils de recherche
+        document.getElementById('fiches-img-visibles').innerHTML = '';
+        const outilsRecherche = document.getElementById('outils-recherche');
+        contenuOriginalOutilsRecherche = outilsRecherche.innerHTML;
+        outilsRecherche.innerHTML = '';  // Vider le contenu
+
+        // Crée et afficher la fiche détaillée
+        const volet = document.getElementById("volet");
+        const ficheImageDetaillee = creerFicheImageDetaillee(proprietes);
+        volet.appendChild(ficheImageDetaillee);
+
+        // Ajoute un bouton de fermeture et événement associé
+        const btnFermer = document.createElement('button');
+        btnFermer.id = "bouton-fermeture";
+        btnFermer.textContent = 'x';
+
+        // Vérifie si un bouton de fermeture existe déjà et supprime-le si nécessaire
+        const ficheEntete = document.getElementsByClassName("fiche-entete")[0];
+        const ancienBtnFermer = ficheEntete.querySelector("#bouton-fermeture");
+
+        if (ancienBtnFermer) {
+            ancienBtnFermer.remove(); // Supprime l'ancien bouton
+        }
+
+        ficheEntete.appendChild(btnFermer);
+
+        btnFermer.addEventListener('click', function () {
+            ficheDetailleeActive = false;
+            afficherImagesVolet();
+
+            // Restaure le contenu des outils de recherche
+            outilsRecherche.innerHTML = contenuOriginalOutilsRecherche;
+
+            // Vider la fiche image sélectionnée
+            document.getElementById("fiche-img-selectionnee").innerHTML = '';
+        });
+    });
+}
+
+function survolFicheImage(ficheImage, proprietes) {
     ficheImage.addEventListener('mouseenter', function () {
 
         const idMapLibre = obtenirIdMLDepuisIdImage(proprietes.id_image);
@@ -165,8 +200,11 @@ function getDistance(pointA, pointB) {
 }
 
 // Événement sur le déplacement de la carte pour réafficher les images visibles
+// S'il n'y a pas d'image sélectionnée.
 map.on('moveend', function () {
-    afficherImagesVolet(rechercheActuelle);  // Passe la recherche actuelle sans réinitialiser la valeur
+    if (!ficheDetailleeActive) {
+        afficherImagesVolet(rechercheActuelle);  // Passe la recherche actuelle sans réinitialiser la valeur
+    }
 });
 
 // Écouteur pour gérer le clic sur une fiche d'image

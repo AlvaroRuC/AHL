@@ -24,30 +24,31 @@
     </div>
 
     <div id="volet" class="plie">
-        <div id="search-container">
-            <h2>Rechercher</h2>
-            <input type="text" id="recherche" placeholder="Rechercher..." />
-            <h3>Filtrer</h3>
-            <i id="recherche-icon" class="fa fa-search"></i>
-            <!-- NE PAS OUBLIER D'AJOUTER UNE ICONE -->
-        </div>
 
-        <div class="wrapper">
-            <div class="values">
-                <input type="number" id="range1" value="1840" min="1840" max="2000" oninput="updateSlider1()">
-                <span> &dash; </span>
-                <input type="number" id="range2" value="2000" min="1840" max="2000" oninput="updateSlider2()">
+        <div id="outils-recherche">
+            <div id="search-container">
+                <h2>Rechercher</h2>
+                <input type="text" id="recherche" placeholder="Rechercher..." />
+                <h3>Filtrer</h3>
+                <i id="recherche-icon" class="fa fa-search"></i>
+                <!-- NE PAS OUBLIER D'AJOUTER UNE ICONE -->
             </div>
-            <div class="container">
-                <div class="slider-track"></div>
-                <input type="range" min="1840" max="2000" value="1840" id="slider-1" oninput="slideOne()">
-                <span id="range1"></span>
-                </input>
-                <input type="range" min="1840" max="2000" value="1840" id="slider-2" oninput="slideTwo()">
+
+            <div class="wrapper">
+                <div class="values">
+                    <input type="number" id="range1" value="1840" min="1840" max="2000" oninput="updateSlider1()">
+                    <span> &dash; </span>
+                    <input type="number" id="range2" value="2000" min="1840" max="2000" oninput="updateSlider2()">
+                </div>
+                <div class="container">
+                    <div class="slider-track"></div>
+                    <input type="range" min="1840" max="2000" value="1840" id="slider-1" oninput="slideOne()">
+                    <span id="range1"></span>
+                    </input>
+                    <input type="range" min="1840" max="2000" value="1840" id="slider-2" oninput="slideTwo()">
+                </div>
             </div>
         </div>
-
-        <div id="fiche-img-selectionee" class="fiche-img"></div>
 
         <template id="my-paragraph">
             <p>My paragraph</p>
@@ -154,6 +155,7 @@
 
     <!-- Fonctions pour la création des fiches des images -->
     <script src="/scripts/images_fiches.js"></script>
+    <script src="/scripts/img_fiches_detaillees.js"></script>
 
     <!-- Contrôle de couches -->
     <script src="/scripts/couches.js"></script>
