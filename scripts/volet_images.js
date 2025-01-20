@@ -24,19 +24,19 @@ inputs.forEach(input => {
 // Fonction principale pour afficher les images dans le volet
 
 function afficherImagesVolet(recherche = '') {
-    const fichesImagesVisibles = document.getElementById('fichier-img-visibles');
-    fichesImagesVisibles.innerHTML = ''; // Vide la liste des images visibles
+    const fichierImagesVisibles = document.getElementById('fichier-img-visibles');
+    fichierImagesVisibles.innerHTML = ''; // Vide la liste des images visibles
 
     // Recupère les images sur la carte
     const imagesVisiblesDonnees = map.queryRenderedFeatures({ layers: ['images-points'] });
 
     // No tiene en cuenta los filtros, solo lo que se ve
     if (imagesVisiblesDonnees.length === 0) {
-        fichesImagesVisibles.textContent = 'Aucune image visible';
+        fichierImagesVisibles.textContent = 'Aucune image visible';
         return;
     } else {
         // Afficher le nombre d'images trouvées
-        fichesImagesVisibles.textContent = `${imagesVisiblesDonnees.length} image${imagesVisiblesDonnees.length > 1 ? 's' : ''} trouvée${imagesVisiblesDonnees.length > 1 ? 's' : ''}`;
+        fichierImagesVisibles.textContent = `${imagesVisiblesDonnees.length} image${imagesVisiblesDonnees.length > 1 ? 's' : ''} trouvée${imagesVisiblesDonnees.length > 1 ? 's' : ''}`;
     }
 
     // Filtrer et trier les images
@@ -49,7 +49,7 @@ function afficherImagesVolet(recherche = '') {
     imagesFiltrees.forEach(imageVisible => {
         const ficheImage = creerFicheImageSiFiltrable(imageVisible, recherche);
         if (ficheImage) {
-            ajouterFicheImage(ficheImage, fichesImagesVisibles); // Ajout de l'image
+            ajouterFicheImage(ficheImage, fichierImagesVisibles); // Ajout de l'image
             selectionFicheImage(ficheImage, imageVisible.properties);
             survolFicheImage(ficheImage, imageVisible.properties); // Hover des fiches
         }
@@ -79,9 +79,9 @@ function creerFicheImageSiFiltrable(imageVisible, recherche) {
     return null;
 }
 
-function ajouterFicheImage(ficheImage, fichesImagesVisibles) {
+function ajouterFicheImage(ficheImage, fichierImagesVisibles) {
     // Ajouter la fiche d'image dans le volet
-    fichesImagesVisibles.appendChild(ficheImage);
+    fichierImagesVisibles.appendChild(ficheImage);
     setTimeout(() => {
         ficheImage.classList.add('visible'); // Transition d'apparition de la fiche
     }, 10);
@@ -97,8 +97,8 @@ function selectionFicheImage(ficheImage, proprietes) {
         const outilsRecherche = document.getElementById("outils-recherche")
         outilsRecherche.style.display = 'none';
 
-        const fichesImagesVisibles = document.getElementById("fichier-img-visibles")
-        fichesImagesVisibles.style.display = "none"
+        const fichierImagesVisibles = document.getElementById("fichier-img-visibles")
+        fichierImagesVisibles.style.display = "none"
 
         // Crée et afficher la fiche détaillée
         const volet = document.getElementById("volet");
@@ -126,7 +126,7 @@ function selectionFicheImage(ficheImage, proprietes) {
 
             // Restaure le contenu des outils de recherche
             outilsRecherche.style.display = "block";
-            fichesImagesVisibles.style.display = "block"
+            fichierImagesVisibles.style.display = "block"
 
             // Vider la fiche image sélectionnée
             document.getElementById("fiche-img-selectionnee").innerHTML = '';
