@@ -10,46 +10,25 @@ document.getElementById("bouton-volet").addEventListener("click", function () {
     }
 });
 
-function filtrerImagesParDate(images) {
-    // Récupérer les valeurs des sliders
-    const dateMin = new Date(sliderOne.value === "0" ? "0000-01-01" : sliderOne.value + "-01-01"); // Date minimale
-    const dateMax = new Date(sliderTwo.value + "-12-31"); // Date maximale
+// Refait les fiches quand on filtre les données
 
-    return images.filter(imageVisible => {
-        const dateInfStr = imageVisible.properties.date_inf; // date de début
-        const dateSupStr = imageVisible.properties.date_sup; // date de fin
+const inputs = document.querySelectorAll('#range1, #range2, #slider-1, #slider-2');
 
-        // Si les deux dates sont manquantes, on exclut l'image
-        if (!dateInfStr && !dateSupStr) {
-            return false; // Exclut l'image si les deux dates sont manquantes
-        }
-
-        // Si une des dates est manquante, on l'inclut quand même
-        if (!dateInfStr || !dateSupStr) {
-            return true; // Inclut l'image si une des dates est manquante
-        }
-
-        const dateInf = new Date(dateInfStr); // Date de début de l'image
-        const dateSup = new Date(dateSupStr); // Date de fin de l'image
-
-        // Si l'image n'a pas de dates valides et la valeur du slider est "0" (pour inclure les dates inconnues)
-        if (sliderOne.value === "0" && (!dateInfStr || !dateSupStr)) {
-            return true; // Inclut les images sans dates (si la valeur du slider est "0")
-        }
-
-        // Vérifie si l'image est dans la plage des dates spécifiées
-        return (dateSup >= dateMin && dateInf <= dateMax);
+inputs.forEach(input => {
+    input.addEventListener('change', function() {
+        afficherImagesVolet();
+        console.log(`${input.id} value changed to: ${input.value}`);
     });
-}
+});
 
 // Fonction principale pour afficher les images dans le volet
 
 function afficherImagesVolet(recherche = '') {
     const volet = document.getElementById('volet');
-    const imageSelectionnee = document.getElementById('fiche-img-selectionee');
     const fichesImagesVisibles = document.getElementById('fiches-img-visibles');
     fichesImagesVisibles.innerHTML = ''; // Vide la liste des images visibles
 
+    // Recupère les images sur la carte
     const fichesImagesVisiblesData = map.queryRenderedFeatures({ layers: ['images-points'] });
 
     if (fichesImagesVisiblesData.length === 0) {
@@ -68,7 +47,9 @@ function afficherImagesVolet(recherche = '') {
         const ficheImage = creerFicheImageSiFiltrable(imageVisible, recherche);
         if (ficheImage) {
             ajouterFicheImage(ficheImage, fichesImagesVisibles); // Ajout de l'image
-            selectionFicheImage(ficheImage, imageVisible.properties);
+
+            ficheImage.addEventListener('click', selectionFicheImage(ficheImage, imageVisible.properties));
+
             survolFicheImage(ficheImage, imageVisible.properties); // Hover des fiches
         }
     });
@@ -110,18 +91,17 @@ function ajouterFicheImage(ficheImage, fichesImagesVisibles) {
 }
 
 let ficheDetailleeActive = false;
-let contenuOriginalOutilsRecherche = null; // Variable pour stocker les outils de recherche
 
 function selectionFicheImage(ficheImage, proprietes) {
     ficheImage.addEventListener('click', function () {
         // Empêche l'affichage des images lors de la sélection d'une image
         ficheDetailleeActive = true;
 
-        // Vide le volet des images et les outils de recherche
-        document.getElementById('fiches-img-visibles').innerHTML = '';
-        const outilsRecherche = document.getElementById('outils-recherche');
-        contenuOriginalOutilsRecherche = outilsRecherche.innerHTML;
-        outilsRecherche.innerHTML = '';  // Vider le contenu
+        const outilsRecherche = document.getElementById("outils-recherche")
+        outilsRecherche.style.display = 'none';
+
+        const fichesImagesVisibles = document.getElementById("fiches-img-visibles")
+        fichesImagesVisibles.style.display = "none"
 
         // Crée et afficher la fiche détaillée
         const volet = document.getElementById("volet");
@@ -145,10 +125,11 @@ function selectionFicheImage(ficheImage, proprietes) {
 
         btnFermer.addEventListener('click', function () {
             ficheDetailleeActive = false;
-            afficherImagesVolet();
+            // afficherImagesVolet();
 
             // Restaure le contenu des outils de recherche
-            outilsRecherche.innerHTML = contenuOriginalOutilsRecherche;
+            outilsRecherche.style.display = "block";
+            fichesImagesVisibles.style.display = "block"
 
             // Vider la fiche image sélectionnée
             document.getElementById("fiche-img-selectionnee").innerHTML = '';
