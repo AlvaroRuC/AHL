@@ -24,19 +24,23 @@ inputs.forEach(input => {
 // Fonction principale pour afficher les images dans le volet
 
 function afficherImagesVolet(recherche = '') {
-    const fichesImagesVisibles = document.getElementById('fiches-img-visibles');
+    const fichesImagesVisibles = document.getElementById('fichier-img-visibles');
     fichesImagesVisibles.innerHTML = ''; // Vide la liste des images visibles
 
     // Recupère les images sur la carte
-    const fichesImagesVisiblesData = map.queryRenderedFeatures({ layers: ['images-points'] });
+    const imagesVisiblesDonnees = map.queryRenderedFeatures({ layers: ['images-points'] });
 
-    if (fichesImagesVisiblesData.length === 0) {
+    // No tiene en cuenta los filtros, solo lo que se ve
+    if (imagesVisiblesDonnees.length === 0) {
         fichesImagesVisibles.textContent = 'Aucune image visible';
         return;
+    } else {
+        // Afficher le nombre d'images trouvées
+        fichesImagesVisibles.textContent = `${imagesVisiblesDonnees.length} image${imagesVisiblesDonnees.length > 1 ? 's' : ''} trouvée${imagesVisiblesDonnees.length > 1 ? 's' : ''}`;
     }
 
     // Filtrer et trier les images
-    const imagesTriees = trierImagesParDistance(fichesImagesVisiblesData);
+    const imagesTriees = trierImagesParDistance(imagesVisiblesDonnees);
 
     // Appliquer le filtrage à l'extérieur de la fonction afficherImagesVolet
     const imagesFiltrees = filtrerImagesParDate(imagesTriees);
@@ -50,10 +54,6 @@ function afficherImagesVolet(recherche = '') {
             survolFicheImage(ficheImage, imageVisible.properties); // Hover des fiches
         }
     });
-
-    let template = document.getElementById("my-paragraph");
-    let templateContent = template.content;
-    fichesImagesVisibles.appendChild(templateContent.cloneNode(true)); // Ajout du contenu du template dans fichesImagesVisibles
 }
 
 // Fonction pour trier les images par distance au centre de la carte
@@ -97,7 +97,7 @@ function selectionFicheImage(ficheImage, proprietes) {
         const outilsRecherche = document.getElementById("outils-recherche")
         outilsRecherche.style.display = 'none';
 
-        const fichesImagesVisibles = document.getElementById("fiches-img-visibles")
+        const fichesImagesVisibles = document.getElementById("fichier-img-visibles")
         fichesImagesVisibles.style.display = "none"
 
         // Crée et afficher la fiche détaillée
