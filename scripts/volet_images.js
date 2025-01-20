@@ -6,7 +6,7 @@ document.getElementById("bouton-volet").addEventListener("click", function () {
         map.setLayoutProperty('images-points', 'visibility', 'none');
     } else {
         map.setLayoutProperty('images-points', 'visibility', 'visible');
-        afficherImagesVolet();
+        gererImagesVolet();
     }
 });
 
@@ -15,43 +15,40 @@ document.getElementById("bouton-volet").addEventListener("click", function () {
 const inputs = document.querySelectorAll('#range1, #range2, #slider-1, #slider-2');
 
 inputs.forEach(input => {
-    input.addEventListener('change', function() {
-        afficherImagesVolet();
+    input.addEventListener('change', function () {
+        gererImagesVolet();
         console.log(`${input.id} value changed to: ${input.value}`);
     });
 });
 
 // Fonction principale pour afficher les images dans le volet
 
-function afficherImagesVolet(recherche = '') {
+function gererImagesVolet(lieuRecherche = '') {
     const fichierImagesVisibles = document.getElementById('fichier-img-visibles');
-    fichierImagesVisibles.innerHTML = ''; // Vide la liste des images visibles
+    fichierImagesVisibles.innerHTML = ''; // Vide le fichier des images visibles
 
     // Recupère les images sur la carte
     const imagesVisiblesDonnees = map.queryRenderedFeatures({ layers: ['images-points'] });
 
-    // No tiene en cuenta los filtros, solo lo que se ve
-    if (imagesVisiblesDonnees.length === 0) {
+    // Filtrer et trier les images
+    const imagesTriees = trierImagesParDistance(imagesVisiblesDonnees);
+    const imagesFiltreesParDate = filtrerImagesParDate(imagesTriees);
+
+    // Afficher le nombre d'images trouvées (ça marche pas avec le filtre texte)
+    if (imagesFiltreesParDate.length === 0) {
         fichierImagesVisibles.textContent = 'Aucune image visible';
         return;
     } else {
-        // Afficher le nombre d'images trouvées
-        fichierImagesVisibles.textContent = `${imagesVisiblesDonnees.length} image${imagesVisiblesDonnees.length > 1 ? 's' : ''} trouvée${imagesVisiblesDonnees.length > 1 ? 's' : ''}`;
+        fichierImagesVisibles.textContent = `${imagesFiltreesParDate.length} image${imagesFiltreesParDate.length > 1 ? 's' : ''} trouvée${imagesFiltreesParDate.length > 1 ? 's' : ''}`;
     }
 
-    // Filtrer et trier les images
-    const imagesTriees = trierImagesParDistance(imagesVisiblesDonnees);
-
-    // Appliquer le filtrage à l'extérieur de la fonction afficherImagesVolet
-    const imagesFiltrees = filtrerImagesParDate(imagesTriees);
-
     // Créer et afficher les fiches d'images
-    imagesFiltrees.forEach(imageVisible => {
-        const ficheImage = creerFicheImageSiFiltrable(imageVisible, recherche);
+    imagesFiltreesParDate.forEach(imagePreFiltre => {
+        const ficheImage = creerFicheImageSiFiltrable(imagePreFiltre, lieuRecherche);
         if (ficheImage) {
             ajouterFicheImage(ficheImage, fichierImagesVisibles); // Ajout de l'image
-            selectionFicheImage(ficheImage, imageVisible.properties);
-            survolFicheImage(ficheImage, imageVisible.properties); // Hover des fiches
+            selectionFicheImage(ficheImage, imagePreFiltre.properties);
+            survolFicheImage(ficheImage, imagePreFiltre.properties); // Hover des fiches
         }
     });
 }
@@ -67,23 +64,22 @@ function trierImagesParDistance(images) {
 }
 
 // Fonction pour créer une fiche d'image si elle passe le filtre de recherche
-function creerFicheImageSiFiltrable(imageVisible, recherche) {
-    const proprietes = imageVisible.properties;
+function creerFicheImageSiFiltrable(imagePreFiltre, lieuRecherche) {
+    const proprietes = imagePreFiltre.properties;
 
     // Filtrer selon la recherche (lieu ou code)
-    if (normaliserTexte(proprietes.lieu).includes(normaliserTexte(recherche)) ||
-        normaliserTexte(proprietes.cote_aml).includes(normaliserTexte(recherche))) {
+    if (normaliserTexte(proprietes.lieu).includes(normaliserTexte(lieuRecherche)) ||
+        normaliserTexte(proprietes.cote_aml).includes(normaliserTexte(lieuRecherche))) {
         return creerFicheImage(proprietes);
     }
-
     return null;
 }
 
-function ajouterFicheImage(ficheImage, fichierImagesVisibles) {
     // Ajouter la fiche d'image dans le volet
+function ajouterFicheImage(ficheImage, fichierImagesVisibles) {
     fichierImagesVisibles.appendChild(ficheImage);
     setTimeout(() => {
-        ficheImage.classList.add('visible'); // Transition d'apparition de la fiche
+        ficheImage.classList.add('visible');
     }, 10);
 }
 
@@ -122,7 +118,7 @@ function selectionFicheImage(ficheImage, proprietes) {
 
         btnFermer.addEventListener('click', function () {
             ficheDetailleeActive = false;
-            // afficherImagesVolet();
+            // gererImagesVolet();
 
             // Restaure le contenu des outils de recherche
             outilsRecherche.style.display = "block";
@@ -181,7 +177,7 @@ function getDistance(pointA, pointB) {
 // S'il n'y a pas d'image sélectionnée.
 map.on('moveend', function () {
     if (!ficheDetailleeActive) {
-        afficherImagesVolet(rechercheActuelle);  // Passe la recherche actuelle sans réinitialiser la valeur
+        gererImagesVolet(rechercheActuelle);  // Passe la recherche actuelle sans réinitialiser la valeur
     }
 });
 

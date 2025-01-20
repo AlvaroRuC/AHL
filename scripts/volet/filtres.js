@@ -13,7 +13,7 @@ let rechercheActuelle = '';
 // Écouteur d'événement pour le champ de recherche (filtrage en temps réel)
 document.getElementById('recherche').addEventListener('input', function () {
     rechercheActuelle = document.getElementById('recherche').value;  // Stocke la valeur du champ de recherche
-    afficherImagesVolet(rechercheActuelle);  // Passe la recherche à la fonction de filtrage
+    gererImagesVolet(rechercheActuelle);  // Passe la recherche à la fonction de filtrage
 
     console.log("RechercheActuelle :", rechercheActuelle)
 });
@@ -24,7 +24,6 @@ function filtrerImagesParDate(images) {
     // Récupère les valeurs des sliders
     const dateMinFiltre = new Date(sliderOne.value === "1840" ? "0000-01-01" : sliderOne.value + "-01-01");
     const dateMaxFiltre = new Date(sliderTwo.value + "-12-31");
-
 
     return images.filter(imageVisible => {
         const dateInfStr = imageVisible.properties.date_inf; //String yyyy

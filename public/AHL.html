@@ -45,12 +45,18 @@
                     <input type="range" id="slider-1" value="1838" min="1838" max="2000" oninput="slideOne()">
                     <span id="range1"></span>
                     </input>
-                    <input type="range" id="slider-2" value="2000" min="1838" max="2000" oninput="slideTwo()">
+                    <input type="range" id="slider-2" value="2000" min="1838" max="2000" oninput="slideTwo()" list="markers">
                 </div>
             </div>
         </div>
 
+        <div id='filter-result'>["all"]</div>
+
+
         <div id="fichier-img-visibles"></div>
+
+        <div id="fichier-img-visibles-test"></div>
+
     </div>
 
 
@@ -158,6 +164,10 @@
 
     <!-- Pour filtrer les dates -->
     <script src="/scripts/slider.js"></script>
+
+    <!-- Test pour syncroniser la carte avec les filtres -->
+    <script src="/scripts/volet-gestion.js"></script>
+
 
 
 </body>
