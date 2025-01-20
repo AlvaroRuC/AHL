@@ -24,7 +24,6 @@ inputs.forEach(input => {
 // Fonction principale pour afficher les images dans le volet
 
 function afficherImagesVolet(recherche = '') {
-    const volet = document.getElementById('volet');
     const fichesImagesVisibles = document.getElementById('fiches-img-visibles');
     fichesImagesVisibles.innerHTML = ''; // Vide la liste des images visibles
 
@@ -47,9 +46,7 @@ function afficherImagesVolet(recherche = '') {
         const ficheImage = creerFicheImageSiFiltrable(imageVisible, recherche);
         if (ficheImage) {
             ajouterFicheImage(ficheImage, fichesImagesVisibles); // Ajout de l'image
-
-            ficheImage.addEventListener('click', selectionFicheImage(ficheImage, imageVisible.properties));
-
+            selectionFicheImage(ficheImage, imageVisible.properties);
             survolFicheImage(ficheImage, imageVisible.properties); // Hover des fiches
         }
     });
