@@ -29,13 +29,13 @@
             <div id="search-container">
                 <h2>Rechercher</h2>
                 <input type="text" id="recherche" placeholder="Rechercher..." />
-                <h3>Filtrer</h3>
+                <h3>Filtrer par date</h3>
                 <i id="recherche-icon" class="fa fa-search"></i>
                 <!-- NE PAS OUBLIER D'AJOUTER UNE ICONE -->
             </div>
 
-            <div class="wrapper">
-                <div class="values">
+            <div id="filtre-date" >
+                <div class="values bulle">
                     <input type="number" id="range1" value="1838" min="1838" max="2000" oninput="updateSlider1()">
                     <span> &dash; </span>
                     <input type="number" id="range2" value="2000" min="1838" max="2000" oninput="updateSlider2()">
@@ -45,17 +45,21 @@
                     <input type="range" id="slider-1" value="1838" min="1838" max="2000" oninput="slideOne()">
                     <span id="range1"></span>
                     </input>
-                    <input type="range" id="slider-2" value="2000" min="1838" max="2000" oninput="slideTwo()" list="markers">
+                    <input type="range" id="slider-2" value="2000" min="1838" max="2000" oninput="slideTwo()"
+                        list="markers">
                 </div>
             </div>
         </div>
 
-        <div id='filter-result'>["all"]</div>
+        <hr>
 
-
-        <div id="fichier-img-visibles"></div>
-
-        <div id="fichier-img-visibles-test"></div>
+        <div id="resultats-recherche">
+            <div id="compteur">
+                <p id="compteur-resultats"></p>
+            </div>
+            <div id="fichier-img-visibles"></div>
+            <div id="fichier-img-visibles-test"></div>
+        </div>
 
     </div>
 
@@ -114,20 +118,11 @@
     <!-- Le checkbox qui contrôle l'affichage des bâtiments 3D et des images. -->
     <script src="/scripts/checkbox.js"></script>
 
-    <!-- Ancien sidebar. EFFACER ? -->
-    <!-- <script src="/scripts/sidebar.js"></script> -->
-
     <!-- Change la couleur des points des photographies et affiche les emprises des photographies quand on passe la souris.-->
     <script src="/scripts/images_hover.js"></script>
 
-    <!-- Un test d'affichage des photographies dans le sidebar. -->
-    <!-- <script src="/scripts/images.js"></script> -->
-
     <!-- Pour voler aux coordonnées des photographies. -->
     <script src="/scripts/images_click.js"></script>
-
-    <!-- NE PAS UTILISER. Outil pour ouvrir les popups des images et afficher les emprises des photographies. -->
-    <!-- <script src="/scripts/popup.js"></script> -->
 
     <!-- Pour ajouter les modèles 3d -->
     <script src="/scripts/3d.js"></script>
@@ -139,9 +134,6 @@
 
     <!-- Slider pour comparer des cartes sur "map" -->
     <script src="/scripts/compare.js"></script>
-
-    <!-- Gére la modification des informations des photographies -->
-    <!-- <script src="/scripts/formulaire.js"></script> -->
 
     <!-- Gére la modification des informations des photographies -->
     <script src="/scripts/formulaire-nouveau.js"></script>

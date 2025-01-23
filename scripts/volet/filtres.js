@@ -8,15 +8,13 @@ function normaliserTexte(texte) {
 }
 
 // Variable globale pour stocker la valeur de la recherche
-let rechercheActuelle = '';
+// let rechercheActuelle = '';
 
-// Écouteur d'événement pour le champ de recherche (filtrage en temps réel)
-document.getElementById('recherche').addEventListener('input', function () {
-    rechercheActuelle = document.getElementById('recherche').value;  // Stocke la valeur du champ de recherche
-    gererImagesVolet(rechercheActuelle);  // Passe la recherche à la fonction de filtrage
-
-    console.log("RechercheActuelle :", rechercheActuelle)
-});
+// // Écouteur d'événement pour le champ de recherche (filtrage en temps réel)
+// document.getElementById('recherche').addEventListener('input', function () {
+//     rechercheActuelle = document.getElementById('recherche').value;  // Stocke la valeur du champ de recherche
+//     gererImagesVolet(rechercheActuelle);  // Passe la recherche à la fonction de filtrage
+// });
 
 // Filtre des dates
 
@@ -36,18 +34,6 @@ function filtrerImagesParDate(images) {
 
         if (sliderOne.value === "1838" && sliderTwo.value === "2000") {
             return true;
-        }
-
-        if (sliderOne.value === "1838") {
-            return(
-                (dateSup >= dateMinFiltre && dateSup <= dateMaxFiltre)
-            )
-        }
-
-        if (sliderTwo.value === "2000") {
-            return(
-                (dateInf >= dateMinFiltre && dateInf <= dateMaxFiltre)
-            )
         }
 
         return (

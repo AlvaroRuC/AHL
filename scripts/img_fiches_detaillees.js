@@ -9,7 +9,7 @@ function creerFicheImageDetaillee(proprietes) {
 
     // Création du conteneur principal de la fiche d'image détaillée
     const ficheDetaillee = document.createElement('div');
-    ficheDetaillee.classList.add("fiche-img", "selectionnee");
+    ficheDetaillee.classList.add("fiche", "selectionnee");
     ficheDetaillee.setAttribute("image-id", proprietes.id_image);
     ficheDetaillee.id = "fiche-img-selectionnee";
 

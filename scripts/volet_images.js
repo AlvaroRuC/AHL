@@ -17,7 +17,6 @@ const inputs = document.querySelectorAll('#range1, #range2, #slider-1, #slider-2
 inputs.forEach(input => {
     input.addEventListener('change', function () {
         gererImagesVolet();
-        console.log(`${input.id} value changed to: ${input.value}`);
     });
 });
 
@@ -34,13 +33,19 @@ function gererImagesVolet(lieuRecherche = '') {
     const imagesTriees = trierImagesParDistance(imagesVisiblesDonnees);
     const imagesFiltreesParDate = filtrerImagesParDate(imagesTriees);
 
+    const compteur = document.getElementById("compteur-resultats")
+
     // Afficher le nombre d'images trouvées (ça marche pas avec le filtre texte)
+    let message = '';
     if (imagesFiltreesParDate.length === 0) {
-        fichierImagesVisibles.textContent = 'Aucune image visible';
-        return;
+        message = 'Aucune image visible';
     } else {
-        fichierImagesVisibles.textContent = `${imagesFiltreesParDate.length} image${imagesFiltreesParDate.length > 1 ? 's' : ''} trouvée${imagesFiltreesParDate.length > 1 ? 's' : ''}`;
+        const count = imagesFiltreesParDate.length;
+        message = `${count} image${count > 1 ? 's' : ''} trouvée${count > 1 ? 's' : ''}`;
     }
+
+    // Mettre à jour le texte du compteur
+    compteur.textContent = message;
 
     // Créer et afficher les fiches d'images
     imagesFiltreesParDate.forEach(imagePreFiltre => {
@@ -102,6 +107,10 @@ function selectionFicheImage(ficheImage, proprietes) {
         volet.appendChild(ficheImageDetaillee);
 
         // Ajoute un bouton de fermeture et événement associé
+        creerBoutonFermeture(outilsRecherche, fichierImagesVisibles);
+    });
+
+    function creerBoutonFermeture(outilsRecherche, fichierImagesVisibles) {
         const btnFermer = document.createElement('button');
         btnFermer.id = "bouton-fermeture";
         btnFermer.textContent = 'x';
@@ -118,16 +127,14 @@ function selectionFicheImage(ficheImage, proprietes) {
 
         btnFermer.addEventListener('click', function () {
             ficheDetailleeActive = false;
-            // gererImagesVolet();
-
             // Restaure le contenu des outils de recherche
             outilsRecherche.style.display = "block";
-            fichierImagesVisibles.style.display = "block"
+            fichierImagesVisibles.style.display = "block";
 
             // Vider la fiche image sélectionnée
             document.getElementById("fiche-img-selectionnee").innerHTML = '';
         });
-    });
+    }
 }
 
 function survolFicheImage(ficheImage, proprietes) {
@@ -177,13 +184,13 @@ function getDistance(pointA, pointB) {
 // S'il n'y a pas d'image sélectionnée.
 map.on('moveend', function () {
     if (!ficheDetailleeActive) {
-        gererImagesVolet(rechercheActuelle);  // Passe la recherche actuelle sans réinitialiser la valeur
+        gererImagesVolet();  // Passe la recherche actuelle sans réinitialiser la valeur
     }
 });
 
 // Écouteur pour gérer le clic sur une fiche d'image
 volet.addEventListener('click', function (event) {
-    const ficheCliquee = event.target.closest('.fiche-image');
+    const ficheCliquee = event.target.closest('#fiche-img-selectionnee');
     if (ficheCliquee) {
         const idImage = parseInt(ficheCliquee.getAttribute('image-id'), 10);
         volSurPointImage(idImage);

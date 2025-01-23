@@ -65,7 +65,7 @@ function creerFicheImage(proprietes, ordre = ['image', 'etiquette', 'lien']) {
 
     // Création du conteneur de la fiche d'image
     const ficheImage = document.createElement('div');
-    ficheImage.classList.add('fiche-img');
+    ficheImage.classList.add('fiche');
     ficheImage.setAttribute('image-id', proprietes.id_image);
 
     // Créer les éléments de la fiche en fonction de l'ordre spécifié

@@ -5,44 +5,54 @@ document.getElementById("outils-recherche").addEventListener('input', (e) => {
 });
 
 function appliquerFiltreDate() {
-    const dateMin = document.getElementById('range1').value;  // Valeur de la date minimale
-    const dateSup = document.getElementById('range2').value;  // Valeur de la date maximale
+    const dateMinFiltre = document.getElementById('range1').value;  // Valeur de la date minimale
+    const dateSupFiltre = document.getElementById('range2').value;  // Valeur de la date maximale
 
     const sliderOne = document.getElementById("slider-1");
     const sliderTwo = document.getElementById("slider-2");
 
+    const texteRecherche = document.getElementById('recherche').value;
+
     // Logique de filtre en fonction des conditions des sliders
     let filtreDates;
 
-    // Si les deux curseurs ont les valeurs exactes, on retourne tout
+    // Si les deux curseurs sont dans les extremes, on retourne tout.
     if (sliderOne.value === "1838" && sliderTwo.value === "2000") {
         filtreDates = ["all"];
     }
-    // Si sliderOne vaut "1838", on vérifie si dateSup est dans l'intervalle
-    else if (sliderOne.value === "1838") {
+    else {
         filtreDates = [
             "all",
-            [">=", "date_inf", dateMin],
-            ["<=", "date_sup", dateSup],
-        ];
-    }
-    // Si sliderTwo vaut "2000", on vérifie si dateMin est dans l'intervalle
-    else if (sliderTwo.value === "2000") {
-        filtreDates = [
-            "all",
-            [">=", "date_inf", dateMin],
-            ["<=", "date_sup", dateSup],
-        ];
-    } else {
-        // Par défaut, on applique le filtre avec les deux dates
-        filtreDates = [
-            "all",
-            [">=", "date_inf", dateMin],
-            ["<=", "date_sup", dateSup]
+            [
+                "any",
+                [
+                    "all",
+                    [">=", "date_inf", dateMinFiltre],
+                    ["<=", "date_inf", dateSupFiltre]
+                ],
+                [
+                    "all",
+                    [">=", "date_sup", dateMinFiltre],
+                    ["<=", "date_sup", dateSupFiltre]
+                ]
+            ]
         ];
     }
 
+    // Si un texte de recherche est présent, ajouter un filtre textuel (par exemple "nom" ou "description")
+    if (texteRecherche !== "") {
+        filtreDates.push([
+            "all",
+            ["==", "lieu", texteRecherche]  // Remplace "lieu" par la propriété que tu veux filtrer
+        ]);
+    }
+
     // Appliquer le filtre à la carte
+    map.setFilter('images-points', null); // Réinitialiser le filtre précédent
     map.setFilter('images-points', filtreDates);
     console.log("Filtre appliqué:", filtreDates); // Debugging du filtre appliqué
+    console.log("filtro", JSON.stringify(filtreDates))
+
+    const currentFilter = map.getFilter('images-points');
+    console.log("Filtro que se aplica:", JSON.stringify(currentFilter))
 }
