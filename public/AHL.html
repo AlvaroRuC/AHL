@@ -1,115 +1,158 @@
 <!DOCTYPE html>
 <html>
-
-<head>
-    <meta charset="utf-8">
+  <head>
+    <meta charset="utf-8" />
     <title>Atlas Historique de Limoges</title>
-    <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
+    <meta
+      name="viewport"
+      content="initial-scale=1,maximum-scale=1,user-scalable=no"
+    />
     <script src="https://unpkg.com/maplibre-gl@4.7.0/dist/maplibre-gl.js"></script>
-    <link href="https://unpkg.com/maplibre-gl@4.7.0/dist/maplibre-gl.css" rel="stylesheet">
+    <link
+      href="https://unpkg.com/maplibre-gl@4.7.0/dist/maplibre-gl.css"
+      rel="stylesheet"
+    />
 
-    <link rel="stylesheet" crossorigin href="/css/style.css">
-    <link rel="stylesheet" crossorigin href="/css/slider.css">
+    <link rel="stylesheet" crossorigin href="/css/style.css" />
+    <link rel="stylesheet" crossorigin href="/css/slider.css" />
 
     <script src="https://unpkg.com/three@0.147.0/build/three.min.js"></script>
     <script src="https://unpkg.com/three@0.147.0/examples/js/loaders/GLTFLoader.js"></script>
 
-    <link rel="icon" type="image/png" href="/ressources/icones/favicon.ico">
-</head>
+    <link rel="icon" type="image/png" href="/ressources/icones/favicon.ico" />
+  </head>
 
-<body>
-
-    <div id="comparison-container" style="display: none;">
-        <div id="after" class="map"></div>
+  <body>
+    <div id="comparison-container" style="display: none">
+      <div id="after" class="map"></div>
     </div>
 
     <div id="volet" class="plie">
-
-        <div id="outils-recherche">
-            <div id="search-container">
-                <h2>Rechercher</h2>
-                <input type="text" id="recherche" placeholder="Rechercher..." />
-                <h3>Filtrer par date</h3>
-                <i id="recherche-icon" class="fa fa-search"></i>
-                <!-- NE PAS OUBLIER D'AJOUTER UNE ICONE -->
-            </div>
-
-            <div id="filtre-date" >
-                <div class="values bulle">
-                    <input type="number" id="range1" value="1838" min="1838" max="2000" oninput="updateSlider1()">
-                    <span> &dash; </span>
-                    <input type="number" id="range2" value="2000" min="1838" max="2000" oninput="updateSlider2()">
-                </div>
-                <div class="container">
-                    <div class="slider-track"></div>
-                    <input type="range" id="slider-1" value="1838" min="1838" max="2000" oninput="slideOne()">
-                    <span id="range1"></span>
-                    </input>
-                    <input type="range" id="slider-2" value="2000" min="1838" max="2000" oninput="slideTwo()"
-                        list="markers">
-                </div>
-            </div>
+      <div id="outils-recherche">
+        <div id="search-container">
+          <h2>Rechercher</h2>
+          <input type="text" id="recherche" placeholder="Rechercher..." />
+          <h3>Filtrer par date</h3>
+          <i id="recherche-icon" class="fa fa-search"></i>
+          <!-- NE PAS OUBLIER D'AJOUTER UNE ICONE -->
         </div>
 
-        <hr>
-
-        <div id="resultats-recherche">
-            <div id="compteur">
-                <p id="compteur-resultats"></p>
-            </div>
-            <div id="fichier-img-visibles"></div>
-            <div id="fichier-img-visibles-test"></div>
+        <div id="filtre-date">
+          <div class="values bulle">
+            <input
+              type="number"
+              id="range1"
+              value="1838"
+              min="1838"
+              max="2000"
+              oninput="updateSlider1()"
+            />
+            <span> &dash; </span>
+            <input
+              type="number"
+              id="range2"
+              value="2000"
+              min="1838"
+              max="2000"
+              oninput="updateSlider2()"
+            />
+          </div>
+          <div class="container">
+            <div class="slider-track"></div>
+            <input
+              type="range"
+              id="slider-1"
+              value="1838"
+              min="1838"
+              max="2000"
+              oninput="slideOne()"
+            />
+            <span id="range1"></span>
+            <input
+              type="range"
+              id="slider-2"
+              value="2000"
+              min="1838"
+              max="2000"
+              oninput="slideTwo()"
+              list="markers"
+            />
+          </div>
         </div>
+      </div>
 
+      <hr />
+
+      <div id="resultats-recherche">
+        <div id="compteur">
+          <p id="compteur-resultats"></p>
+        </div>
+        <div id="fichier-img-visibles"></div>
+        <div id="fichier-img-visibles-test"></div>
+      </div>
     </div>
 
-
-    <div id="map"></div>
-
+    <div id="map">
+    </div>
 
     <div class="map-overlay top">
-        <div class="map-overlay-inner">
+      <div class="map-overlay-inner">
+        <!-- Ajouter un bouton pour plus d'info? -->
+        <!-- Ajouter un bouton sur carte suporposée qui déplie les paramètres -->
+        <fieldset>
+          <legend><input type="checkbox" />Carte superposée :></legend>
+          <select name="carte" id="carte-select-2" autocomplete="off">
+            <option value="" selected="selected" disabled hidden>
+              --Choisissez une carte--
+            </option>
+            <option value="c1843">Carte de l'état-major (ca 1843)</option>
+            <option value="c1950">Orthophotos de 1950-1965</option>
+            <option value="c2023">Orthophotos de 2023</option>
+          </select>
 
-            <!-- Ajouter un bouton pour plus d'info? -->
-            <!-- Ajouter un bouton sur carte suporposée qui déplie les paramètres -->
-            </fieldset>
-            <fieldset>
-                <legend>
-                    <input type="checkbox">Carte superposée :</input>
-                </legend>
-                <select name="carte" id="carte-select-2" autocomplete="off">
-                    <option value="" selected="selected" disabled hidden>--Choisissez une carte--</option>
-                    <option value="c1843">Carte de l'état-major (ca 1843)</option>
-                    <option value="c1950">Orthophotos de 1950-1965</option>
-                    <option value="c2023">Orthophotos de 2023</option>
-                </select>
+          <label>Opacité : <span id="slider-value-1">100%</span></label>
+          <input
+            id="slider1"
+            type="range"
+            min="0"
+            max="100"
+            step="0"
+            value="100"
+            autocomplete="off"
+          />
+        </fieldset>
+        <fieldset>
+          <legend>Carte principale :</legend>
+          <select name="carte" id="carte-select-1" autocomplete="off">
+            <optgroup label="--Choisissez une carte--"></optgroup>
+            <option value="c1843">Carte de l'état-major (ca 1843)</option>
+            <option value="c1950">Orthophotos de 1950-1965</option>
+            <option value="c2023">Orthophotos de 2023</option>
+          </select>
 
-                <label>Opacité : <span id="slider-value-1">100%</span></label>
-                <input id="slider1" type="range" min="0" max="100" step="0" value="100" autocomplete='off'>
-            </fieldset>
-            <fieldset>
-                <legend>Carte principale :</legend>
-                <select name="carte" id="carte-select-1" autocomplete="off">
-                    <optgroup label="--Choisissez une carte--"></optgroup>
-                    <option value="c1843">Carte de l'état-major (ca 1843)</option>
-                    <option value="c1950">Orthophotos de 1950-1965</option>
-                    <option value="c2023">Orthophotos de 2023</option>
-                </select>
+          <label>Opacité : <span id="slider-value-2">100%</span></label>
+          <input
+            id="slider2"
+            type="range"
+            min="0"
+            max="100"
+            step="0"
+            value="100"
+            autocomplete="off"
+          />
+        </fieldset>
 
-                <label>Opacité : <span id="slider-value-2">100%</span></label>
-                <input id="slider2" type="range" min="0" max="100" step="0" value="100" autocomplete='off'>
-            </fieldset>
-
-            <!-- <div>
+        <!-- <div>
                 <label for="3d">Bâtiments 3D</label>
                 <input type="checkbox" id="3d" name="3d" checked />
             </div> -->
-            <div id="layersControlDiv">
-            </div>
 
-            <button id="bouton-comparer" class="bouton" type="button">Activer la comparaison</button>
+        <div id="layersControlDiv"></div>
 
-        </div>
+        <ahl-toggle-switch id="bouton-comparer">
+          <label slot="etiquette">Activer la comparaison </label>
+        </ahl-toggle-switch>
+      </div>
     </div>
 
     <!-- Les paramètres de la carte, les sources et les couches. -->
@@ -129,8 +172,11 @@
 
     <!-- Plugin Compare -->
     <script src="../scripts/plugins/maplibre-gl-compare-main/dist/maplibre-gl-compare.js"></script>
-    <link rel="stylesheet" href="../scripts/plugins/maplibre-gl-compare-main/dist/maplibre-gl-compare.css"
-        type="text/css" />
+    <link
+      rel="stylesheet"
+      href="../scripts/plugins/maplibre-gl-compare-main/dist/maplibre-gl-compare.css"
+      type="text/css"
+    />
 
     <!-- Slider pour comparer des cartes sur "map" -->
     <script src="/scripts/compare.js"></script>
@@ -151,17 +197,12 @@
     <script src="/scripts/images_fiches.js"></script>
     <script src="/scripts/img_fiches_detaillees.js"></script>
 
-    <!-- Contrôle de couches -->
-    <script src="/scripts/couches.js"></script>
-
     <!-- Pour filtrer les dates -->
     <script src="/scripts/slider.js"></script>
 
     <!-- Test pour syncroniser la carte avec les filtres -->
     <script src="/scripts/volet-gestion.js"></script>
 
-
-
-</body>
-
+    <script type="module" src="/scripts/ahl.js"></script>
+  </body>
 </html>
