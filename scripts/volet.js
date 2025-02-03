@@ -1,28 +1,11 @@
-// Création un nouveau control Maplibre pour controler le déplacement
+// Pour ouvrir et fermer le volet
 
-const controleVolet = document.createElement("div");
-controleVolet.classList = "maplibregl-ctrl maplibregl-ctrl-group";
-const voletParents = document.getElementsByClassName("maplibregl-ctrl-top-right");
-const voletParent = voletParents[0];
-voletParent.appendChild(controleVolet);
-
-const boutonVolet = document.createElement("button");
-boutonVolet.id = "bouton-volet";
-boutonVolet.classList.add("controle")
-controleVolet.appendChild(boutonVolet);
-boutonVolet.innerHTML = "&larr;"; //Flèche
-
-// Pour déplacer le volet
-
-const volet = document.getElementById("volet")
-
-document.getElementById("bouton-volet").addEventListener("click", function (event) {
-    basculerVolet();
-    event.stopPropagation();
-});
-
+const controlesHautDroite = document.getElementsByClassName("maplibregl-ctrl-top-right");
+const controleHautDroite = controlesHautDroite[0];
 const controlesBasDroite = document.getElementsByClassName("maplibregl-ctrl-bottom-right");
 const controleBasDroite = controlesBasDroite[0];
+
+const volet = document.getElementById("volet")
 
 const longeurVolet = "25%"
 const pourcentageLongeurVolet = parseFloat(longeurVolet) / 100
@@ -37,8 +20,8 @@ const padding = {
 function ouvrirVolet() {
     volet.classList.remove("plie");
     volet.style.width = longeurVolet;
-    voletParent.style.right = longeurVolet;
-    voletParent.style.transition = "right 1s linear";
+    controleHautDroite.style.right = longeurVolet;
+    controleHautDroite.style.transition = "right 1s linear";
     controleBasDroite.style.transition = "right 1s linear";
     controleBasDroite.style.right = longeurVolet;
 
@@ -56,7 +39,7 @@ function basculerVolet() {
     else {
         volet.classList.add("plie");
         volet.style.width = "0%";
-        voletParent.style.right = "0%";
+        controleHautDroite.style.right = "0%";
         controleBasDroite.style.right = "0%";
 
         map.easeTo({

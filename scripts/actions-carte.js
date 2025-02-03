@@ -1,3 +1,0 @@
-function activerBati3d () {
-    
-}

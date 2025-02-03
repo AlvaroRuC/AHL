@@ -1,34 +1,58 @@
-import { ControleCarte } from "./controle-carte.js";
-import {} from "./actions-carte.js";
+// import "./carte.js";
+// import { activerBati3d } from "./actions-carte.js";
 import "../composants/ahl-toggle-switch.js";
+import { controlesPersonnalises } from "./parametres.js";
 
-map.on("load", function () {
-    // Création d'une instance de ControleCarte
+// Création de contrôles personnalisés
 
-    console.log(controleCarteParents);
-    const bouton1 = new ControleCarte(
-      "bouton1",
-      "path/to/icone1.png",
-      "Description de l'icône 1"
-    );
-    const bouton2 = new ControleCarte(
-      "bouton2",
-      "path/to/icone2.png",
-      "Description de l'icône 2"
-    );
+class ControleCarte {
+  constructor(options) {
+    this.idControle = options.idControle;
+    this.iconeSvg = options.iconeSvg;
+    this.onClick = options.onClick; // Fonction de gestion du clic
+  }
 
-    // Ajouter les boutons au DOM, dans un conteneur de la carte
-    const controleCarteParents = document.getElementsByClassName(
-      "maplibregl-ctrl-top-right"
-    );
-    const controleCarteParent = controleCarteParents[0];
+  onAdd(map) {
+    this._map = map;
+    this._container = document.createElement("div");
+    this._container.classList = "maplibregl-ctrl maplibregl-ctrl-group";
 
-    // Ajouter les boutons au conteneur parent
-    controleCarteParent.appendChild(bouton1.getControle());
-    controleCarteParent.appendChild(bouton2.getControle());
+    this.bouton = document.createElement("button");
 
-    // Ajouter un écouteur d'événement pour le bouton1
-    bouton1.addEventListener("click", () => {
-      console.log("Bouton 1 cliqué !");
-    });
-  });
+    // Affecte l'ID du bouton
+    this.bouton.id = this.idControle;
+    this._container.appendChild(this.bouton);
+
+    // Applique le style Flexbox pour centrer l'icône
+    this.bouton.style.display = "flex";
+    this.bouton.style.justifyContent = "center";
+    this.bouton.style.alignItems = "center";
+    this.bouton.style.padding = "0";
+
+    this.icone = document.createElement("span");
+    this.icone.style.height = "80%";
+    this.icone.style.width = "80%";
+
+    this.icone.classList = "maplibregl-ctrl-icon";
+    this.icone.innerHTML = this.iconeSvg;
+
+    this.bouton.appendChild(this.icone);
+
+    // Si une fonction de clic est définie, on l'ajoute comme gestionnaire d'événements
+    if (this.onClick) {
+      this.bouton.addEventListener("click", this.onClick);
+    }
+
+    return this._container;
+  }
+
+  onRemove() {
+    this._container.parentNode.removeChild(this._container);
+    this._map = undefined;
+  }
+}
+
+controlesPersonnalises.forEach((controle) => {
+  const boutonControle = new ControleCarte(controle);
+  map.addControl(boutonControle, "top-right");
+});

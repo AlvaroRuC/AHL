@@ -383,19 +383,20 @@ hr {
   outline: 3px solid #2f8aa862;
 }
 
-/* Style pour ajouter un icône de recherche*/
 #recherche-icon {
   position: absolute;
   right: 10px;
-  /* Positionne l'icône à droite */
-  top: 50%;
+  height: 24px;
+  top: 54%;
   transform: translateY(-50%);
-  /* Centrer verticalement */
 }
 
-/* Style global pour le conteneur du champ de recherche (si vous l'entourez d'un div) */
 #search-container {
   position: relative;
   max-width: 300px;
   margin-bottom: 15px;
+}
+
+.toggle-swich {
+  margin-top: 10px;
 }

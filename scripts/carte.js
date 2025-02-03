@@ -14,6 +14,9 @@ const map = new maplibregl.Map({
   // 'https://api.maptiler.com/maps/streets/style.json?key=get_your_own_OpIi9ZULNHzrESv6T2vL',
 });
 
+map.addControl(new maplibregl.NavigationControl());
+map.addControl(new maplibregl.ScaleControl());
+
 const slider1 = document.getElementById("slider1");
 const sliderValue1 = document.getElementById("slider-value-1");
 
@@ -86,7 +89,7 @@ map.on("load", () => {
   });
 
   map.addLayer({
-    id: "bati-3d2",
+    id: "bati-3d",
     source: "Bati2024",
     type: "fill-extrusion",
     paint: {
@@ -217,7 +220,3 @@ map.on("load", () => {
     sliderValue2.textContent = e.target.value + "%";
   });
 });
-
-map.addControl(new maplibregl.NavigationControl());
-
-map.addControl(new maplibregl.ScaleControl());

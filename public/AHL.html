@@ -32,9 +32,22 @@
         <div id="search-container">
           <h2>Rechercher</h2>
           <input type="text" id="recherche" placeholder="Rechercher..." />
+          <svg
+            id="recherche-icon"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor"
+            class="size-6"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"
+            />
+          </svg>
           <h3>Filtrer par date</h3>
-          <i id="recherche-icon" class="fa fa-search"></i>
-          <!-- NE PAS OUBLIER D'AJOUTER UNE ICONE -->
         </div>
 
         <div id="filtre-date">
@@ -92,15 +105,14 @@
       </div>
     </div>
 
-    <div id="map">
-    </div>
+    <div id="map"></div>
 
     <div class="map-overlay top">
       <div class="map-overlay-inner">
         <!-- Ajouter un bouton pour plus d'info? -->
         <!-- Ajouter un bouton sur carte suporposée qui déplie les paramètres -->
         <fieldset>
-          <legend><input type="checkbox" />Carte superposée :></legend>
+          <legend>Carte superposée :</legend>
           <select name="carte" id="carte-select-2" autocomplete="off">
             <option value="" selected="selected" disabled hidden>
               --Choisissez une carte--
@@ -110,7 +122,7 @@
             <option value="c2023">Orthophotos de 2023</option>
           </select>
 
-          <label>Opacité : <span id="slider-value-1">100%</span></label>
+          <label>Opacité :<span id="slider-value-1">100%</span></label>
           <input
             id="slider1"
             type="range"
@@ -142,24 +154,16 @@
           />
         </fieldset>
 
-        <!-- <div>
-                <label for="3d">Bâtiments 3D</label>
-                <input type="checkbox" id="3d" name="3d" checked />
-            </div> -->
-
-        <div id="layersControlDiv"></div>
-
-        <ahl-toggle-switch id="bouton-comparer">
-          <label slot="etiquette">Activer la comparaison </label>
-        </ahl-toggle-switch>
+        <div class="toggle-swich">
+          <ahl-toggle-switch id="bouton-comparer">
+            <label slot="etiquette">Activer la comparaison </label>
+          </ahl-toggle-switch>
+        </div>
       </div>
     </div>
 
     <!-- Les paramètres de la carte, les sources et les couches. -->
     <script src="/scripts/carte.js"></script>
-
-    <!-- Le checkbox qui contrôle l'affichage des bâtiments 3D et des images. -->
-    <script src="/scripts/checkbox.js"></script>
 
     <!-- Change la couleur des points des photographies et affiche les emprises des photographies quand on passe la souris.-->
     <script src="/scripts/images_hover.js"></script>
