@@ -27,7 +27,7 @@
       <div id="after" class="map"></div>
     </div>
 
-    <div id="volet" class="plie">
+    <div id="volet" class="panneau-configuration plie">
       <div id="outils-recherche">
         <div id="search-container">
           <h2>Rechercher</h2>
@@ -70,9 +70,10 @@
               oninput="updateSlider2()"
             />
           </div>
-          <div class="container">
-            <div class="slider-track"></div>
+          <div class="container double-range">
+            <div class="slider-track double-range"></div>
             <input
+              class="double-range"
               type="range"
               id="slider-1"
               value="1838"
@@ -82,6 +83,7 @@
             />
             <span id="range1"></span>
             <input
+              class="double-range"
               type="range"
               id="slider-2"
               value="2000"
@@ -107,8 +109,8 @@
 
     <div id="map"></div>
 
-    <div class="map-overlay top">
-      <div class="map-overlay-inner">
+    <div class="map-overlay">
+      <div class="map-overlay-inner panneau-configuration">
         <!-- Ajouter un bouton pour plus d'info? -->
         <!-- Ajouter un bouton sur carte suporposée qui déplie les paramètres -->
         <fieldset>
@@ -199,7 +201,7 @@
 
     <!-- Fonctions pour la création des fiches des images -->
     <script src="/scripts/images_fiches.js"></script>
-    <script src="/scripts/img_fiches_detaillees.js"></script>
+    <script src="/scripts/modules/actions-volet.js"></script>
 
     <!-- Pour filtrer les dates -->
     <script src="/scripts/slider.js"></script>

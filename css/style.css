@@ -27,8 +27,13 @@
 :root {
   --main-color: #3498db;
   --font-size: 16px;
-  --border-radius: 0.2rem;
+  --border-radius: 0.4rem;
+  --bord-blanc: 1px solid white;
+  --bord-clair: 1px solid #ccc;
   --background-color-emphase-claire: #ffffff;
+  --tw-backdrop-blur: blur(8px);
+  --tw-backdrop-saturate: saturate(2);
+
 }
 
 html {
@@ -106,6 +111,11 @@ hr {
   transition: right 1s linear, width 1s linear;
 }
 
+.panneau-configuration {
+  background: #fffc;
+  backdrop-filter: var(--tw-backdrop-blur) var(--tw-backdrop-saturate);
+}
+
 .map-overlay {
   position: absolute;
   top: 0;
@@ -118,12 +128,9 @@ hr {
 }
 
 .map-overlay .map-overlay-inner {
-  background: #fffc;
-  --tw-backdrop-blur: blur(8px);
-  --tw-backdrop-saturate: saturate(2);
-  backdrop-filter: var(--tw-backdrop-blur) var(--tw-backdrop-saturate);
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
   border-radius: var(--border-radius);
+  border-radius: var(--border-radius);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
   padding: 10px;
   margin-bottom: 10px;
 }
@@ -139,14 +146,9 @@ hr {
   width: 100%;
   position: relative;
   cursor: ew-resize;
+  color:#2f8aa8
 }
-.map-overlay input[type="checkbox"] {
-  background-color: transparent;
-  display: inline-block;
-  width: 100%;
-  position: relative;
-  cursor: ew-resize;
-}
+
 /* Checkbox (bâti 3D, Boucherie 3D)*/
 
 .layers-control .layer-control {
@@ -163,8 +165,6 @@ hr {
   width: 100%;
 }
 
-/* Pour le volet lateral */
-
 #volet {
   position: absolute;
   right: 0px;
@@ -176,7 +176,7 @@ hr {
 
   height: 100%;
 
-  background: #f3f3f8;
+
   transition: width 1s linear;
   user-select: text;
   box-shadow: -4px 1px 2px rgba(0, 0, 0, 0.2);
@@ -207,11 +207,11 @@ hr {
 }
 
 .bouton {
-  background-color: rgba(219, 219, 219, 0.5);
+  background-color: rgb(255, 255, 255);
   flex-grow: 1;
   padding: 5px;
   border-radius: var(--border-radius);
-  /* border: 1 solid rgba(118, 144, 192, 0.5); */
+  border: none
 }
 
 #bouton-fermeture {
@@ -309,6 +309,7 @@ hr {
 }
 
 .photographie {
+  cursor: pointer;
   position: relative;
   max-width: 100%;
   border-radius: var(--border-radius) var(--border-radius) 0px 0px;
@@ -369,8 +370,9 @@ hr {
 }
 
 #recherche {
-  width: 95%;
-  padding: 5px 0px 5px 5px;
+  box-sizing: border-box;
+  width: 100%;
+  padding: 5px 0px 5px 35px;
   border-radius: var(--border-radius);
   border: 1px solid white;
   transition: border-color 0.3s ease;
@@ -385,7 +387,7 @@ hr {
 
 #recherche-icon {
   position: absolute;
-  right: 10px;
+  left: 5px;
   height: 24px;
   top: 54%;
   transform: translateY(-50%);

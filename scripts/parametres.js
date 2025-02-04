@@ -1,4 +1,4 @@
-import { troisD, photographie, boucherie } from "./modules/icones.js";
+import { troisD, photographie, boucherie, agrandir, voir, modifier } from "./modules/icones.js";
 import { alternerVisibilite, alternerImagesVolet } from "./modules/actions-carte.js";
 // import { basculerVolet } from "./volet.js";
 
@@ -23,4 +23,22 @@ const controlesPersonnalises = [
   },
 ];
 
-export { controlesPersonnalises };
+const boutonsImages = [
+  {
+    idBouton: "agrandir",
+    iconeSvg: agrandir,
+    onClick: () =>alternerVisibilite(),
+  },
+  {
+    idBouton: "voir",
+    iconeSvg: voir,
+    onClick: () =>alternerVisibilite(),
+  },
+  {
+    idBouton: "modifier",
+    iconeSvg: modifier,
+    onClick: () =>alternerVisibilite(),
+  },
+]
+
+export { controlesPersonnalises, boutonsImages};

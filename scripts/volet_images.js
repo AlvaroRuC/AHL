@@ -1,3 +1,4 @@
+// import { creerFicheImageDetaillee } from "./modules/actions-volet";
 // Refait les fiches quand on filtre les données
 
 const inputs = document.querySelectorAll(
@@ -103,6 +104,8 @@ function selectionFicheImage(ficheImage, proprietes) {
       "fichier-img-visibles"
     );
     fichierImagesVisibles.style.display = "none";
+    compteur.style.display = "none";
+
 
     // Crée et afficher la fiche détaillée
     const volet = document.getElementById("volet");

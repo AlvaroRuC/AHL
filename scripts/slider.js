@@ -33,9 +33,9 @@ function slideTwo() {
 
 // Fonction pour remplir la couleur de fond de la barre de sliders
 function fillColor() {
-    let percent1 = (sliderOne.value / sliderMaxValue) * 100;
-    let percent2 = (sliderTwo.value / sliderMaxValue) * 100;
-    sliderTrack.style.background = `linear-gradient(to right, #dadae5 ${percent1}% , #3264fe ${percent1}% , #3264fe ${percent2}%, #dadae5 ${percent2}%)`;
+    let percent1 = ((sliderOne.value - 1838) / (2000 - 1838)) * 100;  // Remarque : on soustrait 1838 du slider
+    let percent2 = ((sliderTwo.value - 1838) / (2000 - 1838)) * 100;  // Idem pour sliderTwo
+    sliderTrack.style.background = `linear-gradient(to right, #dadae5 ${percent1}% , #1c90b9 ${percent1}% , #1c90b9 ${percent2}%, #dadae5 ${percent2}%)`;
 }
 
 // Fonction pour mettre à jour l'input 1 à partir du slider 1

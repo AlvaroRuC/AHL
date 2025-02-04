@@ -1,3 +1,5 @@
+// import { boutonsImages } from "../parametres";
+
 function creerFicheImageDetaillee(proprietes) {
   const infos = obtenirInfosImage(proprietes); // Récupère les informations communes
 
@@ -98,3 +100,5 @@ function creerFicheImageDetaillee(proprietes) {
 
   return ficheDetaillee;
 }
+
+// export { creerFicheImageDetaillee }
