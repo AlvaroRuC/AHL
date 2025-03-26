@@ -1,8 +1,6 @@
-import { map } from "./carte.js";
-
 //Pour charger le 3D de la Boucherie
 
-const modelOrigin = [1.25763, 45.82858];
+const modelOrigin = [1.25762, 45.82857];
 const modelAltitude = 0;
 const modelRotate = [Math.PI / 2, 0, 0];
 
