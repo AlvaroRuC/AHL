@@ -27,8 +27,8 @@ const modelTransform = {
 
 const THREE = window.THREE;
 
-const boucherie3d = {
-    id: '3d-model',
+const modeles3d = {
+    id: 'boucherie-3d',
     type: 'custom',
     renderingMode: '3d',
     onAdd(map, gl) {
@@ -115,9 +115,9 @@ const boucherie3d = {
 
 // On charche la couche mais on ne l'affiche pas
 
-map.on('load', () => {
-    map.addLayer(boucherie3d);
-    map.setLayoutProperty('3d-model', 'visibility', 'none');
-});
+// map.on('load', () => {
+//     map.addLayer(boucherie3d);
+//     map.setLayoutProperty('3d-model', 'visibility', 'none');
+// });
 
-export { boucherie3d }
+export { modeles3d }

@@ -1,4 +1,6 @@
 import { controlesPersonnalises } from "../parametres.js";
+import {modeles3d} from "./3d.js";
+
 
 const map = new maplibregl.Map({
   container: "map",
@@ -273,16 +275,23 @@ class ControleCarte {
   }
 }
 
-map.on("load", () => {
-  import("./3d.js")
-    .then((module) => {
-      // Maintenant tu peux accéder à boucherie3d depuis 'module'
-      map.addLayer(module.boucherie3d);
-      map.setLayoutProperty("3d-model", "visibility", "none");
-    })
-    .catch((error) => {
-      console.error("Erreur lors du chargement du module 3D:", error);
-    });
+// map.on("load", () => {
+//   import("./3d.js")
+//     .then((module) => {
+//       // Maintenant tu peux accéder à boucherie3d depuis 'module'
+//       map.addLayer(module.boucherie3d);
+//       map.setLayoutProperty("3d-model", "visibility", "none");
+//     })
+//     .catch((error) => {
+//       console.error("Erreur lors du chargement du module 3D:", error);
+//     });
+// });
+
+console.log(modeles3d)
+
+map.on('load', () => {
+  map.addLayer(modeles3d);
+  map.setLayoutProperty('boucherie-3d', 'visibility', 'none');
 });
 
 // Créer et ajouter les contrôles à la carte

@@ -17,7 +17,7 @@ const controlesPersonnalises = [
   {
     idControle: "boucherie",
     iconeSvg: boucherie,
-    onClick: () => alternerVisibilite("boucherie3d"),
+    onClick: () => alternerVisibilite("boucherie-3d"),
   },
 ];
 
