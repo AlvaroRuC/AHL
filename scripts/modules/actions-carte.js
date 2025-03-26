@@ -1,4 +1,5 @@
-import { map } from "./modules/carte.js";
+import { map } from "./carte.js";
+
 
 function alternerVisibilite(LayerId) {
     const currentVisibility = map.getLayoutProperty(LayerId, "visibility");
@@ -10,8 +11,4 @@ function alternerVisibilite(LayerId) {
     }
   }
 
-function activerBucherie3d() {
-
-  }
-
-export { alternerVisibilite, activerBucherie3d};
+export { alternerVisibilite };

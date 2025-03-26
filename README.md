@@ -1,6 +1,16 @@
+# Fèvrier:
+[] https://iiif.io/
+[] Resoudre des bugs.
+[] Double slider sans date
+[] Logos
+
 # Janvier:
-
-
+[] Contrôles pour le 3D
+[] Icônes
+[X] Ouvrir formulaire depuis le volet
+[] Bouton filtrer date et lieu
+[] Localiser dater
+[] Mot cles
 
 # Changements décembre :
 [X] Bug: les photos n'affichent pas leur emprise mais toutes les emprises.

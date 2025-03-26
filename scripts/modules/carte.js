@@ -1,4 +1,4 @@
-import { controlesPersonnalises } from "../parametres.js"
+import { controlesPersonnalises } from "../parametres.js";
 
 const map = new maplibregl.Map({
   container: "map",
@@ -88,7 +88,7 @@ map.on("load", () => {
   });
 
   map.addLayer({
-    id: "bati-3d2",
+    id: "bati-3d",
     source: "Bati2024",
     type: "fill-extrusion",
     paint: {
@@ -273,10 +273,24 @@ class ControleCarte {
   }
 }
 
-// Créer et ajouter les contrôles à la carte
-controlesPersonnalises.forEach((controle) => {
-  const boutonControle = new ControleCarte(controle);
-  map.addControl(boutonControle, "top-right");
+map.on("load", () => {
+  import("./3d.js")
+    .then((module) => {
+      // Maintenant tu peux accéder à boucherie3d depuis 'module'
+      map.addLayer(module.boucherie3d);
+      map.setLayoutProperty("3d-model", "visibility", "none");
+    })
+    .catch((error) => {
+      console.error("Erreur lors du chargement du module 3D:", error);
+    });
 });
 
-export { map }
+// Créer et ajouter les contrôles à la carte
+map.on("load", () => {
+  controlesPersonnalises.forEach((controle) => {
+    const boutonControle = new ControleCarte(controle);
+    map.addControl(boutonControle, "top-right");
+  });
+});
+
+export { map };

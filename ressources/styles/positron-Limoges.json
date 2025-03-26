@@ -832,20 +832,6 @@
       }
     },
     {
-      "id": "bati-3d",
-      "source": "bati2024",
-      "minzoom": 14,
-      "type": "fill-extrusion",
-      "paint": {
-        "fill-extrusion-color": "#eaeae5",
-        "fill-extrusion-height": ["get", "HAUTEUR"],
-        "fill-extrusion-opacity": 0.8
-      },
-      "layout": {
-        "visibility": "none"
-      }
-    },
-    {
       "id": "boundary_3",
       "type": "line",
       "source": "openmaptiles",

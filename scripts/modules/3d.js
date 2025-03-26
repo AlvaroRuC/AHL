@@ -1,4 +1,7 @@
-//3D
+import { map } from "./carte.js";
+
+//Pour charger le 3D de la Boucherie
+
 const modelOrigin = [1.25763, 45.82858];
 const modelAltitude = 0;
 const modelRotate = [Math.PI / 2, 0, 0];
@@ -24,7 +27,7 @@ const modelTransform = {
 
 const THREE = window.THREE;
 
-const customLayer = {
+const boucherie3d = {
     id: '3d-model',
     type: 'custom',
     renderingMode: '3d',
@@ -39,7 +42,7 @@ const customLayer = {
         sunLight.castShadow = true;
         this.scene.add(sunLight);
 
-        // lumière d'ambiance, pour réalisme.
+        // lumière d'ambiance
         const ambientLight = new THREE.AmbientLight(0xffffff, 1); // Couleur blanche, intensité 0.5
         this.scene.add(ambientLight);
 
@@ -110,9 +113,11 @@ const customLayer = {
     }
 };
 
-// POR AHORA ESTÁ DESACTIVADO EL 3D
+// On charche la couche mais on ne l'affiche pas
 
-map.on('style.load', () => {
-    map.addLayer(customLayer);
+map.on('load', () => {
+    map.addLayer(boucherie3d);
     map.setLayoutProperty('3d-model', 'visibility', 'none');
 });
+
+export { boucherie3d }
