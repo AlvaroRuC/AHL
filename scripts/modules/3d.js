@@ -113,11 +113,4 @@ const modeles3d = {
     }
 };
 
-// On charche la couche mais on ne l'affiche pas
-
-// map.on('load', () => {
-//     map.addLayer(boucherie3d);
-//     map.setLayoutProperty('3d-model', 'visibility', 'none');
-// });
-
 export { modeles3d }
