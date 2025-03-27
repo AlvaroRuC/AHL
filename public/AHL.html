@@ -27,14 +27,27 @@
       <div id="after" class="map"></div>
     </div>
 
-    <div id="volet" class="plie">
+    <div id="volet" class="panneau-configuration plie">
       <div id="outils-recherche">
         <div id="search-container">
           <h2>Rechercher</h2>
           <input type="text" id="recherche" placeholder="Rechercher..." />
+          <svg
+            id="recherche-icon"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor"
+            class="size-6"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"
+            />
+          </svg>
           <h3>Filtrer par date</h3>
-          <i id="recherche-icon" class="fa fa-search"></i>
-          <!-- NE PAS OUBLIER D'AJOUTER UNE ICONE -->
         </div>
 
         <div id="filtre-date">
@@ -57,9 +70,10 @@
               oninput="updateSlider2()"
             />
           </div>
-          <div class="container">
-            <div class="slider-track"></div>
+          <div class="container double-range">
+            <div class="slider-track double-range"></div>
             <input
+              class="double-range"
               type="range"
               id="slider-1"
               value="1838"
@@ -69,6 +83,7 @@
             />
             <span id="range1"></span>
             <input
+              class="double-range"
               type="range"
               id="slider-2"
               value="2000"
@@ -94,12 +109,12 @@
 
     <div id="map"></div>
 
-    <div class="map-overlay top">
-      <div class="map-overlay-inner">
+    <div class="map-overlay">
+      <div class="map-overlay-inner panneau-configuration">
         <!-- Ajouter un bouton pour plus d'info? -->
         <!-- Ajouter un bouton sur carte suporposée qui déplie les paramètres -->
         <fieldset>
-          <legend><input type="checkbox" />Carte superposée :></legend>
+          <legend>Carte superposée :</legend>
           <select name="carte" id="carte-select-2" autocomplete="off">
             <option value="" selected="selected" disabled hidden>
               --Choisissez une carte--
@@ -109,7 +124,7 @@
             <option value="c2023">Orthophotos de 2023</option>
           </select>
 
-          <label>Opacité : <span id="slider-value-1">100%</span></label>
+          <label>Opacité :<span id="slider-value-1">100%</span></label>
           <input
             id="slider1"
             type="range"
@@ -141,9 +156,11 @@
           />
         </fieldset>
 
-        <ahl-toggle-switch id="bouton-comparer">
-          <label slot="etiquette">Activer la comparaison </label>
-        </ahl-toggle-switch>
+        <div class="toggle-swich">
+          <ahl-toggle-switch id="bouton-comparer">
+            <label slot="etiquette">Activer la comparaison </label>
+          </ahl-toggle-switch>
+        </div>
       </div>
     </div>
 

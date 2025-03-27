@@ -1,15 +1,3 @@
-// Gestion du bouton pour afficher/masquer le volet
-
-document.getElementById("bouton-volet").addEventListener("click", function () {
-  const volet = document.getElementById("volet");
-  if (volet.classList.contains("plie")) {
-    map.setLayoutProperty("images-points", "visibility", "none");
-  } else {
-    map.setLayoutProperty("images-points", "visibility", "visible");
-    gererImagesVolet();
-  }
-});
-
 // Refait les fiches quand on filtre les données
 
 const inputs = document.querySelectorAll(

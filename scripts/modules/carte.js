@@ -1,4 +1,4 @@
-import { controlesPersonnalises } from "../parametres.js";
+import { controlesPersonnalises } from "../composants.js";
 import {modeles3d} from "./3d.js";
 
 

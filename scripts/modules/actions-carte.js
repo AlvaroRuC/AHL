@@ -1,6 +1,5 @@
 import { map } from "./carte.js";
 
-
 function alternerVisibilite(LayerId) {
     const currentVisibility = map.getLayoutProperty(LayerId, "visibility");
 
