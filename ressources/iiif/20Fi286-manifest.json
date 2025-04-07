@@ -1,0 +1,104 @@
+{
+  "@context": "http://iiif.io/api/presentation/3/context.json",
+  "id": "https://example.org/m3qfprouy7-m8smltpk",
+  "type": "Manifest",
+  "label": {
+    "fr": ["Cathédrale Saint Etienne en 1852. Côté nord-ouest"]
+  },
+  "metadata": [
+    {
+      "label": {
+        "en": ["Title"]
+      },
+      "value": {
+        "fr": ["Cathédrale Saint Etienne en 1852. Côté nord-ouest"]
+      }
+    },
+    {
+      "label": {
+        "en": [""]
+      },
+      "value": {
+        "en": [""]
+      }
+    },
+    {
+      "label": {
+        "en": [""]
+      },
+      "value": {
+        "en": [""]
+      }
+    }
+  ],
+  "navDate": "1852-01-01T00:14:44.000Z",
+  "items": [
+    {
+      "id": "https://example.org/m3qfprouy7-m8smltpk/canvas/e95zhg06ox4-m8smzgxc",
+      "type": "Canvas",
+      "height": 686,
+      "width": 928,
+      "label": {
+        "fr": ["Recto"]
+      },
+      "items": [
+        {
+          "id": "https://example.org/m3qfprouy7-m8smltpk/canvas/e95zhg06ox4-m8smzgxc/annotation-page/d1m4dwp2w9m-m8smzgxc",
+          "type": "AnnotationPage",
+          "items": [
+            {
+              "id": "https://example.org/m3qfprouy7-m8smltpk/annotation/svz3akxjby-m8smzg0m",
+              "type": "Annotation",
+              "motivation": "painting",
+              "target": "https://example.org/m3qfprouy7-m8smltpk/canvas/e95zhg06ox4-m8smzgxc",
+              "body": {
+                "id": "https://archivesenligne.limoges.fr/Images/tempimages/FRAC087085_20Fi286.jpg",
+                "type": "Image",
+                "format": "image/jpeg",
+                "height": 686,
+                "width": 928
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "navPlace": {
+    "type": "FeatureCollection",
+    "features": [
+      {
+        "type": "Feature",
+        "properties": {},
+        "geometry": {
+          "type": "Point",
+          "coordinates": [1.265815, 45.83004]
+        }
+      },
+      {
+        "type": "Feature",
+        "properties": {},
+        "geometry": {
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [1.265826, 45.830081],
+              [1.266739, 45.82814],
+              [1.26683, 45.828162],
+              [1.266417, 45.828981],
+              [1.266551, 45.829052],
+              [1.266503, 45.8291],
+              [1.266669, 45.829156],
+              [1.266739, 45.82913],
+              [1.266991, 45.829235],
+              [1.267147, 45.82922],
+              [1.267934, 45.828642],
+              [1.26803, 45.828698],
+              [1.265826, 45.830081]
+            ]
+          ]
+        }
+      }
+    ]
+  }
+}
