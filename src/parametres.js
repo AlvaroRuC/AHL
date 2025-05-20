@@ -7,12 +7,12 @@ import {
   modifier,
   criham,
   limoges,
-  aml
-} from "./modules/icones.js";
+  aml,
+} from "../scripts/modules/icones.js";
 import {
   alternerVisibilite,
   alternerImagesVolet,
-} from "./modules/actions-carte.js";
+} from "../scripts/modules/actions-carte.js";
 // import { basculerVolet } from "./volet.js";
 
 const controlesPersonnalises = [
