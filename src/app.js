@@ -1,5 +1,5 @@
-import { ajouterControles, ControlesCarte } from "./carte/controles-carte.js";
-import { ajouterLogos, Logos } from "./carte/logos-carte.js";
+import { ajouterControles } from "./carte/controles-carte.js";
+import { ajouterLogos } from "./carte/logos-carte.js";
 
 // import "./carte.js";
 // import { activerBati3d } from "./actions-carte.js";

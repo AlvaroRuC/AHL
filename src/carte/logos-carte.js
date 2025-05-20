@@ -1,4 +1,4 @@
-import { controlesPersonnalises, logos } from "../parametres.js";
+import { logos } from "../parametres.js";
 
 export class Logos {
   constructor(options) {

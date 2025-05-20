@@ -1,4 +1,4 @@
-import { controlesPersonnalises, logos } from "../parametres.js";
+import { controlesPersonnalises } from "../parametres.js";
 
 export class ControlesCarte {
   constructor(options) {
