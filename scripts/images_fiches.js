@@ -26,6 +26,7 @@ function creerImage(infos) {
     image.src = infos.chemin;
     image.alt = infos.lieu;
     image.classList.add('photographie');
+    image.loading = "lazy";
     return image;
 }
 

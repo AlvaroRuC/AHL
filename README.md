@@ -1,6 +1,15 @@
+# Fèvrier:
+[] https://iiif.io/
+[] Resoudre des bugs.
+[] Double slider sans date
+
 # Janvier:
-
-
+[] Contrôles pour le 3D
+[] Icônes
+[X] Ouvrir formulaire depuis le volet
+[] Bouton filtrer date et lieu
+[] Localiser dater
+[] Mot clef
 
 # Changements décembre :
 [X] Bug: les photos n'affichent pas leur emprise mais toutes les emprises.
@@ -18,7 +27,6 @@
 [/] Moteur de recherche
 [] Cluster
 [] Exclure les photos qui sont cachés par le volet de la liste qui s'affiche sur le volet.
-[] Ouvrir formulaire depuis le volet
 [] Ouverture d'un formulaire de saisi de points et d'emprises.
 [] Pour modifier les images: créer un API côté serveur qui accepte des requêtes de mise à jour (PUT, PATCH, ou POST), et cette API permettra de modifier le GeoJSON. Node.js et Express pour gérer l'API serveur??
 

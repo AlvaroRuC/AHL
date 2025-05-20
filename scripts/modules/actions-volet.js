@@ -3,7 +3,7 @@
 function creerFicheImageDetaillee(proprietes) {
   const infos = obtenirInfosImage(proprietes); // Récupère les informations communes
 
-  // Supprimer la fiche existante, si elle existe
+  // Suppression de la fiche existante, si elle existe
   const ficheDetailleeExistante = document.getElementById(
     "fiche-img-selectionnee"
   );
