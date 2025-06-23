@@ -42,17 +42,17 @@ J'ai besoin du Terrain RGB tile
 
 ### Le plus compliqué
 
-- [ ] Gérer l’affichage de ces couches:
+- [X] Gérer l’affichage de ces couches:
 
-- [/] afficher/masquer,
-- [/] opacité,  
+- [X] afficher/masquer,
+- [X] opacité,  
 - [?] changer l’ordre, 
 
 - [/] afficher légende si disponible, 
 
-- [/] slider si possible, 
+- [X] slider si possible, 
 
-- [ ] zoomer sur l’emprise de la couche, 
+- [X] zoomer sur l’emprise de la couche, 
 
 - [ ] gérer l’affichage de la couche en fonction du zoom si nécessaire. ??
 
