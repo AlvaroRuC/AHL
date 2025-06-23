@@ -45,5 +45,10 @@ export function ajouterLogos(map) {
   logos.forEach((logo) => {
     const logoCtrl = new Logos(logo);
     map.addControl(logoCtrl, "bottom-left");
+
+    const scaleControl = document.querySelector(".maplibregl-ctrl-scale");
+    if (scaleControl) {
+      scaleControl.style.float = "none";
+    }
   });
 }

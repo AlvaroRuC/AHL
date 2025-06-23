@@ -38,7 +38,18 @@ map.on("load", () => {
   map.addSource("sOrthophotos1950", {
     type: "raster",
     tiles: [
-      "https://data.geopf.fr/wms-r?LAYERS=ORTHOIMAGERY.ORTHOPHOTOS.1950-1965&FORMAT=image/jpeg&SERVICE=WMS&VERSION=1.3.0&REQUEST=GetMap&STYLES=&CRS=EPSG:3857&BBOX={bbox-epsg-3857}&WIDTH=256&HEIGHT=256",
+      "https://data.geopf.fr/wmts?" +
+        "SERVICE=WMTS" +
+        "&REQUEST=GetTile" +
+        "&VERSION=1.0.0" +
+        "&LAYER=ORTHOIMAGERY.ORTHOPHOTOS.1950-1965" +
+        "&STYLE=normal" +
+        "&FORMAT=image/png" +
+        "&TILEMATRIXSET=PM" +
+        "&TILEMATRIX={z}" +
+        "&TILEROW={y}" +
+        "&TILECOL={x}",
+      ,
     ],
     tileSize: 256,
     attribution:

@@ -4,113 +4,142 @@ const modelAltitude = 0;
 const modelRotate = [Math.PI / 2, 0, 0];
 
 const modelAsMercatorCoordinate = maplibregl.MercatorCoordinate.fromLngLat(
-    modelOrigin,
-    modelAltitude
+  modelOrigin,
+  modelAltitude
 );
 
 // transformation parameters to position, rotate and scale the 3D model onto the map
 const modelTransform = {
-    translateX: modelAsMercatorCoordinate.x,
-    translateY: modelAsMercatorCoordinate.y,
-    translateZ: modelAsMercatorCoordinate.z,
-    rotateX: modelRotate[0],
-    rotateY: modelRotate[1],
-    rotateZ: modelRotate[2],
-    /* Since our 3D model is in real world meters, a scale transform needs to be
-    * applied since the CustomLayerInterface expects units in MercatorCoordinates.
-    */
-    scale: modelAsMercatorCoordinate.meterInMercatorCoordinateUnits()
+  translateX: modelAsMercatorCoordinate.x,
+  translateY: modelAsMercatorCoordinate.y,
+  translateZ: modelAsMercatorCoordinate.z,
+  rotateX: modelRotate[0],
+  rotateY: modelRotate[1],
+  rotateZ: modelRotate[2],
+  /* Since our 3D model is in real world meters, a scale transform needs to be
+   * applied since the CustomLayerInterface expects units in MercatorCoordinates.
+   */
+  scale: modelAsMercatorCoordinate.meterInMercatorCoordinateUnits(),
 };
 
 const THREE = window.THREE;
 
-const boucherie3d = {
-    id: 'boucherie-3d',
-    type: 'custom',
-    renderingMode: '3d',
-    onAdd(map, gl) {
-        this.camera = new THREE.Camera();
-        this.scene = new THREE.Scene();
+const models3d = {
+  id: "boucherie",
+  type: "custom",
+  renderingMode: "3d",
+  modelLoaded: true,
+  onAdd(map, gl) {
+    this.camera = new THREE.Camera();
+    this.scene = new THREE.Scene();
+    this.map = map;
 
-        // create two three.js lights to illuminate the model
-        const sunLight = new THREE.DirectionalLight(0xffdd99, 0.5); // Couleur jaune, intensité 1
-        sunLight.position.set(0, 100, 100); // Position du soleil
-        sunLight.target.position.set(0, 0, 0); // Cible la scène (ou le centre de la scène)
-        sunLight.castShadow = true;
-        this.scene.add(sunLight);
+    // Lumières
+    const sunLight = new THREE.DirectionalLight(0xffdd99, 0.5);
+    sunLight.position.set(0, 100, 100);
+    this.scene.add(sunLight);
 
-        // lumière d'ambiance, pour réalisme.
-        const ambientLight = new THREE.AmbientLight(0xffffff, 1); // Couleur blanche, intensité 0.5
-        this.scene.add(ambientLight);
+    const ambientLight = new THREE.AmbientLight(0xffffff, 1);
+    this.scene.add(ambientLight);
 
-        // use the three.js GLTF loader to add the 3D model to the three.js scene
-        const loader = new THREE.GLTFLoader();
-        loader.load(
-            '/donnees/3d/boucherie.glb',
-            // '/donnees/3d/B-22-36.glb',
-            (gltf) => {
-                this.scene.add(gltf.scene);
-            }
-        );
-        // S'il faut carger plus de modèles:
-        // loader.load(
-        //     '/donnees/3d/B-32.glb',
-        //     (gltf) => {
-        //         this.scene.add(gltf.scene);
-        //     }
-        // );
+    // Position et transformation du modèle
+    const modelOrigin = [1.25762, 45.82857];
+    const modelAltitude = 0;
+    const modelRotate = [Math.PI / 2, 0, 0];
+    const modelAsMercatorCoordinate = maplibregl.MercatorCoordinate.fromLngLat(
+      modelOrigin,
+      modelAltitude
+    );
 
-        this.map = map;
+    this.modelTransform = {
+      translateX: modelAsMercatorCoordinate.x,
+      translateY: modelAsMercatorCoordinate.y,
+      translateZ: modelAsMercatorCoordinate.z,
+      rotateX: modelRotate[0],
+      rotateY: modelRotate[1],
+      rotateZ: modelRotate[2],
+      scale: modelAsMercatorCoordinate.meterInMercatorCoordinateUnits(),
+    };
 
-        // use the MapLibre GL JS map canvas for three.js
-        this.renderer = new THREE.WebGLRenderer({
-            canvas: map.getCanvas(),
-            context: gl,
-            antialias: true
-        });
+    // Renderer
+    this.renderer = new THREE.WebGLRenderer({
+      canvas: map.getCanvas(),
+      context: gl,
+      antialias: true,
+    });
+    this.renderer.autoClear = false;
 
-        this.renderer.autoClear = false;
-    },
-    render(gl, matrix) {
-        const rotationX = new THREE.Matrix4().makeRotationAxis(
-            new THREE.Vector3(1, 0, 0),
-            modelTransform.rotateX
-        );
-        const rotationY = new THREE.Matrix4().makeRotationAxis(
-            new THREE.Vector3(0, 1, 0),
-            modelTransform.rotateY
-        );
-        const rotationZ = new THREE.Matrix4().makeRotationAxis(
-            new THREE.Vector3(0, 0, 1),
-            modelTransform.rotateZ
-        );
+    // Chargement du modèle
+    const loader = new THREE.GLTFLoader();
+    loader.load(
+      "/donnees/3d/boucherie.glb",
+      (gltf) => {
+        this.scene.add(gltf.scene);
+        this.modelLoaded = true;
+        map.triggerRepaint();
+      },
+      undefined,
+      (error) => {
+        console.error("Erreur de chargement GLB :", error);
+      }
+    );
+  },
 
-        const m = new THREE.Matrix4().fromArray(matrix);
-        const l = new THREE.Matrix4()
-            .makeTranslation(
-                modelTransform.translateX,
-                modelTransform.translateY,
-                modelTransform.translateZ
-            )
-            .scale(
-                new THREE.Vector3(
-                    modelTransform.scale,
-                    -modelTransform.scale,
-                    modelTransform.scale
-                )
-            )
-            .multiply(rotationX)
-            .multiply(rotationY)
-            .multiply(rotationZ);
+  render(gl, { defaultProjectionData }) {
+    if (!this.modelLoaded) return;
 
-        this.camera.projectionMatrix = m.multiply(l);
-        this.renderer.resetState();
-        this.renderer.render(this.scene, this.camera);
-        this.map.triggerRepaint();
-    }
+    const rotationX = new THREE.Matrix4().makeRotationAxis(
+      new THREE.Vector3(1, 0, 0),
+      this.modelTransform.rotateX
+    );
+    const rotationY = new THREE.Matrix4().makeRotationAxis(
+      new THREE.Vector3(0, 1, 0),
+      this.modelTransform.rotateY
+    );
+    const rotationZ = new THREE.Matrix4().makeRotationAxis(
+      new THREE.Vector3(0, 0, 1),
+      this.modelTransform.rotateZ
+    );
+
+    const m = new THREE.Matrix4().fromArray(defaultProjectionData.mainMatrix);
+    const l = new THREE.Matrix4()
+      .makeTranslation(
+        this.modelTransform.translateX,
+        this.modelTransform.translateY,
+        this.modelTransform.translateZ
+      )
+      .scale(
+        new THREE.Vector3(
+          this.modelTransform.scale,
+          -this.modelTransform.scale,
+          this.modelTransform.scale
+        )
+      )
+      .multiply(rotationX)
+      .multiply(rotationY)
+      .multiply(rotationZ);
+
+    this.camera.projectionMatrix = m.multiply(l);
+    this.renderer.resetState();
+    this.renderer.render(this.scene, this.camera);
+    this.map.triggerRepaint();
+  },
 };
 
-map.on('style.load', () => {
-    map.addLayer(boucherie3d);
-    map.setLayoutProperty('boucherie-3d', 'visibility', 'none');
+map.on("style.load", () => {
+  console.log("THREE:", THREE);
+  console.log("GLTFLoader:", THREE.GLTFLoader);
+
+  if (!THREE.GLTFLoader) {
+    console.error(
+      "⚠️ GLTFLoader n'est pas disponible. Vérifie le chargement du script !"
+    );
+    return; // on empêche d'ajouter la couche si le loader n'est pas prêt
+  }
+
+  // Ajout de la couche 3D seulement si tout est prêt
+  map.addLayer(models3d);
+
+  // Optionnel : rendre visible si masqué
+  map.setLayoutProperty("boucherie", "visibility", "none");
 });
