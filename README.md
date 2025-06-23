@@ -21,8 +21,8 @@ Couches vectorielles ?
 
 WMS:
 
-- [] Carte topographique ??
-- [] Carte topographique en noire et blanc ?? Voir geoportail. https://www.geoportail.gouv.fr/carte
+- [ ] Carte topographique ??
+- [ ] Carte topographique en noire et blanc ?? Voir geoportail. https://www.geoportail.gouv.fr/carte
 - [X] Photographie aerienne 2017 ->  2023
 - [?] Photographie aerienne 1965-1980
 - [X] Photographie aerienne 1950-1965
