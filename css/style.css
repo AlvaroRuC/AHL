@@ -1,24 +1,24 @@
 @font-face {
   font-family: "Roboto";
-  src: url("/ressources/polices/Roboto/Roboto-Regular.woff2") format("woff2"),
-    url("/ressources/polices/Roboto/Roboto-Regular.ttf") format("truetype");
+  src: url("./ressources/polices/Roboto/Roboto-Regular.woff2") format("woff2"),
+    url("./ressources/polices/Roboto/Roboto-Regular.ttf") format("truetype");
   font-weight: 400;
   font-style: normal;
 }
 
 @font-face {
   font-family: "Roboto";
-  src: url("/ressources/polices/Roboto/Roboto-Light.woff2") format("woff2"),
-    url("/ressources/polices/Roboto/Roboto-Light.ttf") format("truetype");
+  src: url("./ressources/polices/Roboto/Roboto-Light.woff2") format("woff2"),
+    url("./ressources/polices/Roboto/Roboto-Light.ttf") format("truetype");
   font-weight: 300;
   font-style: normal;
 }
 
 @font-face {
   font-family: "Roboto-condensed";
-  src: url("/ressources/polices/Roboto_condensed/RobotoCondensed-Bold.woff2")
+  src: url("./ressources/polices/Roboto_condensed/RobotoCondensed-Bold.woff2")
       format("woff2"),
-    url("/ressources/polices/Roboto_condensed/RobotoCondensed-Bold.ttf")
+    url("./ressources/polices/Roboto_condensed/RobotoCondensed-Bold.ttf")
       format("truetype");
   font-weight: 700;
   font-style: normal;
