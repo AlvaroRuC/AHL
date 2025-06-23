@@ -9,7 +9,7 @@ const map = new maplibregl.Map({
   maxZoom: 20,
   maxPitch: 85,
   zoom: 13,
-  style: "../ressources/styles/positron-Limoges.json",
+  style: "./ressources/styles/positron-Limoges.json",
   // 'https://data.geopf.fr/annexes/ressources/vectorTiles/styles/PLAN.IGN/standard.json',
   // 'https://api.maptiler.com/maps/streets/style.json?key=get_your_own_OpIi9ZULNHzrESv6T2vL',
 });
