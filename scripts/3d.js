@@ -127,8 +127,6 @@ const models3d = {
 };
 
 map.on("style.load", () => {
-  console.log("THREE:", THREE);
-  console.log("GLTFLoader:", THREE.GLTFLoader);
 
   if (!THREE.GLTFLoader) {
     console.error(
