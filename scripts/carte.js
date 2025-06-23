@@ -49,7 +49,6 @@ map.on("load", () => {
         "&TILEMATRIX={z}" +
         "&TILEROW={y}" +
         "&TILECOL={x}",
-      ,
     ],
     tileSize: 256,
     attribution:
