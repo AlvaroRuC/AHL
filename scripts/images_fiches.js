@@ -12,7 +12,7 @@ function obtenirInfosImage(proprietes) {
 
     // Construction de l'objet d'informations de base
     return {
-        chemin: "../donnees/" + proprietes.chemin,
+        chemin: "./donnees/" + proprietes.chemin,
         lieu: proprietes.lieu || 'Lieu inconnu',
         datesExtremes: datesExtremes,
         coteAML: proprietes.cote_aml,
