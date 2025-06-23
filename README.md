@@ -16,8 +16,8 @@ Système de projection privilégié : EPSG : 3857
 
 Couches vectorielles ?
 
-- [] Parcelles cadastrales,
-- [] Limites administratives (communes ou d'autres?): sur OpenFreeMap
+- [ ] Parcelles cadastrales,
+- [ ] Limites administratives (communes ou d'autres?): sur OpenFreeMap
 
 WMS:
 
@@ -28,13 +28,13 @@ WMS:
 - [X] Photographie aerienne 1950-1965
 - [X] Carte de l'État-Major
 
-- [] Altitude MNT
+- [ ] Altitude MNT
 
 Projections EPSG : 3857
 
 Ça marche pour des couches wms, et pas (?) pour des couches vecteur.
 
-- [] Afficher des couches en 3D en fonction du relief (ajouter des bâtiments).
+- [ ] Afficher des couches en 3D en fonction du relief (ajouter des bâtiments).
 
 J'ai besoin du Terrain RGB tile
 
