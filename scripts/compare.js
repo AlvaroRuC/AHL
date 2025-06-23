@@ -16,11 +16,11 @@ bouton.addEventListener("change", function () {
     // Afficher le conteneur de comparaison
     document.getElementById("comparison-container").style.display = "block";
 
-    // Créer une nouvelle instance de la carte "After"
+    // Créer une nouvelle instance de la carte "After" 
     afterMap = new maplibregl.Map({
       container: "after",
       style:
-        "https://api.maptiler.com/maps/streets/style.json?key=get_your_own_OpIi9ZULNHzrESv6T2vL",
+        "https://data.geopf.fr/annexes/ressources/vectorTiles/styles/PLAN.IGN/standard.json",
       center: [longitude, latitude],
       zoom: zoom,
       pitch: pitch,
