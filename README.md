@@ -1,77 +1,102 @@
-# Fèvrier:
-[] https://iiif.io/
-[] Resoudre des bugs.
-[] Double slider sans date
+# Atlas Historique du Limousin
 
-# Janvier:
-[] Contrôles pour le 3D
-[] Icônes
-[X] Ouvrir formulaire depuis le volet
-[] Bouton filtrer date et lieu
-[] Localiser dater
-[] Mot clef
+Système de projection privilégié : EPSG : 3857
 
-# Changements décembre :
-[X] Bug: les photos n'affichent pas leur emprise mais toutes les emprises.
-[X] Bug: quelques emprises ont plusieurs photos.
-[X] Les images qui se montrent sur le volet sont les plus proches à la caméra
-[] Volet dynamique:
-    [X] Côté volet:s
-        [X] Selection
-        [X] Pas d'image repétée
-        [X] Hover
-    [] Côté carte
-        [] Selection
-        [X] Hover
+## Conversion de l’AHL en Maplibre ?
 
-[/] Moteur de recherche
-[] Cluster
-[] Exclure les photos qui sont cachés par le volet de la liste qui s'affiche sur le volet.
-[] Ouverture d'un formulaire de saisi de points et d'emprises.
-[] Pour modifier les images: créer un API côté serveur qui accepte des requêtes de mise à jour (PUT, PATCH, ou POST), et cette API permettra de modifier le GeoJSON. Node.js et Express pour gérer l'API serveur??
+### Fait
 
-Quel système pour geolocaliser ? Nouvelle page ou à travers la carte ?
+- [x] Définir une emprise pour la fenêtre de carte.
 
-# Changements novembre :
+- [x] Prévoir un volet latéral pour afficher des informations.
 
-[x] Ajouter les modèles qui restent.
-[x] Optimiser les bâtiments en 3D. Question. Où ratacher les 3D ? Couches actuelles ou couches anciennes ?
-[x] Améliorer lumières.
-[x] Chercher positron (tuiles vectorielles).
-[x] Ajouter les 3D OSM/cadastre à sa place.
-[x] Bug checkbox.js.
-[x] Bug formulaire.js: Uncaught TypeError: document.getElementById(...) is null 1:10
-[x] Rendre les contrôles visibles lors de l'ouverture du sidebar.
+### À faire facilement
 
-Intégrer les bâtiments 3D sur le 3D du cadastre.
+- [X] Afficher des couches web (google, osm, ign -> BD Ortho, cadastre, éléments BD Topo):
 
-# Réunion 5 novembre :
+Couches vectorielles ?
 
- [] Caler les 3D.
- [] Ajouter des catégories
+- [] Parcelles cadastrales,
+- [] Limites administratives (communes ou d'autres?): sur OpenFreeMap
 
-# Réunion 14 octobre :
+WMS:
 
-[] Creer de clusters pour afficher les photos (peut-être pas nécessaire si je fait le airbnb sidebar).
-[] Publier des commentaires sur la photo sans inscription. Géoreferencer.
-[] Posibilité d'ouvrir un formulaire.
-[] Sidebar.
+- [] Carte topographique ??
+- [] Carte topographique en noire et blanc ?? Voir geoportail. https://www.geoportail.gouv.fr/carte
+- [X] Photographie aerienne 2017 ->  2023
+- [?] Photographie aerienne 1965-1980
+- [X] Photographie aerienne 1950-1965
+- [X] Carte de l'État-Major
 
-# Idées
+- [] Altitude MNT
 
-[] Popup translucide (je laisse tomber cette idée)
-[] Airbnb sidebar.
-[] Ajouter des etiquettes sur les cartes anciennes et orthophotos.
+Projections EPSG : 3857
 
-# Index
+Ça marche pour des couches wms, et pas (?) pour des couches vecteur.
 
-##
+- [] Afficher des couches en 3D en fonction du relief (ajouter des bâtiments).
 
-### Sidebar
+J'ai besoin du Terrain RGB tile
 
-Propre.
+- [ ] Afficher des couches vectoriel avec des étiquettes éventuelles et/ou infobulle.
+
+### Le plus compliqué
+
+- [ ] Gérer l’affichage de ces couches:
+
+- [/] afficher/masquer,
+- [/] opacité,  
+- [?] changer l’ordre, 
+
+- [/] afficher légende si disponible, 
+
+- [/] slider si possible, 
+
+- [ ] zoomer sur l’emprise de la couche, 
+
+- [ ] gérer l’affichage de la couche en fonction du zoom si nécessaire. ??
+
+Minumum, afficher/masquer, et opacité 
+avec 
+https://github.com/mug-jp/maplibre-gl-opacity 
+ou
+https://www.npmjs.com/package/mapbox-layer-control
+
+### Plugins à tester
+
+Creer de points
+https://maplibre.org/maplibre-gl-js/docs/examples/maplibre-gl-terradraw/
+
+Gerer opacité des couches
+https://github.com/mug-jp/maplibre-gl-opacity
+
+Swipe between maps
+https://docs.mapbox.com/mapbox-gl-js/example/mapbox-gl-compare/
+https://github.com/maplibre/maplibre-gl-compare
+
+Une autre possibilité:
+https://maplibre.org/maplibre-gl-js/docs/examples/sync-move/
+
+https://github.com/Beilinson/mapbox-layer-groups
+
+Maputnik
+https://geoservices.ign.fr/documentation/services/utilisation-sig/tutoriel-maputnik
+
+WMS IGN ici: 
+https://data.geopf.fr/wms-r?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetCapabilities
 
 
-Fonds de carte positron ?
+2 :  Gestion des photos
 
-Pour utiliser une base de données (comme MongoDB ou PostgreSQL avec PostGIS), il faut adapter le code serveur pour interagir.
+Prévoir un modèle de BDD intégrant les infos sur les photos (datation, localisation prise de vue, auteur, thématique/mot clé, liste des lieux vu)
+Photos déjà géolocalisées -> affiche une couche avec la localisation de la prise de vue
+Réfléchir à un moyen de visualiser ce qui est vu sur la photo (bâtiment/objet, emprise ?)
+Interagir avec les points pour afficher la photo et les infos
+Compléter les informations sur les photos (autre interface ? galerie photo ? formulaire ? Système de validation ou modération ?)
+
+https://github.com/JamesLMilner/terra-draw
+
+3 : Tutoriel
+Prévoir un tutoriel pour l’utilisation de(s) interface(s)
+
+
