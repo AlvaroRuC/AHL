@@ -68,7 +68,7 @@ map.on("load", () => {
 
   map.addSource("Bati2024", {
     type: "geojson",
-    data: "/donnees/Bati-CRS-84.geojson",
+    data: "./donnees/Bati-CRS-84.geojson",
   });
 
   // map.addSource("imagesCluster", {
@@ -82,13 +82,13 @@ map.on("load", () => {
 
   map.addSource("images", {
     type: "geojson",
-    data: "/donnees/images_points.geojson",
+    data: "./donnees/images_points.geojson",
     generateId: true,
   });
 
   map.addSource("images_emprise", {
     type: "geojson",
-    data: "/donnees/images_emprise.geojson",
+    data: "./donnees/images_emprise.geojson",
     generateId: true,
   });
 

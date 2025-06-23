@@ -72,7 +72,7 @@ const models3d = {
     // Chargement du modèle
     const loader = new THREE.GLTFLoader();
     loader.load(
-      "/donnees/3d/boucherie.glb",
+      "./donnees/3d/boucherie.glb",
       (gltf) => {
         this.scene.add(gltf.scene);
         this.modelLoaded = true;
