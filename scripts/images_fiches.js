@@ -54,7 +54,7 @@ function creerLienAgrandissement(infos) {
     lien.classList.add('image-bouton');
 
     const iconeAgrandir = document.createElement("img");
-    iconeAgrandir.src = "../ressources/icones/agrandir.png";
+    iconeAgrandir.src = "./ressources/icones/agrandir.png";
     iconeAgrandir.classList.add('image-icone');
 
     lien.appendChild(iconeAgrandir);
