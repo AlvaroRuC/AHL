@@ -1,10 +1,10 @@
 // Source: https://heroicons.com (licence MIT)
 
-export const criham = "../../ressources/icones/criham.png"
+export const criham = "./ressources/icones/criham.png"
 
-export const aml = "../../ressources/icones/aml.png"
+export const aml = "./ressources/icones/aml.png"
 
-export const limoges = "../../ressources/icones/limoges.png"
+export const limoges = "./ressources/icones/limoges.png"
 
 export const troisD = `
   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 svg-controle">
